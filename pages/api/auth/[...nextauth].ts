@@ -10,23 +10,23 @@ export default NextAuth({
       session.user.id = token.id
       return session; // The return type will match the one returned in `useSession()`
     },
-    async jwt({token, user, account, profile, isNewUser}) {
-      if (profile) {
-          token['userProfile'] = {
-              followersCount: profile.followers_count,
-              twitterHandle: profile.screen_name,
-              userID: profile.id
-          };
+    async jwt(token, user, account = {}, profile, isNewUser) {
+      if ( account.provider && !token[account.provider] ) {
+        token[account.provider] = {};
       }
-      if (account) {
-          token['credentials'] = {
-              authToken: account.access_token,
-              authSecret: account.oauth_token_secret,
-          }
+
+      if ( account.accessToken ) {
+        token[account.provider].accessToken = account.accessToken;
       }
-      return token
+
+      if ( account.refreshToken ) {
+        token[account.provider].refreshToken = account.refreshToken;
+      }
+
+      return token;
+    },
   },
-  },
+  
   providers: [
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID as string,
