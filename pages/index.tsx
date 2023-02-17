@@ -38,6 +38,8 @@ const Home: NextPage = () => {
     likes: 12700
   };
 
+  console.log(session?.accessToken ?? "no access token");
+
   const config2 = { // used for fake tweet testing
     user: {
       nickname: session?.user.name ?? "twitter",
@@ -120,7 +122,7 @@ const Home: NextPage = () => {
         Signed in as {session.user.name} <br />
         {/* Signed in<br /> */}
         <button onClick={() => signOut()}>Sign out</button>
-        {session.accessToken}
+        Token: {session?.accessToken ?? "no access token"}
       </>}
 
 {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
