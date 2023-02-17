@@ -12,14 +12,15 @@ import LoadingDots from "../components/LoadingDots";
 import ResizablePanel from "../components/ResizablePanel";
 import { signIn, signOut, useSession } from 'next-auth/react';
 import FakeTweet from "fake-tweet";
-import { getToken } from "next-auth/jwt";
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [bio, setBio] = useState("");
   const [vibe, setVibe] = useState<VibeType>("Professional");
   const [generatedBios, setGeneratedBios] = useState<String>("");
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  console.log("Status: ", status);
 
   const config1 = { // used for fake tweet testing
     user: {

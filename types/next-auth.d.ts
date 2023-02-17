@@ -6,13 +6,13 @@ declare module "next-auth" {
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
   interface Session {
-    accessToken
-    refreshToken
     user: {
-      id
       name
+      email
       image
     } & DefaultSession["user"]
+    accessToken
+    refreshToken
   }
 //   interface JWT {
 //     oauth_token?: string
