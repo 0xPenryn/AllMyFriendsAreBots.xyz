@@ -13,21 +13,21 @@ export default NextAuth({
       session.user = token.token.user;
       return session; // The return type will match the one returned in `useSession()`
     },
-  //   async jwt(token, user, account = {}, profile, isNewUser) {
-  //     console.log("token EEEEEE", token);
-  //     // if ( account.provider && !token[account.provider] ) {
-  //     //   token[account.provider] = {};
-  //     // }
+    async jwt(token, user, account = {}, profile, isNewUser) {
+      console.log("token EEEEEE", token);
+      // if ( account.provider && !token[account.provider] ) {
+      //   token[account.provider] = {};
+      // }
 
-  //     // token[account.provider].oauth_token = token.account.access_token;
+      // token[account.provider].oauth_token = token.account.access_token;
       
 
-  //     // if ( account.refresh_token ) {
-  //     //   token[account.provider].oauth_token_secret = account.refresh_token;
-  //     // }
+      // if ( account.refresh_token ) {
+      //   token[account.provider].oauth_token_secret = account.refresh_token;
+      // }
 
-  //     return token;
-  //   },
+      return token;
+    },
   },
   
   providers: [
