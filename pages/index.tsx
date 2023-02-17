@@ -127,8 +127,8 @@ const Home: NextPage = () => {
 
 {/* fake tweet generator for timeline-style view */}
       <div className="items-center justify-center">
-        <FakeTweet config={config} />
-        <FakeTweet config={config} />
+        <FakeTweet config={config1} />
+        <FakeTweet config={config2} />
       </div>
 
       <Header />
