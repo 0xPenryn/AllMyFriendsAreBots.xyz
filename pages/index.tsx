@@ -44,14 +44,14 @@ const Home: NextPage = () => {
 
   const config2 = { // used for fake tweet testing
     user: {
-      nickname: session?.user.name ?? "twitter",
-      name: session?.user.name ?? "Twitter",
+      nickname: session?.user?.name ?? "twitter",
+      name: session?.user?.name ?? "Twitter",
       avatar: "avatar.png",
       verified: false,
       locked: false
     },
     display: "default",
-    text: session?.user.name ?? "no text",
+    text: session?.user?.name ?? "no text",
     image: "",
     date: "3:32 PM · Feb 14, 1997",
     app: "Twitter for iPhone",

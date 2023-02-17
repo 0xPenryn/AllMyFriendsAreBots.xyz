@@ -5,9 +5,9 @@ import TwitterProvider from "next-auth/providers/twitter";
 export default NextAuth({
   callbacks: {
     async session({ session, token, user }) {
-      session.accessToken = token.accessToken
-      session.accessSecret = token.refreshToken
-      session.user = user
+      // session.accessToken = token.accessToken
+      // session.accessSecret = token.refreshToken
+      // session.user = user
       return session; // The return type will match the one returned in `useSession()`
     },
     // async jwt(token, user, account = {}, profile, isNewUser) {
