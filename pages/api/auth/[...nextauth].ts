@@ -7,7 +7,7 @@ export default NextAuth({
     async session({ session, token, user }) {
       session.accessToken = token.accessToken
       session.accessSecret = token.refreshToken
-      // session.user.id = token.id
+      session.user = user
       return session; // The return type will match the one returned in `useSession()`
     },
     async jwt(token, user, account = {}, profile, isNewUser) {
