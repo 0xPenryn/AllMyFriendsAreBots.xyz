@@ -8,9 +8,9 @@ export default NextAuth({
       console.log("session AAAAAAA", session);
       console.log("token AAAAAAA", token);
       console.log("token account", token.token.account);
-      session.accessToken = token.access_token;
-      session.refreshToken = token.refresh_token;
-      session.user = user;
+      session.accessToken = token.token.account.access_token;
+      session.refreshToken = token.token.account.refresh_token;
+      session.user = token.token.user;
       return session; // The return type will match the one returned in `useSession()`
     },
     async jwt(token, user, account = {}, profile, isNewUser) {
