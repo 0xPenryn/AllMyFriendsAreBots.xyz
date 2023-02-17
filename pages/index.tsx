@@ -38,7 +38,7 @@ const Home: NextPage = () => {
     likes: 12700
   };
 
-  console.log(session?.accessToken ?? "no access token");
+  console.log(JSON.stringify(session) ?? "no session object");
 
   const config2 = { // used for fake tweet testing
     user: {
