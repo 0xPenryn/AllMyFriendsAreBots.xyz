@@ -46,7 +46,7 @@ const Home: NextPage = () => {
     user: {
       nickname: session?.user?.name ?? "twitter",
       name: session?.user?.name ?? "Twitter",
-      avatar: "avatar.png",
+      avatar: session?.user?.image ?? "avatar.png",
       verified: false,
       locked: false
     },
