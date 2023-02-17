@@ -6,8 +6,8 @@ export default NextAuth({
   callbacks: {
     async session({ session, token, user }) {
       console.log("token AAAAAAA", token);
-      session.accessToken = token[account.access_token];
-      session.refreshToken = token[account.refresh_token];
+      session.accessToken = token.account.access_token;
+      session.refreshToken = token.account.refresh_token;
       session.user = user;
       return session; // The return type will match the one returned in `useSession()`
     },
