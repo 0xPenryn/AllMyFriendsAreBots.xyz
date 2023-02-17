@@ -10,12 +10,14 @@ import Github from "../components/GitHub";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 import ResizablePanel from "../components/ResizablePanel";
+import { signIn, signOut, useSession, } from 'next-auth/react';
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [bio, setBio] = useState("");
   const [vibe, setVibe] = useState<VibeType>("Professional");
   const [generatedBios, setGeneratedBios] = useState<String>("");
+  const { data: session } = useSession();
 
   console.log("Streamed response: ", generatedBios);
 
@@ -73,6 +75,15 @@ const Home: NextPage = () => {
         <title>Twitter Generator</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      {!session && <>
+        Not signed in <br />
+        <button onClick={() => signIn()}>Sign in</button>
+      </>}
+      {session && <>
+        Signed in as {session.user.email} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>}
 
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
