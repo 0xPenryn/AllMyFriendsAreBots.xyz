@@ -60,7 +60,7 @@ const Home: NextPage = () => {
     likes: 12700
   };
 
-  console.log("Streamed response: ", generatedBios);
+  // console.log("Streamed response: ", generatedBios);
 
   const prompt =
     vibe === "Funny"

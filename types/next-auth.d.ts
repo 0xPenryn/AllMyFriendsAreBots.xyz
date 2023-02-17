@@ -8,13 +8,14 @@ declare module "next-auth" {
   interface Session {
     accessToken
     refreshToken
-    user: {
-      id
-      name
-    } & DefaultSession["user"]
+    // user: {
+    //   id
+    //   name
+    // } & DefaultSession["user"]
   }
-//   interface JWT {
-//     /** OpenID ID Token */
-//     idToken?: string
-//   }
+  interface JWT {
+    oauth_token?: string
+    oauth_token_secret?: string
+
+}
 }
