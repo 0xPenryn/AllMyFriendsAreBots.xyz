@@ -6,23 +6,23 @@ export default NextAuth({
   callbacks: {
     async session({ session, token, user }) {
       console.log("token AAAAAAA", token);
-      session.accessToken = token.oauth_token;
-      session.refreshToken = token.oauth_token_secret;
+      session.accessToken = token.account.access_token;
+      session.refreshToken = token.account.refresh_token;
       // session.user = user
       return session; // The return type will match the one returned in `useSession()`
     },
     async jwt(token, user, account = {}, profile, isNewUser) {
       console.log("token EEEEEE", token);
-      if ( account.provider && !token[account.provider] ) {
-        token[account.provider] = {};
-      }
+      // if ( account.provider && !token[account.provider] ) {
+      //   token[account.provider] = {};
+      // }
 
-      token[account.provider].oauth_token = token.account.access_token;
+      // token[account.provider].oauth_token = token.account.access_token;
       
 
-      if ( account.refresh_token ) {
-        token[account.provider].oauth_token_secret = account.refresh_token;
-      }
+      // if ( account.refresh_token ) {
+      //   token[account.provider].oauth_token_secret = account.refresh_token;
+      // }
 
       return token;
     },
