@@ -13,9 +13,8 @@ declare module "next-auth" {
     //   name
     // } & DefaultSession["user"]
   }
-  interface JWT {
-    oauth_token?: string
-    oauth_token_secret?: string
-
-}
+//   interface JWT {
+//     oauth_token?: string
+//     oauth_token_secret?: string
+// }
 }
