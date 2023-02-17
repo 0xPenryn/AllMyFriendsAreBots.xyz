@@ -12,6 +12,7 @@ import LoadingDots from "../components/LoadingDots";
 import ResizablePanel from "../components/ResizablePanel";
 import { signIn, signOut, useSession } from 'next-auth/react';
 import FakeTweet from "fake-tweet";
+import { getToken } from "next-auth/jwt";
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -39,6 +40,7 @@ const Home: NextPage = () => {
   };
 
   console.log(JSON.stringify(session) ?? "no session object");
+  console.log(JSON.stringify(getToken) ?? "no token object");
 
   const config2 = { // used for fake tweet testing
     user: {
