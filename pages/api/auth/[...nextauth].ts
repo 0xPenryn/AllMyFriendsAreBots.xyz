@@ -8,7 +8,7 @@ export default NextAuth({
       // console.log("session AAAAAAA", session);
       // console.log("token AAAAAAA", token);
       // console.log("token account", token.token.account);
-      session.user = token.token.user;
+      // session.user = token.token.user;
       session.accessToken = token.token.account.access_token;
       session.refreshToken = token.token.account.refresh_token;
       
