@@ -5,6 +5,7 @@ import TwitterProvider from "next-auth/providers/twitter";
 export default NextAuth({
   callbacks: {
     async session({ session, token, user }) {
+      console.log("token", token);
       session.accessToken = token.oauth_token;
       session.refreshToken = token.oauth_token_secret;
       // session.user = user

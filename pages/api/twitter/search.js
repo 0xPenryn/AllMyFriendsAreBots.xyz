@@ -11,7 +11,7 @@ export default async (req, res) => {
 
     try {
       return res.status(200).json({
-        status: 'Ok',
+        status: (session, 'Ok'),
         data: []
       });
     } catch(e) {
