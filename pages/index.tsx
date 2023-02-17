@@ -40,7 +40,7 @@ const Home: NextPage = () => {
   };
 
   console.log(JSON.stringify(session) ?? "no session object");
-  console.log(JSON.stringify(session?.accessToken) ?? "no token object");
+  // console.log(JSON.stringify(session?.accessToken) ?? "no token object");
 
   const config2 = { // used for fake tweet testing
     user: {
@@ -124,8 +124,8 @@ const Home: NextPage = () => {
         Signed in as {session.user.name} <br />
         {/* Signed in<br /> */}
         <button onClick={() => signOut()}>Sign out</button>
-        Token: {session?.accessToken ?? "no access token"} <br />
-        Secret: {session?.accessSecret ?? "no access secret"}
+        {/* Token: {session?.accessToken ?? "no access token"} <br /> */}
+        {/* Secret: {session?.accessSecret ?? "no access secret"} */}
       </>}
 
 {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
