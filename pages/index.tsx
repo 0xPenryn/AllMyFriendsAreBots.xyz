@@ -10,7 +10,8 @@ import Github from "../components/GitHub";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 import ResizablePanel from "../components/ResizablePanel";
-import { signIn, signOut, useSession, } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import FakeTweet from "fake-tweet";
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -18,6 +19,23 @@ const Home: NextPage = () => {
   const [vibe, setVibe] = useState<VibeType>("Professional");
   const [generatedBios, setGeneratedBios] = useState<String>("");
   const { data: session } = useSession();
+  const config = { // used for fake tweet testing
+    user: {
+      nickname: "twitter",
+      name: "Twitter",
+      avatar: "avatar.png",
+      verified: true,
+      locked: false
+    },
+    display: "default",
+    text: "This is a fake tweet",
+    image: "",
+    date: "3:32 PM · Feb 14, 1997",
+    app: "Twitter for iPhone",
+    retweets: 32000,
+    quotedTweets: 100,
+    likes: 12700
+  };
 
   console.log("Streamed response: ", generatedBios);
 
@@ -76,6 +94,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+{/* THIS HANDLES SIGNING IN W TWITTER */}
       {!session && <>
         Not signed in <br />
         <button onClick={() => signIn()}>Sign in</button>
@@ -84,7 +103,16 @@ const Home: NextPage = () => {
         Signed in as {session.user.name} <br />
         {/* Signed in<br /> */}
         <button onClick={() => signOut()}>Sign out</button>
+        {session.accessToken}
       </>}
+
+{/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
+
+{/* fake tweet generator for timeline-style view */}
+      <div className="items-center justify-center">
+        <FakeTweet config={config} />
+        <FakeTweet config={config} />
+      </div>
 
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">

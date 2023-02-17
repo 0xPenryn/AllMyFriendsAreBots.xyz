@@ -6,7 +6,9 @@ import TwitterProvider from "next-auth/providers/twitter";
 export default NextAuth({
   callbacks: {
     session({ session, token, user }) {
-      return session // The return type will match the one returned in `useSession()`
+      session.accessToken = token.accessToken 
+      session.user.id = token.id
+      return session; // The return type will match the one returned in `useSession()`
     },
   },
   providers: [
