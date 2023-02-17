@@ -127,7 +127,6 @@ const Home: NextPage = () => {
         Token: {session?.accessToken ?? "no access token"} <br />
         Secret: {session?.refreshToken ?? "no access secret"}
       </>}
-
 {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
 
 {/* fake tweet generator for timeline-style view */}

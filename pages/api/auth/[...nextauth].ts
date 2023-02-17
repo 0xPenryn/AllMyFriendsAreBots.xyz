@@ -21,12 +21,12 @@ export default NextAuth({
         token[account.provider] = {};
       }
 
-      if ( account.oauth_token ) {
-        token[account.provider].oauth_token = account.oauth_token;
+      if ( account.access_token ) {
+        token[account.provider].oauth_token = account.access_token;
       }
 
-      if ( account.oauth_token_secret ) {
-        token[account.provider].oauth_token_secret = account.oauth_token_secret;
+      if ( account.refresh_token ) {
+        token[account.provider].oauth_token_secret = account.refresh_token;
       }
 
       return token;
