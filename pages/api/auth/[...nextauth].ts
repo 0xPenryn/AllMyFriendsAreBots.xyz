@@ -4,7 +4,7 @@ import TwitterProvider from "next-auth/providers/twitter";
 
 export default NextAuth({
   callbacks: {
-    session({ session, token, user }) {
+    async session({ session, token, user }) {
       session.accessToken = token.credentials.authToken
       session.accessSecret = token.credentials.authSecret
       session.user.id = token.id
@@ -20,7 +20,7 @@ export default NextAuth({
       }
       if (account) {
           token['credentials'] = {
-              authToken: account.oauth_token,
+              authToken: account.access_token,
               authSecret: account.oauth_token_secret,
           }
       }

@@ -40,7 +40,7 @@ const Home: NextPage = () => {
   };
 
   console.log(JSON.stringify(session) ?? "no session object");
-  console.log(JSON.stringify(getToken) ?? "no token object");
+  console.log(getToken ?? "no token object");
 
   const config2 = { // used for fake tweet testing
     user: {
