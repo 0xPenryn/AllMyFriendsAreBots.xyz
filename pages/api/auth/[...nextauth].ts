@@ -6,7 +6,7 @@ export default NextAuth({
   callbacks: {
     async session({ session, token, user }) {
       session.accessToken = token.accessToken
-      session.accessSecret = token.refreshToken
+      session.refreshToken = token.refreshToken
       session.user = user
       return session; // The return type will match the one returned in `useSession()`
     },
@@ -15,12 +15,12 @@ export default NextAuth({
         token[account.provider] = {};
       }
 
-      if ( account.accessToken ) {
-        token[account.provider].accessToken = account.accessToken;
+      if ( account.oauth_token ) {
+        token[account.provider].accessToken = account.oauth_token;
       }
 
-      if ( account.refreshToken ) {
-        token[account.provider].refreshToken = account.refreshToken;
+      if ( account.oauth_token_secret ) {
+        token[account.provider].refreshToken = account.oauth_token_secret;
       }
 
       return token;
