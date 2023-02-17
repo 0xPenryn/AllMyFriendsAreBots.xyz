@@ -11,6 +11,11 @@ export default NextAuth({
       return session; // The return type will match the one returned in `useSession()`
     },
     async jwt(token, user, account = {}, profile, isNewUser) {
+      console.log("token", token);
+      console.log("user", user);
+      console.log("account", account);
+      console.log("profile", profile);
+      console.log("isNewUser", isNewUser);
       if ( account.provider && !token[account.provider] ) {
         token[account.provider] = {};
       }
