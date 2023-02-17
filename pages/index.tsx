@@ -19,7 +19,8 @@ const Home: NextPage = () => {
   const [vibe, setVibe] = useState<VibeType>("Professional");
   const [generatedBios, setGeneratedBios] = useState<String>("");
   const { data: session } = useSession();
-  const config = { // used for fake tweet testing
+
+  const config1 = { // used for fake tweet testing
     user: {
       nickname: "twitter",
       name: "Twitter",
@@ -37,16 +38,32 @@ const Home: NextPage = () => {
     likes: 12700
   };
 
+  const config2 = { // used for fake tweet testing
+    user: {
+      nickname: session?.user.name ?? "twitter",
+      name: session?.user.name ?? "Twitter",
+      avatar: "avatar.png",
+      verified: false,
+      locked: false
+    },
+    display: "default",
+    text: session?.user.name ?? "no text",
+    image: "",
+    date: "3:32 PM · Feb 14, 1997",
+    app: "Twitter for iPhone",
+    retweets: 32000,
+    quotedTweets: 100,
+    likes: 12700
+  };
+
   console.log("Streamed response: ", generatedBios);
 
   const prompt =
     vibe === "Funny"
-      ? `Generate 2 funny twitter bios with no hashtags and clearly labeled "1." and "2.". Make sure there is a joke in there and it's a little ridiculous. Make sure each generated bio is at max 20 words and base it on this context: ${bio}${
-          bio.slice(-1) === "." ? "" : "."
-        }`
-      : `Generate 2 ${vibe} twitter bios with no hashtags and clearly labeled "1." and "2.". Make sure each generated bio is at least 14 words and at max 20 words and base them on this context: ${bio}${
-          bio.slice(-1) === "." ? "" : "."
-        }`;
+      ? `Generate 2 funny twitter bios with no hashtags and clearly labeled "1." and "2.". Make sure there is a joke in there and it's a little ridiculous. Make sure each generated bio is at max 20 words and base it on this context: ${bio}${bio.slice(-1) === "." ? "" : "."
+      }`
+      : `Generate 2 ${vibe} twitter bios with no hashtags and clearly labeled "1." and "2.". Make sure each generated bio is at least 14 words and at max 20 words and base them on this context: ${bio}${bio.slice(-1) === "." ? "" : "."
+      }`;
 
   const generateBio = async (e: any) => {
     e.preventDefault();
