@@ -5,31 +5,31 @@ import TwitterProvider from "next-auth/providers/twitter";
 export default NextAuth({
   callbacks: {
     async session({ session, token, user }) {
-      session.accessToken = token.accessToken
-      session.refreshToken = token.refreshToken
+      session.accessToken = token.oauth_token;
+      session.refreshToken = token.oauth_token_secret;
       session.user = user
       return session; // The return type will match the one returned in `useSession()`
     },
-    async jwt(token, user, account = {}, profile, isNewUser) {
-      console.log("token", token);
-      console.log("user", user);
-      console.log("account", account);
-      console.log("profile", profile);
-      console.log("isNewUser", isNewUser);
-      if ( account.provider && !token[account.provider] ) {
-        token[account.provider] = {};
-      }
+    // async jwt(token, user, account = {}, profile, isNewUser) {
+    //   console.log("token", token);
+    //   console.log("user", user);
+    //   console.log("account", account);
+    //   console.log("profile", profile);
+    //   console.log("isNewUser", isNewUser);
+    //   if ( account.provider && !token[account.provider] ) {
+    //     token[account.provider] = {};
+    //   }
 
-      if ( account.oauth_token ) {
-        token[account.provider].accessToken = account.oauth_token;
-      }
+    //   if ( account.oauth_token ) {
+    //     token[account.provider].accessToken = account.oauth_token;
+    //   }
 
-      if ( account.oauth_token_secret ) {
-        token[account.provider].refreshToken = account.oauth_token_secret;
-      }
+    //   if ( account.oauth_token_secret ) {
+    //     token[account.provider].refreshToken = account.oauth_token_secret;
+    //   }
 
-      return token;
-    },
+    //   return token;
+    // },
   },
   
   providers: [
