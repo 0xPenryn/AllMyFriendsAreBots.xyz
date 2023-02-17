@@ -122,7 +122,7 @@ const Home: NextPage = () => {
         Signed in as {session.user.name} <br />
         {/* Signed in<br /> */}
         <button onClick={() => signOut()}>Sign out</button>
-        Token: {session?.accessToken ?? "no access token"}
+        Token: {session ?? "no access token"}
       </>}
 
 {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
