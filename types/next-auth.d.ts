@@ -6,6 +6,7 @@ declare module "next-auth" {
    */
   interface Session {
     accessToken
+    accessSecret
     user: {
       /** The user's postal address. */
       id
