@@ -81,7 +81,7 @@ const Home: NextPage = () => {
         <button onClick={() => signIn()}>Sign in</button>
       </>}
       {session && <>
-        Signed in as {session.user.email} <br />
+        Signed in as {session.user} <br />
         <button onClick={() => signOut()}>Sign out</button>
       </>}
 
