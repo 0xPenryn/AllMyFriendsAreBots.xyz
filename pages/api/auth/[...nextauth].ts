@@ -10,7 +10,7 @@ export default NextAuth({
       // session.user = user
       return session; // The return type will match the one returned in `useSession()`
     },
-    // async jwt(token, user, account = {}, profile, isNewUser) {
+    async jwt(token, user, account = {}, profile, isNewUser) {
     //   if ( account.provider && !token[account.provider] ) {
     //     token[account.provider] = {};
     //   }
@@ -23,8 +23,8 @@ export default NextAuth({
     //     token[account.provider].refreshToken = account.refreshToken;
     //   }
 
-    //   return token;
-    // },
+      return token;
+    },
   },
   
   providers: [
