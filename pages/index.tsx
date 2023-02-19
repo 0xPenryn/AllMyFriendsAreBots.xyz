@@ -108,7 +108,7 @@ const Home: NextPage = () => {
 
   var tweetList = getTweets("").then((res) => {
     console.log("promise tweet list: ", res ?? "no promise tweetlist");
-    return res;
+    tweetList = res;
   });
   console.log("tweetlist: ", tweetList ?? "no tweetlist");
 
