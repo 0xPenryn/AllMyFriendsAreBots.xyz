@@ -109,6 +109,7 @@ const Home: NextPage = () => {
   };
 
   const tweetlist = getTweets("");
+  console.log(JSON.stringify(tweetlist) ?? "no tweetlist");
 
   const config2 = { // used for fake tweet testing
     user: {
