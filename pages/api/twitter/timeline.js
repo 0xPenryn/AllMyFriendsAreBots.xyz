@@ -20,11 +20,13 @@ export default async (req, res) => {
     // const user = await client.currentUserV2();
     const homeTimeline = await client.v2.homeTimeline({ exclude: 'replies' });
 
-    console.log(JSON.stringify(homeTimeline));
+    for (item in homeTimeline) {
+      console.log("tweet: ", await client.v2.tweets(item.id));
+    }
 
     return res.status(200).json({
       status: (session, 'Ok'),
-      data: JSON.stringify(homeTimeline)
+      data: homeTimeline
     });
   } catch (e) {
     return res.status(400).json({
