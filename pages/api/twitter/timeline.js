@@ -25,7 +25,7 @@ export default async (req, res) => {
     });
 
     // console.log("homeTimeline: ", homeTimeline)
-    console.log("first tweet: ", homeTimeline.tweets[0])
+    console.log("first tweet: ", homeTimeline.tweets[0], homeTimeline.includes[0])
 
     // for (const fetchedTweet of homeTimeline) {
     //   console.log("fetched: ", fetchedTweet);
