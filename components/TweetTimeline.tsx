@@ -42,23 +42,25 @@ export default function TweetTimeline({ className }: { className?: string }) {
     const date = homeTimeline.tweets[0].created_at ?? "Placeholder";
 
     return (
-      <FakeTweet config={{
-        user: {
-          nickname: nickname,
-          name: name,
-          avatar: avatar,
-          verified: false,
-          locked: false
-        },
-        display: "default",
-        text: text,
-        image: "",
-        date: date,
-        app: "Twitter for iPhone",
-        retweets: 1,
-        quotedTweets: 0,
-        likes: 5
-      }}/>
+      <div>
+        <FakeTweet config={{
+          user: {
+            nickname: nickname,
+            name: name,
+            avatar: avatar,
+            verified: false,
+            locked: false
+          },
+          display: "default",
+          text: text,
+          image: "",
+          date: date,
+          app: "Twitter for iPhone",
+          retweets: 1,
+          quotedTweets: 0,
+          likes: 5
+        }} />
+      </div>
     );
   });
 
