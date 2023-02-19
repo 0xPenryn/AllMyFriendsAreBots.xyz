@@ -55,8 +55,35 @@ const getTweets = async () => {
 export default function TweetTimeline(): JSX.Element {
 
   getTweets().then((tweets) => {
-    return tweets
-  });
+    for (const tweet of tweets) {
+
+      const nickname = tweet.author.name ?? "Placeholder";
+      const name = tweet.author.username ?? "Placeholder";
+      const avatar = tweet.author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+      const text = tweet.tweet.text ?? "Placeholder";
+      const date = tweet.tweet.create_at.toDateString() ?? "Placeholder";
+
+      return (
+        <FakeTweet config={{
+          user: {
+            nickname: nickname,
+            name: name,
+            avatar: avatar,
+            verified: false,
+            locked: false
+          },
+          display: "default",
+          text: text,
+          image: "",
+          date: date,
+          app: "Twitter for iPhone",
+          retweets: 1,
+          quotedTweets: 0,
+          likes: 5
+        }} />
+      )
+    }
+});
 
   // const { data: session, status } = useSession();
   // const client = new TwitterApi(session?.access_token);
