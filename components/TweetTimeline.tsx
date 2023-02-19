@@ -20,12 +20,12 @@ const getTweets = async (e: any) => {
 
 export default function TweetTimeline({ className }: { className?: string }) {
 
-  var tweetList = getTweets("").then((list) => {
-
-    // const includes = new TwitterV2IncludesHelper(list);
-    // console.log("list: ", list);
-    for (const tweet of list) {
-      console.log("item: ", tweet); 
+  getTweets("").then((list) => {
+    const includes = new TwitterV2IncludesHelper(list);
+    for (const tweet of list.data) {
+      console.log("item: ", tweet);
+      const author = includes.author(tweet);
+      console.log("author: ", author);
     };
   });
 
