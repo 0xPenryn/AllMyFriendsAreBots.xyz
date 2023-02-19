@@ -10,11 +10,11 @@ export default async (req, res) => {
     const session = await getSession({ req });
     const token = await getToken({ req });
 
-    if (!session || !token) {
-      return res.status(401).json({
-        status: 'Unauthorized'
-      });
-    }
+    // if (!session || !token) {
+    //   return res.status(401).json({
+    //     status: 'Unauthorized'
+    //   });
+    // }
 
     const client = new TwitterApi(token.access_token);
     // const user = await client.currentUserV2();
