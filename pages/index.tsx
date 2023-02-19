@@ -107,24 +107,40 @@ const Home: NextPage = () => {
   // console.log("tweetlist: ", tweetList ?? "no tweetlist");
 
 
-  const config2 = { // used for fake tweet testing
-    user: {
-      nickname: session?.user?.name ?? "twitter",
-      name: session?.user?.name ?? "Twitter",
-      avatar: session?.user?.image ?? "avatar.png",
-      verified: false,
-      locked: false
-    },
-    display: "default",
-    // text: JSON.stringify(tweetlist) ?? "no text",
-    text: "This is a fake tweet",
-    image: "",
-    date: "3:32 PM · Feb 14, 1997",
-    app: "Twitter for iPhone",
-    retweets: 32000,
-    quotedTweets: 100,
-    likes: 12700
+  // const config2 = { // used for fake tweet testing
+  //   user: {
+  //     nickname: session?.user?.name ?? "twitter",
+  //     name: session?.user?.name ?? "Twitter",
+  //     avatar: session?.user?.image ?? "avatar.png",
+  //     verified: false,
+  //     locked: false
+  //   },
+  //   display: "default",
+  //   // text: JSON.stringify(tweetlist) ?? "no text",
+  //   text: "This is a fake tweet",
+  //   image: "",
+  //   date: "3:32 PM · Feb 14, 1997",
+  //   app: "Twitter for iPhone",
+  //   retweets: 32000,
+  //   quotedTweets: 100,
+  //   likes: 12700
+  // };
+
+  const getTweets = async () => {
+    const homeTimeline = await fetch("/api/twitter/timeline")
+      .then(
+        (response) => response.json()
+      );
+  
+    // console.log("homeTimeline: ", homeTimeline)
+  
+    return await homeTimeline;
+  
   };
+
+  var tweetList: Array<any> = []
+  
+  getTweets().then(res => tweetList = res);
 
   return (
     // <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
@@ -150,7 +166,7 @@ const Home: NextPage = () => {
       {/* <FakeTweet config={blankTweet} />
       <FakeTweet config={config2} /> */}
 
-      <TweetTimeline verified={true} />
+      <TweetTimeline verified={true} tweets={tweetList} />
       {/* <main className="flex flex-1 w-100 flex-col items-center justify-center text-center">
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">

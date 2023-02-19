@@ -15,9 +15,12 @@ const getTweets = async () => {
 
 export interface Props {
   verified: boolean;
+  tweets: Array<any>;
 }
 
 export default function TweetTimeline(props: Props): JSX.Element {
+
+  const tweets = props.tweets;
 
   var nickname = "Placeholder";
   var name = "Placeholder";
@@ -26,7 +29,7 @@ export default function TweetTimeline(props: Props): JSX.Element {
   var date = "Placeholder";
   var verified = props.verified;
 
-  getTweets().then((tweets) => {
+  // getTweets().then((tweets) => {
     nickname = tweets[0].author.name ?? "New Placeholder";
     name = tweets[0].author.username ?? "New Placeholder";
     avatar = tweets[0].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
@@ -52,7 +55,7 @@ export default function TweetTimeline(props: Props): JSX.Element {
         likes: 5
       }} />
     )
-  });
+  // });
 
   return (
     <FakeTweet config={{
