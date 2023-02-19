@@ -42,7 +42,7 @@ export default function TweetTimeline(): JSX.Element {
           avatar = tweets[0].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
           text = tweets[0].tweet.text ?? "New Placeholder";
           date = tweets[0].tweet.created_at ?? "New Placeholder";
-      
+          setLoading(false)
           return (
             <FakeTweet config={{
               user: {
@@ -63,7 +63,6 @@ export default function TweetTimeline(): JSX.Element {
             }} />
           )
         });
-        setLoading(false)
       })
   }, [])
 
