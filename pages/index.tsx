@@ -110,8 +110,8 @@ const Home: NextPage = () => {
 
   var tweetlist = null;
 
-  getTweets("").then((res) => {console.log("promise tweet list: ", res ?? "no promise tweetlist")})
-  getTweets("").then((res) => {tweetlist = res});
+  getTweets("").then((res) => {console.log("promise tweet list: ", res ?? "no promise tweetlist")});
+  getTweets("").then((res) => {setTimeout(tweetlist = res, 2000)});
 
   console.log("outside tweet list: ", tweetlist ?? "no outside tweetlist");
 
