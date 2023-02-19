@@ -4,16 +4,16 @@ import FakeTweet from "fake-tweet";
 
 const getTweets = async () => {
   const tweets = await fetch("/api/twitter/timeline")
-  .then(
-    (response) => response.json()
-  );
-  console.log("got tweets!", await tweets.data);
+  // .then(
+  //   (response) => response.json()
+  // );
+  console.log("got tweets!", tweets);
 
   // if (!response.ok) {
   //   throw new Error(response.statusText);
   // }
 
-  return await tweets;
+  return tweets;
 
 };
 
@@ -69,7 +69,7 @@ export default function TweetTimeline(): JSX.Element {
     //   </div>
     // );
 
-    getTweets().then((homeTimeline) => {
+    getTweets().then((homeTimeline: TweetHomeTimelineV2Paginator) => {
       const includes = new TwitterV2IncludesHelper(homeTimeline);
 
       console.log("first tweet: ", homeTimeline.tweets[0], includes.author(homeTimeline.tweets[0]));
