@@ -5,32 +5,19 @@ import TwitterProvider from "next-auth/providers/twitter";
 export default NextAuth({
   callbacks: {
     session({ session, token, user }) {
-      console.log("session", session);
-      console.log("token session", token);
-      console.log("user session", user);
-      // console.log("token account", token.token.account);
-      // session.user = user;
-      session.accessToken = token.oauth_token;
-      session.refreshToken = token.oauth_token_secret;
+      // next two lines only necessary if you want to save the access token to the session, probably best to avoid in prod
+      session.access_token = token.access_token;
+      session.refresh_token = token.refresh_token;
       
       return session; // The return type will match the one returned in `useSession()`
     },
     jwt({ token, user, account = {}, profile, isNewUser }) {
-      console.log("token jwt", token);
-      console.log("user jwt", user);
-      console.log("account jwt", account);
-      console.log("profile jwt", profile);
-      console.log("isNewUser jwt", isNewUser);
-      // if ( account.provider && !token[account.provider] ) {
-      //   token[account.provider] = {};
-      // }
-
       if ( account.access_token ) {
-        token.oauth_token = account.access_token;
+        token.access_token = account.access_token;
       }
       
       if ( account.refresh_token ) {
-        token.oauth_token_secret = account.refresh_token;
+        token.refresh_token = account.refresh_token;
       }
 
       return token

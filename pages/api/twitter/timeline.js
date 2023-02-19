@@ -6,8 +6,8 @@ export default async (req, res) => {
     const session = await getSession({ req });
     const token = await getToken({ req });
 
-    console.log('session', session ?? 'No session');
-    console.log('token', token ?? 'No token');
+    console.log(session ?? 'No session');
+    console.log(token ?? 'No token');
 
     try {
       return res.status(200).json({
