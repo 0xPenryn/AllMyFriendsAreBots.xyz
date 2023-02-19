@@ -18,7 +18,7 @@ import FakeTweet from "fake-tweet";
 
 // };
 
-export default function TweetTimeline({ className }: { className?: string }) {
+export default function TweetTimeline(): JSX.Element {
 
   const { data: session, status } = useSession();
   const client = new TwitterApi(session?.access_token ?? null);
