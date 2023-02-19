@@ -16,13 +16,10 @@ import TweetTimeline from "../components/TweetTimeline";
 const Home: NextPage = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [bio, setBio] = useState("");
-  const [vibe, setVibe] = useState<VibeType>("Professional");
-  const [generatedBios, setGeneratedBios] = useState<String>("");
+  // const [bio, setBio] = useState("");
+  // const [vibe, setVibe] = useState<VibeType>("Professional");
+  // const [generatedBios, setGeneratedBios] = useState<String>("");
   const { data: session, status } = useSession();
-
-
-  // console.log("Status: ", status);
 
   const blankTweet = { // used for fake tweet testing
     user: {
@@ -41,6 +38,16 @@ const Home: NextPage = () => {
     quotedTweets: 0,
     likes: 5
   };
+
+  var tweets = [] as any;
+
+  var tweetdata = blankTweet;
+
+  var nickname = "Placeholder";
+  var name = "Placeholder";
+  var avatar = "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+  var text = "Placeholder";
+  var date = "Placeholder";
 
   // const prompt =
   //   vibe === "Funny"
@@ -128,22 +135,37 @@ const Home: NextPage = () => {
   //   likes: 12700
   // };
 
-  const getTweets = async () => {
-    const homeTimeline = await fetch("/api/twitter/timeline")
-      .then(
-        (response) => response.json()
-      );
+  // const getTweets = async () => {
+  //   const homeTimeline = await fetch("/api/twitter/timeline")
+  //     .then(
+  //       (response) => response.json()
+  //     );
   
-    // console.log("homeTimeline: ", homeTimeline)
-  
-    return await homeTimeline;
-  
-  };
+  //   // console.log("homeTimeline: ", homeTimeline)
+
+  //   return await homeTimeline;
+
+  // };
+
+  useEffect(() => {
+    setLoading(true)
+    tweets = fetch('/api/twitter/timeline')
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data)
+        console.log("data: ", data ?? "no data")
+        nickname = data[0].author.name ?? "New Placeholder";
+        name = data[0].author.username ?? "New Placeholder";
+        avatar = data[0].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+        text = data[0].tweet.text ?? "New Placeholder";
+        date = data[0].tweet.created_at ?? "New Placeholder";
+        setLoading(false)
+      });
+  }, [data]);
 
 
 
   return (
-    // <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
     <div className="flex flex-col items-center">
       {/* THIS HANDLES SIGNING IN W TWITTER */}
       {!session && <>
@@ -156,17 +178,32 @@ const Home: NextPage = () => {
         <button onClick={() => signOut()}>Sign out</button>
         {/* fake tweet generator for timeline-style view */}
       </>}
-      {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
+      {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */}
 
       <Head>
         <title>is this tweet ai? idk</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* <FakeTweet config={blankTweet} />
-      <FakeTweet config={config2} /> */}
-
-      <TweetTimeline />
+      {!loading && <>
+        <FakeTweet config={{
+            user: {
+              nickname: nickname,
+              name: name,
+              avatar: avatar,
+              verified: false,
+              locked: false
+            },
+            display: "default",
+            text: text,
+            image: "",
+            date: date,
+            app: "Twitter for iPhone",
+            retweets: 1,
+            quotedTweets: 0,
+            likes: 5
+          }} />
+      </>}
       {/* <main className="flex flex-1 w-100 flex-col items-center justify-center text-center">
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">
