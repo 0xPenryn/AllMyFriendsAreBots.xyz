@@ -37,10 +37,11 @@ export default async (req, res) => {
     //   console.log("processed: ", await client.v2.singleTweet(fetchedTweet.id));
     // }
 
-    return res.status(200).json({
-      status: ('Ok'),
-      data: homeTimeline
-    });
+    // return res.status(200).json({
+    //   status: ('Ok'),
+    //   data: homeTimeline
+    // });
+    return Response(homeTimeline)
   } catch (e) {
     return res.status(400).json({
       status: e.message

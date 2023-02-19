@@ -6,12 +6,12 @@ import { useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import DropDown, { VibeType } from "../components/DropDown";
 import Footer from "../components/Footer";
-import Github from "../components/GitHub";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 import ResizablePanel from "../components/ResizablePanel";
 import { signIn, signOut, useSession } from 'next-auth/react';
 import FakeTweet from "fake-tweet";
+import TweetTimeline from "../components/TweetTimeline";
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -86,25 +86,25 @@ const Home: NextPage = () => {
   //   setLoading(false);
   // };
 
-  const getTweets = async (e: any) => {
-    const tweets = await fetch("/api/twitter/timeline")
-    .then(
-      (response) => response.json()
-    );
-    // console.log("got tweets!");
+  // const getTweets = async (e: any) => {
+  //   const tweets = await fetch("/api/twitter/timeline")
+  //   .then(
+  //     (response) => response.json()
+  //   );
+  //   // console.log("got tweets!");
 
-    // if (!response.ok) {
-    //   throw new Error(response.statusText);
-    // }
+  //   // if (!response.ok) {
+  //   //   throw new Error(response.statusText);
+  //   // }
 
-    return await tweets;
+  //   return await tweets;
 
-  };
+  // };
 
-  var tweetList = getTweets("").then((res) => {
-    console.log("promise tweet list: ", res ?? "no promise tweetlist");
-  });
-  console.log("tweetlist: ", tweetList ?? "no tweetlist");
+  // var tweetList = getTweets("").then((res) => {
+  //   console.log("promise tweet list: ", res ?? "no promise tweetlist");
+  // });
+  // console.log("tweetlist: ", tweetList ?? "no tweetlist");
 
 
   const config2 = { // used for fake tweet testing
@@ -139,17 +139,18 @@ const Home: NextPage = () => {
         {/* Signed in<br /> */}
         <button onClick={() => signOut()}>Sign out</button>
         {/* fake tweet generator for timeline-style view */}
-        <FakeTweet config={blankTweet} />
-        <FakeTweet config={config2} />
       </>}
       {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
-
-
 
       <Head>
         <title>is this tweet ai? idk</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <FakeTweet config={blankTweet} />
+      <FakeTweet config={config2} />
+
+      <TweetTimeline />
       {/* <main className="flex flex-1 w-100 flex-col items-center justify-center text-center">
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">
