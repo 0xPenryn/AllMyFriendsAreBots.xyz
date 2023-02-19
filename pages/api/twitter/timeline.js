@@ -41,7 +41,7 @@ export default async (req, res) => {
     //   status: ('Ok'),
     //   data: homeTimeline
     // });
-    return Response(homeTimeline)
+    return new Response(homeTimeline);
   } catch (e) {
     return res.status(400).json({
       status: e.message
