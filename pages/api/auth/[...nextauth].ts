@@ -32,7 +32,7 @@ export default NextAuth({
       //   token[account.provider].oauth_token_secret = account.refresh_token;
       // }
 
-      return token, user, account, profile, isNewUser;
+      return token.token, token.user, token.account, token.profile, token.isNewUser;
     },
   },
   
