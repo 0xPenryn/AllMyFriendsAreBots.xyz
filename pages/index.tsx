@@ -91,10 +91,11 @@ const Home: NextPage = () => {
     setLoading(false);
   };
 
-  const getTweets = async (e: any) => {
-    const response = await fetch("/api/twitter/timeline", {
+  const getTweets = (e: any) => {
+    const response = fetch("/api/twitter/timeline", {
       method: "GET",
-    }).then(res => res.json());
+    }).then(res => res.json())
+    .then(data => data.json());
     // console.log("got tweets!");
 
     // if (!response.ok) {
@@ -108,7 +109,7 @@ const Home: NextPage = () => {
   const tweetlist = getTweets("");
 
   console.log("raw list: ", tweetlist ?? "no tweetlist")
-  console.log("resolved: ", tweetlist ?? "what the fuck is a resolved promise");
+  // console.log("resolved: ", Promise.resolve(tweetlist) ?? "what the fuck is a resolved promise");
 
   const config2 = { // used for fake tweet testing
     user: {
