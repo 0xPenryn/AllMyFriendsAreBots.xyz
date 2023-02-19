@@ -10,8 +10,8 @@ export default NextAuth({
       console.log("user session", user);
       // console.log("token account", token.token.account);
       // session.user = user;
-      // session.accessToken = token.token.account.access_token;
-      // session.refreshToken = token.token.account.refresh_token;
+      session.accessToken = token.oauth_token;
+      session.refreshToken = token.oauth_token_secret;
       
       return session; // The return type will match the one returned in `useSession()`
     },
@@ -25,14 +25,14 @@ export default NextAuth({
       //   token[account.provider] = {};
       // }
 
-      // token[account.provider].oauth_token = token.account.access_token;
+      token.oauth_token = token.account.access_token;
       
 
-      // if ( account.refresh_token ) {
-      //   token[account.provider].oauth_token_secret = account.refresh_token;
-      // }
+      if ( account.refresh_token ) {
+        token.oauth_token_secret = account.refresh_token;
+      }
 
-      return { token, user, account, profile, isNewUser };
+      return token
     },
   },
   
