@@ -29,15 +29,24 @@ export default async (req, res) => {
     });
     const includes = new TwitterV2IncludesHelper(homeTimeline);
 
+    const body = [];
+
     // console.log("homeTimeline: ", homeTimeline)
-    console.log("first tweet: ", homeTimeline.tweets[0], includes.author(homeTimeline.tweets[0]));
+    // console.log("first tweet: ", homeTimeline.tweets[0], includes.author(homeTimeline.tweets[0]));
+    for (const tweet of homeTimeline.tweets) {
+      console.log("tweet: ", tweet, includes.author(tweet));
+      body.push({
+        tweet:tweet, 
+        author: includes.author(tweet)
+      });
+    }
 
     // for (const fetchedTweet of homeTimeline) {
     //   console.log("fetched: ", fetchedTweet);
     //   console.log("processed: ", await client.v2.singleTweet(fetchedTweet.id));
     // }
 
-    return res.status(200).json(homeTimeline);
+    return res.status(200).json(body);
     // return new Response(homeTimeline);
   } catch (e) {
     return res.status(400).json({

@@ -12,43 +12,43 @@ const getTweets = async () => {
   //   throw new Error(response.statusText);
   // }
 
-  const includes = new TwitterV2IncludesHelper(homeTimeline);
+  // const includes = new TwitterV2IncludesHelper(homeTimeline.body);
 
   console.log("homeTimeline: ", homeTimeline)
 
   // console.log("first tweet: ", includes.tweets[0], includes.author(homeTimeline.tweets[0]));
-  console.log("includes: ", includes);
+  // console.log("includes: ", includes);
 
-  const nickname = includes.author(homeTimeline.tweets[0])?.username ?? "Placeholder";
-  const name = includes.author(homeTimeline.tweets[0])?.name ?? "Placeholder";
-  const avatar = includes.author(homeTimeline.tweets[0])?.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-  const text = homeTimeline.tweets[0].text ?? "Placeholder";
-  const date = homeTimeline.tweets[0].created_at ?? "Placeholder";
+  // const nickname = includes.author(homeTimeline.tweets[0])?.username ?? "Placeholder";
+  // const name = includes.author(homeTimeline.tweets[0])?.name ?? "Placeholder";
+  // const avatar = includes.author(homeTimeline.tweets[0])?.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+  // const text = homeTimeline.tweets[0].text ?? "Placeholder";
+  // const date = homeTimeline.tweets[0].created_at ?? "Placeholder";
 
-  return (
-    <div>
-      <h1>Timeline</h1>
-      <FakeTweet config={{
-        user: {
-          nickname: nickname,
-          name: name,
-          avatar: avatar,
-          verified: false,
-          locked: false
-        },
-        display: "default",
-        text: text,
-        image: "",
-        date: date,
-        app: "Twitter for iPhone",
-        retweets: 1,
-        quotedTweets: 0,
-        likes: 5
-      }} />
-    </div>
-  )
+  // return (
+  //   <div>
+  //     <h1>Timeline</h1>
+  //     <FakeTweet config={{
+  //       user: {
+  //         nickname: nickname,
+  //         name: name,
+  //         avatar: avatar,
+  //         verified: false,
+  //         locked: false
+  //       },
+  //       display: "default",
+  //       text: text,
+  //       image: "",
+  //       date: date,
+  //       app: "Twitter for iPhone",
+  //       retweets: 1,
+  //       quotedTweets: 0,
+  //       likes: 5
+  //     }} />
+  //   </div>
+  // )
 
-  // return await tweets.json();
+  return await homeTimeline;
 
 };
 
