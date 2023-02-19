@@ -27,7 +27,7 @@ export default async (req, res) => {
   // console.log(session ?? 'No session');
   // console.log(token ?? 'No token');
 
-  client.currentUserV2.then(console.log).catch(console.error);
+  const user = await client.currentUserV2()
 
   // for twitter-lite
   // client
@@ -40,7 +40,7 @@ export default async (req, res) => {
   try {
     return res.status(200).json({
       status: (session, 'Ok'),
-      data: []
+      data: [user]
     });
   } catch (e) {
     return res.status(400).json({
