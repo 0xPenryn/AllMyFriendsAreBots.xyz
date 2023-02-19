@@ -36,11 +36,11 @@ export default function TweetTimeline(): JSX.Element {
       .then((data) => {
         setData(data)
         console.log("data: ", data ?? "no data")
-        nickname = tweets[0].author.name ?? "New Placeholder";
-        name = tweets[0].author.username ?? "New Placeholder";
-        avatar = tweets[0].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-        text = tweets[0].tweet.text ?? "New Placeholder";
-        date = tweets[0].tweet.created_at ?? "New Placeholder";
+        nickname = data[0].author.name ?? "New Placeholder";
+        name = data[0].author.username ?? "New Placeholder";
+        avatar = data[0].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+        text = data[0].tweet.text ?? "New Placeholder";
+        date = data[0].tweet.created_at ?? "New Placeholder";
         setLoading(false)
         return (
           <FakeTweet config={{
