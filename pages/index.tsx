@@ -43,24 +43,6 @@ const Home: NextPage = () => {
   // console.log(JSON.stringify(session) ?? "no session object");
   // console.log(JSON.stringify(session?.accessToken) ?? "no token object");
 
-  const config2 = { // used for fake tweet testing
-    user: {
-      nickname: session?.user?.name ?? "twitter",
-      name: session?.user?.name ?? "Twitter",
-      avatar: session?.user?.image ?? "avatar.png",
-      verified: false,
-      locked: false
-    },
-    display: "default",
-    text: session?.user?.name ?? "no text",
-    image: "",
-    date: "3:32 PM · Feb 14, 1997",
-    app: "Twitter for iPhone",
-    retweets: 32000,
-    quotedTweets: 100,
-    likes: 12700
-  };
-
   // console.log("Streamed response: ", generatedBios);
 
   const prompt =
@@ -112,7 +94,6 @@ const Home: NextPage = () => {
   const getTweets = async (e: any) => {
     const response = await fetch("/api/twitter/timeline", {
       method: "POST",
-      body: "",
     });
     console.log("got tweets!");
 
@@ -120,12 +101,32 @@ const Home: NextPage = () => {
       throw new Error(response.statusText);
     }
 
-    return response.json();
+    const data = response.body;
+    if (!data) {
+      return;
+    }
 
   };
 
   const tweetlist = getTweets("");
-  console.log(tweetlist);
+
+  const config2 = { // used for fake tweet testing
+    user: {
+      nickname: session?.user?.name ?? "twitter",
+      name: session?.user?.name ?? "Twitter",
+      avatar: session?.user?.image ?? "avatar.png",
+      verified: false,
+      locked: false
+    },
+    display: "default",
+    text: JSON.stringify(tweetlist) ?? "no text",
+    image: "",
+    date: "3:32 PM · Feb 14, 1997",
+    app: "Twitter for iPhone",
+    retweets: 32000,
+    quotedTweets: 100,
+    likes: 12700
+  };
 
   return (
     // <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
@@ -144,6 +145,7 @@ const Home: NextPage = () => {
         </>}
         {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
         {/* fake tweet generator for timeline-style view */}
+      {console.log(tweetlist)}
       <FakeTweet config={config1} />
       <FakeTweet config={config2} />
     
