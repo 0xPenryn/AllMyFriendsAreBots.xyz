@@ -13,7 +13,7 @@ const getTweets = async () => {
   //   throw new Error(response.statusText);
   // }
 
-  return await tweets.data;
+  return await tweets.data.data;
 
 };
 
@@ -68,8 +68,6 @@ export default function TweetTimeline(): JSX.Element {
     //     <h1>Empty Timeline</h1>
     //   </div>
     // );
-
-    console.log("getting tweets: ", getTweets());
 
     getTweets().then((homeTimeline) => {
       const includes = new TwitterV2IncludesHelper(homeTimeline);
