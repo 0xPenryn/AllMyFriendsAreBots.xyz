@@ -94,7 +94,7 @@ const Home: NextPage = () => {
   const getTweets = async (e: any) => {
     const response = await fetch("/api/twitter/timeline", {
       method: "GET",
-    }).then(res => res.json());
+    });
     // console.log("got tweets!");
 
     // if (!response.ok) {
@@ -105,7 +105,7 @@ const Home: NextPage = () => {
 
   };
 
-  const tweetlist = getTweets("").then();
+  const tweetlist = getTweets("").then((res) => res.json());
 
   console.log("raw list: ", tweetlist ?? "no tweetlist")
   // console.log("resolved: ", Promise.resolve(tweetlist) ?? "what the fuck is a resolved promise");
@@ -140,14 +140,13 @@ const Home: NextPage = () => {
         Signed in as {session.user?.name ?? "no user object"} <br />
         {/* Signed in<br /> */}
         <button onClick={() => signOut()}>Sign out</button>
-        {/* Token: {session?.access_token ?? "no access token"} <br />
-          Secret: {session?.refresh_token ?? "no access secret"} */}
+        {/* fake tweet generator for timeline-style view */}
+        <FakeTweet config={config1} />
+        <FakeTweet config={config2} />
       </>}
       {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
 
-      {/* fake tweet generator for timeline-style view */}
-      <FakeTweet config={config1} />
-      <FakeTweet config={config2} />
+
 
       <Head>
         <title>is this tweet ai? idk</title>
