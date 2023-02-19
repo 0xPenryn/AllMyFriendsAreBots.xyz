@@ -27,7 +27,7 @@ const Home: NextPage = () => {
       nickname: "twitter",
       name: "Twitter",
       avatar: "avatar.png",
-      verified: true,
+      verified: false,
       locked: false
     },
     display: "default",
@@ -110,47 +110,31 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
+    // <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
+    <div className="flex flex-col items-center">
+      {/* THIS HANDLES SIGNING IN W TWITTER */}
+      {!session && <>
+          Not signed in <br />
+          <button onClick={() => signIn("twitter")}>Sign in with Twitter</button>
+        </>}
+        {session && <>
+          Signed in as {session.user?.name ?? "no user object"} <br />
+          {/* Signed in<br /> */}
+          <button onClick={() => signOut()}>Sign out</button>
+          Token: {session?.accessToken ?? "no access token"} <br />
+          Secret: {session?.refreshToken ?? "no access secret"}
+        </>}
+        {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
+        {/* fake tweet generator for timeline-style view */}
+      <FakeTweet config={config1} />
+      <FakeTweet config={config2} />
       <Head>
         <title>Twitter Generator</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-{/* THIS HANDLES SIGNING IN W TWITTER */}
-      {!session && <>
-        Not signed in <br />
-        <button onClick={() => signIn()}>Sign in</button>
-      </>}
-      {session && <>
-        Signed in as {session.user?.name ?? "no user object"} <br />
-        {/* Signed in<br /> */}
-        <button onClick={() => signOut()}>Sign out</button>
-        Token: {session?.accessToken ?? "no access token"} <br />
-        Secret: {session?.refreshToken ?? "no access secret"}
-      </>}
-{/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
-
-{/* fake tweet generator for timeline-style view */}
-      <div className="items-center justify-center">
-        <FakeTweet config={config1} />
-        <FakeTweet config={config2} />
-      </div>
-
-      <Header />
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
-        <a
-          className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-600 shadow-md transition-colors hover:bg-gray-100 mb-5"
-          href="https://github.com/Nutlope/twitterbio"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Github />
-          <p>Star on GitHub</p>
-        </a>
-        <h1 className="sm:text-6xl text-4xl max-w-2xl font-bold text-slate-900">
-          Generate your next Twitter bio in seconds
-        </h1>
-        <p className="text-slate-500 mt-5">47,118 bios generated so far.</p>
+      {/* <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20"> */}
+      <main className="flex flex-1 w-100 flex-col items-center justify-center text-center">
+        
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">
             <Image
@@ -245,7 +229,6 @@ const Home: NextPage = () => {
           </AnimatePresence>
         </ResizablePanel>
       </main>
-      <Footer />
     </div>
   );
 };
