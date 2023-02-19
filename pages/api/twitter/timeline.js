@@ -34,7 +34,7 @@ export default async (req, res) => {
 
     return res.status(200).json({
       status: (session, 'Ok'),
-      data: homeTimeline.tweets
+      data: homeTimeline
     });
   } catch (e) {
     return res.status(400).json({
