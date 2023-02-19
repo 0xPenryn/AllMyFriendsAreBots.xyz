@@ -91,8 +91,8 @@ const Home: NextPage = () => {
     setLoading(false);
   };
 
-  const getTweets = async (e: any) => {
-    const tweets = await fetch("/api/twitter/timeline")
+  const getTweets = (e: any) => {
+    const tweets = fetch("/api/twitter/timeline")
     .then(
       (response) => response.json()
     );
