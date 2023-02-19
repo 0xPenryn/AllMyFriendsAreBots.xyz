@@ -6,8 +6,8 @@ export default NextAuth({
   callbacks: {
     session({ session, token, user }) {
       // next two lines only necessary if you want to save the access token to the session, probably best to avoid in prod
-      // session.access_token = token.access_token;
-      // session.refresh_token = token.refresh_token;
+      session.access_token = token.access_token;
+      session.refresh_token = token.refresh_token;
       
       return session; // The return type will match the one returned in `useSession()`
     },
