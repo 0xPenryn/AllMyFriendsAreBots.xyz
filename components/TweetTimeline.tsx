@@ -2,17 +2,17 @@ import { TweetHomeTimelineV2Paginator, TwitterApi, TwitterV2IncludesHelper } fro
 import FakeTweet from "fake-tweet";
 
 const getTweets = async () => {
-  const tweets = fetch("/api/twitter/timeline")
+  const tweets = await fetch("/api/twitter/timeline")
   // .then(
   //   (response) => response.json()
   // );
-  console.log("got tweets!", await tweets);
+  console.log("got tweets!", await tweets.json());
 
   // if (!response.ok) {
   //   throw new Error(response.statusText);
   // }
 
-  return await tweets;
+  return await tweets.json();
 
 };
 
