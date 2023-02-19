@@ -30,7 +30,6 @@ export default function TweetTimeline(): JSX.Element {
       .then((data) => {
         setData(data)
         console.log("data: ", data ?? "no data")
-        setLoading(false)
         getTweets().then((tweets) => {
           nickname = tweets[0].author.name ?? "New Placeholder";
           name = tweets[0].author.username ?? "New Placeholder";
@@ -58,6 +57,7 @@ export default function TweetTimeline(): JSX.Element {
             }} />
           )
         });
+        setLoading(false)
       })
   }, [])
 
