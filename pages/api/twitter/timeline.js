@@ -37,7 +37,7 @@ export default async (req, res) => {
   try {
     return res.status(200).json({
       status: (session, 'Ok'),
-      data: []
+      data: [user]
     });
   } catch (e) {
     return res.status(400).json({
