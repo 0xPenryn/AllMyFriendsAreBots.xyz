@@ -1,6 +1,6 @@
 import { getSession } from 'next-auth/react';
 import { getToken } from 'next-auth/jwt';
-import { TwitterApi } from 'twitter-api-v2';
+import { TweetHomeTimelineV2Paginator, TweetSearchRecentV2Paginator, TweetV2ListTweetsPaginator, TwitterApi } from 'twitter-api-v2';
 import { TwitterV2IncludesHelper } from 'twitter-api-v2';
 
 
@@ -39,7 +39,7 @@ export default async (req, res) => {
 
     return res.status(200).json({
       status: ('Ok'),
-      data: homeTimeline
+      data: homeTimeline,
     });
     // return new Response(homeTimeline);
   } catch (e) {

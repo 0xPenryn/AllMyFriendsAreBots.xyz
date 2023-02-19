@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import { TwitterApi, TwitterV2IncludesHelper } from 'twitter-api-v2';
+import { TweetHomeTimelineV2Paginator, TwitterApi, TwitterV2IncludesHelper } from 'twitter-api-v2';
 import FakeTweet from "fake-tweet";
 
 const getTweets = async () => {
@@ -13,7 +13,7 @@ const getTweets = async () => {
   //   throw new Error(response.statusText);
   // }
 
-  return await tweets.data;
+  return await tweets;
 
 };
 
