@@ -16,9 +16,6 @@ const getTweets = async () => {
 };
 
 
-const [data, setData] = useState([])
-const [isLoading, setLoading] = useState(false)
-
 var tweets = [] as any;
 
 var nickname = "Placeholder";
@@ -28,6 +25,9 @@ var text = "Placeholder";
 var date = "Placeholder";
 
 export default function TweetTimeline(): JSX.Element {
+
+  const [data, setData] = useState([])
+  const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
     setLoading(true)
