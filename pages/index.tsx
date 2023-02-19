@@ -150,7 +150,7 @@ const Home: NextPage = () => {
       {/* <FakeTweet config={blankTweet} />
       <FakeTweet config={config2} /> */}
 
-      <TweetTimeline />
+      <TweetTimeline verified="true" />
       {/* <main className="flex flex-1 w-100 flex-col items-center justify-center text-center">
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">
