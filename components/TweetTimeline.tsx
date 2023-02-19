@@ -7,13 +7,13 @@ const getTweets = async () => {
   .then(
     (response) => response.json()
   );
-  console.log("got tweets!", await tweets.data.data);
+  console.log("got tweets!", await tweets.data);
 
   // if (!response.ok) {
   //   throw new Error(response.statusText);
   // }
 
-  return await tweets.data.data;
+  return await tweets.data;
 
 };
 
