@@ -1,6 +1,8 @@
 import { getSession } from 'next-auth/react';
 import { getToken } from 'next-auth/jwt';
 import { TwitterApi } from 'twitter-api-v2';
+import { TwitterV2IncludesHelper } from 'twitter-api-v2';
+
 
 // https://github.com/PLhery/node-twitter-api-v2/blob/master/doc/paginators.md for reference here
 
@@ -24,9 +26,10 @@ export default async (req, res) => {
       'media.fields': ['url'], 
       'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
     });
+    const includes = new TwitterV2IncludesHelper(homeTimeline);
 
     // console.log("homeTimeline: ", homeTimeline)
-    console.log("first tweet: ", homeTimeline.tweets[0], homeTimeline.includes[0])
+    console.log("first tweet: ", homeTimeline.tweets[0], includes.author(homeTimeline.tweets[0]), includes.tweets(homeTimeline.tweets[0]));
 
     // for (const fetchedTweet of homeTimeline) {
     //   console.log("fetched: ", fetchedTweet);
