@@ -6,7 +6,7 @@ const getTweets = async () => {
   // .then(
   //   (response) => response.json()
   // );
-  console.log("got tweets!", await tweets.json());
+  // console.log("got tweets!", await tweets.json());
 
   // if (!response.ok) {
   //   throw new Error(response.statusText);
@@ -70,6 +70,8 @@ export default function TweetTimeline(): JSX.Element {
 
     getTweets().then((homeTimeline) => {
       const includes = new TwitterV2IncludesHelper(homeTimeline);
+
+      console.log("homeTimeline: ", homeTimeline)
 
       console.log("first tweet: ", homeTimeline.tweets[0], includes.author(homeTimeline.tweets[0]));
 
