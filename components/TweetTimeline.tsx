@@ -61,7 +61,7 @@ export default function TweetTimeline(): JSX.Element {
       const name = tweet.author.username ?? "Placeholder";
       const avatar = tweet.author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
       const text = tweet.tweet.text ?? "Placeholder";
-      const date = tweet.tweet.create_at.toDateString() ?? "Placeholder";
+      const date = tweet.tweet.created_at.toDateString() ?? "Placeholder";
 
       return (
         <FakeTweet config={{
