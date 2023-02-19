@@ -139,8 +139,8 @@ const Home: NextPage = () => {
           Signed in as {session.user?.name ?? "no user object"} <br />
           {/* Signed in<br /> */}
           <button onClick={() => signOut()}>Sign out</button>
-          Token: {session?.access_token ?? "no access token"} <br />
-          Secret: {session?.refresh_token ?? "no access secret"}
+          {/* Token: {session?.access_token ?? "no access token"} <br />
+          Secret: {session?.refresh_token ?? "no access secret"} */}
         </>}
         {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
         {/* fake tweet generator for timeline-style view */}
