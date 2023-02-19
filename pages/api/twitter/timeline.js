@@ -18,12 +18,18 @@ export default async (req, res) => {
 
     const client = new TwitterApi(token.access_token);
     // const user = await client.currentUserV2();
-    const homeTimeline = await client.v2.homeTimeline({ exclude: 'replies' });
+    const homeTimeline = await client.v2.homeTimeline({ 
+      exclude: 'replies',
+      expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id'],
+      'media.fields': ['url'], 
+    });
 
-    for (const fetchedTweet of homeTimeline) {
-      console.log("fetched: ", fetchedTweet);
-      console.log("processed: ", await client.v2.singleTweet(fetchedTweet.id));
-    }
+    console.log("homeTimeline: ", homeTimeline)
+
+    // for (const fetchedTweet of homeTimeline) {
+    //   console.log("fetched: ", fetchedTweet);
+    //   console.log("processed: ", await client.v2.singleTweet(fetchedTweet.id));
+    // }
 
     return res.status(200).json({
       status: (session, 'Ok'),
