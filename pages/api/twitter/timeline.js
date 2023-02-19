@@ -20,7 +20,7 @@ export default async (req, res) => {
     // const user = await client.currentUserV2();
     const homeTimeline = await client.v2.homeTimeline({ exclude: 'replies' });
 
-    for (await item in homeTimeline.tweets) {
+    for (item in homeTimeline.tweets) {
       console.log(item);
     }
 
