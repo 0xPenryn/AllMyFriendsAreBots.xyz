@@ -22,7 +22,9 @@ export default async (req, res) => {
   // console.log(session ?? 'No session');
   // console.log(token ?? 'No token');
 
-  console.log(client.currentUserV2);
+  const user = await client.currentUserV2();
+
+  console.log(JSON.stringify(user));
 
   // for twitter-lite
   // client
