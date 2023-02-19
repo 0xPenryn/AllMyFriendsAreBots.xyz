@@ -8,11 +8,11 @@ export default async (req, res) => {
 
   const client = new Twitter({
     subdomain: "api", // "api" is the default (change for other subdomains)
-    version: "2", // version "1.1" is the default (change for other subdomains)
+    version: "1.1", // version "1.1" is the default (change for other subdomains)
     consumer_key: process.env.TWITTER_CLIENT_ID, // from Twitter.
     consumer_secret: process.env.TWITTER_CLIENT_SECRET, // from Twitter.
     access_token_key: token.access_token, // from your User (oauth_token)
-    access_token_secret: token.refresh_token // from your User (oauth_token_secret)
+    access_token_secret: token.refresh_token, // from your User (oauth_token_secret)
   });
 
   console.log(session ?? 'No session');
