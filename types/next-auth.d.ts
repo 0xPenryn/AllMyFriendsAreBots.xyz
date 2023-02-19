@@ -14,8 +14,8 @@ declare module "next-auth" {
     accessToken
     refreshToken
   }
-//   interface JWT {
-//     oauth_token?: string
-//     oauth_token_secret?: string
-// }
+  interface JWT {
+    oauth_token?: string
+    oauth_token_secret?: string
+}
 }
