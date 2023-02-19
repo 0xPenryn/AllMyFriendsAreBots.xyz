@@ -22,74 +22,69 @@ const Home: NextPage = () => {
 
   // console.log("Status: ", status);
 
-  const config1 = { // used for fake tweet testing
+  const blankTweet = { // used for fake tweet testing
     user: {
       nickname: "twitter",
       name: "Twitter",
-      avatar: "avatar.png",
-      verified: false,
+      avatar: "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg",
+      verified: true,
       locked: false
     },
     display: "default",
-    text: "This is a fake tweet",
+    text: "This is a placeholder tweet.",
     image: "",
     date: "3:32 PM · Feb 14, 1997",
     app: "Twitter for iPhone",
-    retweets: 32000,
-    quotedTweets: 100,
-    likes: 12700
+    retweets: 1,
+    quotedTweets: 0,
+    likes: 5
   };
 
-  // console.log(JSON.stringify(session) ?? "no session object");
-  // console.log(JSON.stringify(session?.accessToken) ?? "no token object");
+  // const prompt =
+  //   vibe === "Funny"
+  //     ? `Generate 2 funny twitter bios with no hashtags and clearly labeled "1." and "2.". Make sure there is a joke in there and it's a little ridiculous. Make sure each generated bio is at max 20 words and base it on this context: ${bio}${bio.slice(-1) === "." ? "" : "."
+  //     }`
+  //     : `Generate 2 ${vibe} twitter bios with no hashtags and clearly labeled "1." and "2.". Make sure each generated bio is at least 14 words and at max 20 words and base them on this context: ${bio}${bio.slice(-1) === "." ? "" : "."
+  //     }`;
 
-  // console.log("Streamed response: ", generatedBios);
+  // const generateBio = async (e: any) => {
+  //   e.preventDefault();
+  //   setGeneratedBios("");
+  //   setLoading(true);
+  //   const response = await fetch("/api/generate", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       prompt,
+  //     }),
+  //   });
+  //   console.log("Edge function returned.");
 
-  const prompt =
-    vibe === "Funny"
-      ? `Generate 2 funny twitter bios with no hashtags and clearly labeled "1." and "2.". Make sure there is a joke in there and it's a little ridiculous. Make sure each generated bio is at max 20 words and base it on this context: ${bio}${bio.slice(-1) === "." ? "" : "."
-      }`
-      : `Generate 2 ${vibe} twitter bios with no hashtags and clearly labeled "1." and "2.". Make sure each generated bio is at least 14 words and at max 20 words and base them on this context: ${bio}${bio.slice(-1) === "." ? "" : "."
-      }`;
+  //   if (!response.ok) {
+  //     throw new Error(response.statusText);
+  //   }
 
-  const generateBio = async (e: any) => {
-    e.preventDefault();
-    setGeneratedBios("");
-    setLoading(true);
-    const response = await fetch("/api/generate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        prompt,
-      }),
-    });
-    console.log("Edge function returned.");
+  //   // This data is a ReadableStream
+  //   const data = response.body;
+  //   if (!data) {
+  //     return;
+  //   }
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
+  //   const reader = data.getReader();
+  //   const decoder = new TextDecoder();
+  //   let done = false;
 
-    // This data is a ReadableStream
-    const data = response.body;
-    if (!data) {
-      return;
-    }
+  //   while (!done) {
+  //     const { value, done: doneReading } = await reader.read();
+  //     done = doneReading;
+  //     const chunkValue = decoder.decode(value);
+  //     setGeneratedBios((prev) => prev + chunkValue);
+  //   }
 
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
-
-    while (!done) {
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      const chunkValue = decoder.decode(value);
-      setGeneratedBios((prev) => prev + chunkValue);
-    }
-
-    setLoading(false);
-  };
+  //   setLoading(false);
+  // };
 
   const getTweets = async (e: any) => {
     const tweets = await fetch("/api/twitter/timeline")
@@ -144,7 +139,7 @@ const Home: NextPage = () => {
         {/* Signed in<br /> */}
         <button onClick={() => signOut()}>Sign out</button>
         {/* fake tweet generator for timeline-style view */}
-        <FakeTweet config={config1} />
+        <FakeTweet config={blankTweet} />
         <FakeTweet config={config2} />
       </>}
       {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
