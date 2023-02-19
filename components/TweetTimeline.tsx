@@ -19,17 +19,15 @@ const getTweets = async () => {
 const [data, setData] = useState(null)
 const [isLoading, setLoading] = useState(false)
 
+var tweets = [] as any;
+
+var nickname = "Placeholder";
+var name = "Placeholder";
+var avatar = "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+var text = "Placeholder";
+var date = "Placeholder";
+
 export default function TweetTimeline(): JSX.Element {
-
-  // const tweets = props.tweets;
-
-  var tweets = [] as any;
-
-  var nickname = "Placeholder";
-  var name = "Placeholder";
-  var avatar = "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-  var text = "Placeholder";
-  var date = "Placeholder";
 
   useEffect(() => {
     setLoading(true)
