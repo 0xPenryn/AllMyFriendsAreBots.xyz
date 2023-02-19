@@ -106,14 +106,8 @@ const Home: NextPage = () => {
 
   };
 
-  // const tweetlist = await getTweets("").then((res) => res.json());
-
-  var tweetlist = null;
-
-  getTweets("").then((res) => {console.log("promise tweet list: ", res ?? "no promise tweetlist")});
-  getTweets("").then((res) => {setTimeout(tweetlist = res, 2000)});
-
-  console.log("outside tweet list: ", tweetlist ?? "no outside tweetlist");
+  const tweetList = getTweets("").then((res) => {console.log("promise tweet list: ", res ?? "no promise tweetlist")});
+  console.log("tweetlist: ", tweetList ?? "no tweetlist");
 
 
   const config2 = { // used for fake tweet testing
