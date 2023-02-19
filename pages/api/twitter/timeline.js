@@ -18,17 +18,23 @@ export default async (req, res) => {
   // });  
   
   const client = new TwitterApi({
-    appKey: process.env.TWITTER_CLIENT_ID, // from Twitter.
-    appSecret: process.env.TWITTER_CLIENT_SECRET, // from Twitter.
-    accessToken: token.access_token, // from your User (oauth_token)
-    accessSecret: token.refresh_token, // from your User (oauth_token_secret)
+    clientID: process.env.TWITTER_CLIENT_ID, // from Twitter.
+    clientSecret: process.env.TWITTER_CLIENT_SECRET, // from Twitter.
   });
 
   // console.log(session ?? 'No session');
   // console.log(token ?? 'No token');
 
-  const user = await client.currentUserV2()
-  console.log(user ?? "No user");
+  client.loginWithOAuth2({ code, codeVerifier, redirectUri: CALLBACK_URL })
+    .then(async ({ client: loggedClient, accessToken, refreshToken, expiresIn }) => {
+      // {loggedClient} is an authenticated client in behalf of some user
+      // Store {accessToken} somewhere, it will be valid until {expiresIn} is hit.
+      // If you want to refresh your token later, store {refreshToken} (it is present if 'offline.access' has been given as scope)
+
+      // Example request
+      const { data: userObject } = await loggedClient.v2.me();
+    })
+    .catch(() => res.status(403).send('Invalid verifier or access tokens!'));
 
   // for twitter-lite
   // client
