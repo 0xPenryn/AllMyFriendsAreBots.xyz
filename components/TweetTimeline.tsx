@@ -21,13 +21,15 @@ export default function TweetTimeline(): JSX.Element {
 
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(false)
+  var tweets = [] as any;
 
   useEffect(() => {
     setLoading(true)
-    fetch('/api/twitter/timeline')
+    tweets = fetch('/api/twitter/timeline')
       .then((res) => res.json())
       .then((data) => {
         setData(data)
+        console.log("data: ", data ?? "no data")
         setLoading(false)
       })
   }, [])
@@ -40,7 +42,12 @@ export default function TweetTimeline(): JSX.Element {
   var avatar = "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
   var text = "Placeholder";
   var date = "Placeholder";
-  var verified = false;
+
+  nickname = tweets[0].author.name ?? "New Placeholder";
+  name = tweets[0].author.username ?? "New Placeholder";
+  avatar = tweets[0].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+  text = tweets[0].tweet.text ?? "New Placeholder";
+  date = tweets[0].tweet.created_at ?? "New Placeholder";
 
   getTweets().then((tweets) => {
     nickname = tweets[0].author.name ?? "New Placeholder";
