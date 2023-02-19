@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import DropDown, { VibeType } from "../components/DropDown";
 import Footer from "../components/Footer";
@@ -14,11 +14,13 @@ import FakeTweet from "fake-tweet";
 import TweetTimeline from "../components/TweetTimeline";
 
 const Home: NextPage = () => {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [bio, setBio] = useState("");
   const [vibe, setVibe] = useState<VibeType>("Professional");
   const [generatedBios, setGeneratedBios] = useState<String>("");
   const { data: session, status } = useSession();
+
 
   // console.log("Status: ", status);
 
@@ -138,9 +140,7 @@ const Home: NextPage = () => {
   
   };
 
-  var tweetList: Array<any> = []
-  
-  getTweets().then(res => tweetList = res);
+
 
   return (
     // <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
@@ -166,7 +166,7 @@ const Home: NextPage = () => {
       {/* <FakeTweet config={blankTweet} />
       <FakeTweet config={config2} /> */}
 
-      <TweetTimeline verified={true} tweets={tweetList} />
+      <TweetTimeline />
       {/* <main className="flex flex-1 w-100 flex-col items-center justify-center text-center">
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">

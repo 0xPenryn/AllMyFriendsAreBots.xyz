@@ -1,5 +1,7 @@
 import { TweetHomeTimelineV2Paginator, TwitterApi, TwitterV2IncludesHelper } from 'twitter-api-v2';
 import FakeTweet from "fake-tweet";
+import { useState, useEffect } from "react";
+
 
 const getTweets = async () => {
   const homeTimeline = await fetch("/api/twitter/timeline")
@@ -13,21 +15,32 @@ const getTweets = async () => {
 
 };
 
-export interface Props {
-  verified: boolean;
-  tweets: Array<any>;
-}
+export default function TweetTimeline(): JSX.Element {
 
-export default function TweetTimeline(props: Props): JSX.Element {
+  // const tweets = props.tweets;
 
-  const tweets = props.tweets;
+  const [data, setData] = useState(null)
+  const [isLoading, setLoading] = useState(false)
+
+  useEffect(() => {
+    setLoading(true)
+    fetch('/api/twitter/timeline')
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data)
+        setLoading(false)
+      })
+  }, [])
+
+  if (isLoading) return <p>Loading...</p>
+  if (!data) return <p>No Timeline</p>
 
   var nickname = "Placeholder";
   var name = "Placeholder";
   var avatar = "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
   var text = "Placeholder";
   var date = "Placeholder";
-  var verified = props.verified;
+  var verified = false;
 
   getTweets().then((tweets) => {
     nickname = tweets[0].author.name ?? "New Placeholder";
