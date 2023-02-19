@@ -108,8 +108,13 @@ const Home: NextPage = () => {
 
   // const tweetlist = await getTweets("").then((res) => res.json());
 
-  getTweets("").then((res) => {console.log("tweet list: ", res  ?? "no tweetlist")})
-  // console.log("resolved: ", Promise.resolve(tweetlist) ?? "what the fuck is a resolved promise");
+  var tweetlist = null;
+
+  // getTweets("").then((res) => {console.log("tweet list: ", res ?? "no tweetlist")})
+  getTweets("").then((res) => {tweetlist = res})
+
+  console.log("tweet list: ", tweetlist ?? "no tweetlist");
+
 
   const config2 = { // used for fake tweet testing
     user: {
