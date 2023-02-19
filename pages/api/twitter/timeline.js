@@ -20,10 +20,7 @@ export default async (req, res) => {
 
     // console.log(JSON.stringify(user));
 
-    return res.status(200).json({
-      status: (session, 'Ok'),
-      data: [homeTimeline]
-    });
+    return res.status(200).json({ homeTimeline });
   } catch (e) {
     return res.status(400).json({
       status: e.message

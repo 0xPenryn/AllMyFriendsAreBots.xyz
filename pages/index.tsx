@@ -97,15 +97,16 @@ const Home: NextPage = () => {
     });
     // console.log("got tweets!");
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
+    // if (!response.ok) {
+    //   throw new Error(response.statusText);
+    // }
 
     return response.json();
 
   };
 
   const tweetlist = getTweets("");
+
   console.log("raw list: ", tweetlist ?? "no tweetlist")
   console.log("resolved: ", Promise.resolve(tweetlist) ?? "what the fuck is a resolved promise");
 
