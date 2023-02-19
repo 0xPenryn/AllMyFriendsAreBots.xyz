@@ -20,7 +20,7 @@ const Home: NextPage = () => {
   const [generatedBios, setGeneratedBios] = useState<String>("");
   const { data: session, status } = useSession();
 
-  console.log("Status: ", status);
+  // console.log("Status: ", status);
 
   const config1 = { // used for fake tweet testing
     user: {
@@ -40,7 +40,7 @@ const Home: NextPage = () => {
     likes: 12700
   };
 
-  console.log(JSON.stringify(session) ?? "no session object");
+  // console.log(JSON.stringify(session) ?? "no session object");
   // console.log(JSON.stringify(session?.accessToken) ?? "no token object");
 
   const config2 = { // used for fake tweet testing
@@ -125,7 +125,7 @@ const Home: NextPage = () => {
   };
 
   const tweetlist = getTweets("");
-  console.log(tweetlist)
+  console.log(tweetlist);
 
   return (
     // <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
@@ -148,12 +148,10 @@ const Home: NextPage = () => {
       <FakeTweet config={config2} />
     
       <Head>
-        <title>Twitter Generator</title>
+        <title>is this tweet ai? idk</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20"> */}
-      <main className="flex flex-1 w-100 flex-col items-center justify-center text-center">
-        
+      {/* <main className="flex flex-1 w-100 flex-col items-center justify-center text-center">
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">
             <Image
@@ -247,7 +245,7 @@ const Home: NextPage = () => {
             </motion.div>
           </AnimatePresence>
         </ResizablePanel>
-      </main>
+      </main> */}
     </div>
   );
 };
