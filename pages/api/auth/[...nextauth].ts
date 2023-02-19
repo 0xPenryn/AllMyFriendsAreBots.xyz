@@ -15,7 +15,7 @@ export default NextAuth({
       
       return session, token, user; // The return type will match the one returned in `useSession()`
     },
-    jwt(token, user, account = {}, profile, isNewUser) {
+    jwt({ token, user, account = {}, profile, isNewUser} ) {
       console.log("token jwt", token);
       console.log("user jwt", user);
       console.log("account jwt", account);
@@ -32,7 +32,7 @@ export default NextAuth({
       //   token[account.provider].oauth_token_secret = account.refresh_token;
       // }
 
-      return token.token, token.user, token.account, token.profile, token.isNewUser;
+      return token, user, account, profile, isNewUser;
     },
   },
   
