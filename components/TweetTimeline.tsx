@@ -1,6 +1,5 @@
 import { useSession } from 'next-auth/react';
-import { TwitterApi } from 'twitter-api-v2';
-import { TwitterV2IncludesHelper } from 'twitter-api-v2';
+import { TwitterApi, TwitterV2IncludesHelper } from 'twitter-api-v2';
 import FakeTweet from "fake-tweet";
 
 // const getTweets = async (e: any) => {
@@ -21,7 +20,7 @@ import FakeTweet from "fake-tweet";
 export default function TweetTimeline(): JSX.Element {
 
   const { data: session, status } = useSession();
-  const client = new TwitterApi(session?.access_token ?? null);
+  const client = new TwitterApi(session?.access_token);
 
   client.v2.homeTimeline({ 
     'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld'],
