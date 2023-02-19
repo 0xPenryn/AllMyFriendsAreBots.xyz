@@ -54,36 +54,72 @@ const getTweets = async () => {
 
 export default function TweetTimeline(): JSX.Element {
 
+  var nickname = "Placeholder";
+  var name = "Placeholder";
+  var avatar = "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+  var text = "Placeholder";
+  var date = "Placeholder";
+
   getTweets().then((tweets) => {
-    for (const tweet of tweets) {
+    nickname = tweets[0].author.name ?? "Placeholder";
+    name = tweets[0].author.username ?? "Placeholder";
+    avatar = tweets[0].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+    text = tweets[0].tweet.text ?? "Placeholder";
+    date = tweets[0].tweet.created_at ?? "Placeholder";
+  });
 
-      const nickname = tweet.author.name ?? "Placeholder";
-      const name = tweet.author.username ?? "Placeholder";
-      const avatar = tweet.author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-      const text = tweet.tweet.text ?? "Placeholder";
-      const date = tweet.tweet.created_at ?? "Placeholder";
 
-      return (
-        <FakeTweet config={{
-          user: {
-            nickname: nickname,
-            name: name,
-            avatar: avatar,
-            verified: false,
-            locked: false
-          },
-          display: "default",
-          text: text,
-          image: "",
-          date: date,
-          app: "Twitter for iPhone",
-          retweets: 1,
-          quotedTweets: 0,
-          likes: 5
-        }} />
-      )
-    }
-});
+  return (
+    <FakeTweet config={{
+      user: {
+        nickname: nickname,
+        name: name,
+        avatar: avatar,
+        verified: false,
+        locked: false
+      },
+      display: "default",
+      text: text,
+      image: "",
+      date: date,
+      app: "Twitter for iPhone",
+      retweets: 1,
+      quotedTweets: 0,
+      likes: 5
+    }} />
+  )
+
+
+
+    // for (const tweet of tweets) {
+
+    //   const nickname = tweet.author.name ?? "Placeholder";
+    //   const name = tweet.author.username ?? "Placeholder";
+    //   const avatar = tweet.author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+    //   const text = tweet.tweet.text ?? "Placeholder";
+    //   const date = tweet.tweet.created_at ?? "Placeholder";
+
+    //   return (
+    //     <FakeTweet config={{
+    //       user: {
+    //         nickname: nickname,
+    //         name: name,
+    //         avatar: avatar,
+    //         verified: false,
+    //         locked: false
+    //       },
+    //       display: "default",
+    //       text: text,
+    //       image: "",
+    //       date: date,
+    //       app: "Twitter for iPhone",
+    //       retweets: 1,
+    //       quotedTweets: 0,
+    //       likes: 5
+    //     }} />
+    //   )
+    // }
+// });
 
   // const { data: session, status } = useSession();
   // const client = new TwitterApi(session?.access_token);
@@ -172,9 +208,9 @@ export default function TweetTimeline(): JSX.Element {
   //   );
   // });
 
-  return (
-    <div>
-      <h1>Empty Timeline</h1>
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <h1>Empty Timeline</h1>
+  //   </div>
+  // );
 }
