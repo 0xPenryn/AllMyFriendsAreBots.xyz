@@ -91,11 +91,10 @@ const Home: NextPage = () => {
     setLoading(false);
   };
 
-  const getTweets = (e: any) => {
-    const response = fetch("/api/twitter/timeline", {
+  const getTweets = async (e: any) => {
+    const response = await fetch("/api/twitter/timeline", {
       method: "GET",
-    }).then(res => res.json())
-    .then(data => data.json());
+    }).then(res => res.json());
     // console.log("got tweets!");
 
     // if (!response.ok) {
@@ -106,7 +105,7 @@ const Home: NextPage = () => {
 
   };
 
-  const tweetlist = getTweets("");
+  const tweetlist = getTweets("").then();
 
   console.log("raw list: ", tweetlist ?? "no tweetlist")
   // console.log("resolved: ", Promise.resolve(tweetlist) ?? "what the fuck is a resolved promise");
@@ -145,6 +144,7 @@ const Home: NextPage = () => {
           Secret: {session?.refresh_token ?? "no access secret"} */}
       </>}
       {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
+
       {/* fake tweet generator for timeline-style view */}
       <FakeTweet config={config1} />
       <FakeTweet config={config2} />
