@@ -20,11 +20,11 @@ export default async (req, res) => {
     // const user = await client.currentUserV2();
     const homeTimeline = await client.v2.homeTimeline({ 
       'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld'],
-      expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', ],
+      expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id' ],
       'media.fields': ['url'], 
     });
 
-    console.log("homeTimeline: ", homeTimeline)
+    // console.log("homeTimeline: ", homeTimeline)
     console.log("first tweet: ", homeTimeline.tweets[0])
 
     // for (const fetchedTweet of homeTimeline) {
@@ -34,7 +34,7 @@ export default async (req, res) => {
 
     return res.status(200).json({
       status: (session, 'Ok'),
-      data: homeTimeline
+      data: homeTimeline.tweets
     });
   } catch (e) {
     return res.status(400).json({
