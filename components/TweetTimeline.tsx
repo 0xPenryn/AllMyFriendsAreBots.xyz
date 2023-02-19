@@ -43,6 +43,7 @@ export default function TweetTimeline({ className }: { className?: string }) {
 
     return (
       <div>
+        <h1>Timeline</h1>
         <FakeTweet config={{
           user: {
             nickname: nickname,
@@ -63,6 +64,12 @@ export default function TweetTimeline({ className }: { className?: string }) {
       </div>
     );
   });
+
+  return (
+    <div>
+      <h1>Empty Timeline</h1>
+    </div>
+  );
 
   // getTweets("").then((list) => {
   //   const includes = new TwitterV2IncludesHelper(list);
