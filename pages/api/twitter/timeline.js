@@ -27,7 +27,7 @@ export default async (req, res) => {
   // console.log(session ?? 'No session');
   // console.log(token ?? 'No token');
 
-  console.log(client.currentUser ?? 'No client user');
+  console.log(await client.currentUser ?? 'No client user');
 
   // for twitter-lite
   // client
