@@ -91,8 +91,8 @@ const Home: NextPage = () => {
     setLoading(false);
   };
 
-  const getTweets = (e: any) => {
-    const tweets = fetch("/api/twitter/timeline")
+  const getTweets = async (e: any) => {
+    const tweets = await fetch("/api/twitter/timeline")
     .then(
       (response) => response.json()
     );
@@ -102,7 +102,7 @@ const Home: NextPage = () => {
     //   throw new Error(response.statusText);
     // }
 
-    return tweets;
+    return await tweets;
 
   };
 
