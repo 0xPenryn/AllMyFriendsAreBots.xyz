@@ -147,8 +147,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <FakeTweet config={blankTweet} />
-      <FakeTweet config={config2} />
+      {/* <FakeTweet config={blankTweet} />
+      <FakeTweet config={config2} /> */}
 
       <TweetTimeline />
       {/* <main className="flex flex-1 w-100 flex-col items-center justify-center text-center">
