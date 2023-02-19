@@ -43,11 +43,11 @@ export default function TweetTimeline(): JSX.Element {
   var text = "Placeholder";
   var date = "Placeholder";
 
-  nickname = tweets[0].author.name ?? "New Placeholder";
-  name = tweets[0].author.username ?? "New Placeholder";
-  avatar = tweets[0].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-  text = tweets[0].tweet.text ?? "New Placeholder";
-  date = tweets[0].tweet.created_at ?? "New Placeholder";
+  // nickname = tweets[0].author.name ?? "New Placeholder";
+  // name = tweets[0].author.username ?? "New Placeholder";
+  // avatar = tweets[0].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+  // text = tweets[0].tweet.text ?? "New Placeholder";
+  // date = tweets[0].tweet.created_at ?? "New Placeholder";
 
   getTweets().then((tweets) => {
     nickname = tweets[0].author.name ?? "New Placeholder";
