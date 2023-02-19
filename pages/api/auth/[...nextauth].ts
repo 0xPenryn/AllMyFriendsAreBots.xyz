@@ -25,7 +25,7 @@ export default NextAuth({
       //   token[account.provider] = {};
       // }
 
-      token.oauth_token = token.account.access_token;
+      token.oauth_token = account.access_token;
       
 
       if ( account.refresh_token ) {
