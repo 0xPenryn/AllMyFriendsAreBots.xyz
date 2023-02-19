@@ -17,7 +17,7 @@ const getTweets = async () => {
   console.log("homeTimeline: ", homeTimeline)
 
   // console.log("first tweet: ", includes.tweets[0], includes.author(homeTimeline.tweets[0]));
-  console.log("first tweet: ", includes.tweets[0]);
+  console.log("includes: ", includes);
 
   const nickname = includes.author(homeTimeline.tweets[0])?.username ?? "Placeholder";
   const name = includes.author(homeTimeline.tweets[0])?.name ?? "Placeholder";
