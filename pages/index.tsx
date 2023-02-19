@@ -95,16 +95,13 @@ const Home: NextPage = () => {
     const response = await fetch("/api/twitter/timeline", {
       method: "GET",
     });
-    console.log("got tweets!");
+    // console.log("got tweets!");
 
     if (!response.ok) {
       throw new Error(response.statusText);
     }
 
-    const data = response.body;
-    if (!data) {
-      return;
-    }
+    return response.json();
 
   };
 
