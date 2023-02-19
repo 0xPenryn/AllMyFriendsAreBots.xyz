@@ -13,7 +13,11 @@ const getTweets = async () => {
 
 };
 
-export default function TweetTimeline(props): JSX.Element {
+export interface Props {
+  verified: boolean;
+}
+
+export default function TweetTimeline(props: Props): JSX.Element {
 
   var nickname = "Placeholder";
   var name = "Placeholder";
