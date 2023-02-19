@@ -110,10 +110,10 @@ const Home: NextPage = () => {
 
   var tweetlist = null;
 
-  // getTweets("").then((res) => {console.log("tweet list: ", res ?? "no tweetlist")})
-  getTweets("").then((res) => {tweetlist = res})
+  getTweets("").then((res) => {console.log("promise tweet list: ", res ?? "no promise tweetlist")})
+  getTweets("").then((res) => {tweetlist = res});
 
-  console.log("tweet list: ", tweetlist ?? "no tweetlist");
+  console.log("outside tweet list: ", tweetlist ?? "no outside tweetlist");
 
 
   const config2 = { // used for fake tweet testing
