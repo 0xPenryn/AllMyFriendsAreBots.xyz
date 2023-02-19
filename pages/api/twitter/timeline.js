@@ -29,7 +29,7 @@ export default async (req, res) => {
     const includes = new TwitterV2IncludesHelper(homeTimeline);
 
     // console.log("homeTimeline: ", homeTimeline)
-    console.log("first tweet: ", homeTimeline.tweets[0], includes.author(homeTimeline.tweets[0]), includes.tweets(homeTimeline.tweets[0]));
+    console.log("first tweet: ", homeTimeline.tweets[0], includes.author(homeTimeline.tweets[0]));
 
     // for (const fetchedTweet of homeTimeline) {
     //   console.log("fetched: ", fetchedTweet);
