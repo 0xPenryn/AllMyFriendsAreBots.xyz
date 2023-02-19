@@ -8,16 +8,16 @@ import { TwitterV2IncludesHelper } from 'twitter-api-v2';
 
 export default async (req, res) => {
 
+  const session = await getSession({ req });
+  const token = await getToken({ req });
+
+  if (!token) {
+    return res.status(401).json({
+      status: 'Unauthorized'
+    });
+  }
+
   try {
-    const session = await getSession({ req });
-    const token = await getToken({ req });
-
-    // if (!session || !token) {
-    //   return res.status(401).json({
-    //     status: 'Unauthorized'
-    //   });
-    // }
-
     const client = new TwitterApi(token.access_token);
     // const user = await client.currentUserV2();
     const homeTimeline = await client.v2.homeTimeline({ 
@@ -38,7 +38,7 @@ export default async (req, res) => {
     // }
 
     return res.status(200).json({
-      status: (session, 'Ok'),
+      status: ('Ok'),
       data: homeTimeline
     });
   } catch (e) {

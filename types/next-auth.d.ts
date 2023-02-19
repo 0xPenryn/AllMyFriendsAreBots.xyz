@@ -15,7 +15,7 @@ declare module "next-auth" {
     refresh_token
   }
   interface JWT {
-    access_token?: string
-    refresh_token?: string
+    access_token: string
+    refresh_token: string
 }
 }
