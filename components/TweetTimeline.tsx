@@ -3,8 +3,6 @@ import { TwitterApi } from 'twitter-api-v2';
 import { TwitterV2IncludesHelper } from 'twitter-api-v2';
 import FakeTweet from "fake-tweet";
 
-const {data: session} = useSession();
-
 // const getTweets = async (e: any) => {
 //   const tweets = await fetch("/api/twitter/timeline")
 //   .then(
@@ -20,9 +18,10 @@ const {data: session} = useSession();
 
 // };
 
-const client = new TwitterApi(session?.access_token ?? null);
-
 export default function TweetTimeline({ className }: { className?: string }) {
+
+  const { data: session, status } = useSession();
+  const client = new TwitterApi(session?.access_token ?? null);
 
   client.v2.homeTimeline({ 
     'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld'],
