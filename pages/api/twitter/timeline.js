@@ -20,10 +20,6 @@ export default async (req, res) => {
     // const user = await client.currentUserV2();
     const homeTimeline = await client.v2.homeTimeline({ exclude: 'replies' });
 
-    for (item in homeTimeline) {
-      console.log("tweet: ", await client.v2.tweets(item.id));
-    }
-
     return res.status(200).json({
       status: (session, 'Ok'),
       data: homeTimeline
