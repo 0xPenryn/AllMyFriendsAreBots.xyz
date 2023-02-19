@@ -26,7 +26,7 @@ var date = "Placeholder";
 
 export default function TweetTimeline(): JSX.Element {
 
-  const [data, setData] = useState([])
+  const [data, setData] = useState<any[]>([])
   const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -35,13 +35,44 @@ export default function TweetTimeline(): JSX.Element {
       .then((res) => res.json())
       .then((data) => {
         setData(data)
+        // console.log("data: ", data ?? "no data")
+        // nickname = data[0].author.name ?? "New Placeholder";
+        // name = data[0].author.username ?? "New Placeholder";
+        // avatar = data[0].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+        // text = data[0].tweet.text ?? "New Placeholder";
+        // date = data[0].tweet.created_at ?? "New Placeholder";
+        // // setLoading(false)
+        // return (
+        //   <FakeTweet config={{
+        //     user: {
+        //       nickname: nickname,
+        //       name: name,
+        //       avatar: avatar,
+        //       verified: false,
+        //       locked: false
+        //     },
+        //     display: "default",
+        //     text: text,
+        //     image: "",
+        //     date: date,
+        //     app: "Twitter for iPhone",
+        //     retweets: 1,
+        //     quotedTweets: 0,
+        //     likes: 5
+        //   }} />
+        // )
+      });
+  });
+
+  if (isLoading) return <p>Loading...</p>
+  if (!isLoading && data) {
         console.log("data: ", data ?? "no data")
         nickname = data[0].author.name ?? "New Placeholder";
         name = data[0].author.username ?? "New Placeholder";
         avatar = data[0].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
         text = data[0].tweet.text ?? "New Placeholder";
         date = data[0].tweet.created_at ?? "New Placeholder";
-        setLoading(false)
+        // setLoading(false)
         return (
           <FakeTweet config={{
             user: {
@@ -61,10 +92,7 @@ export default function TweetTimeline(): JSX.Element {
             likes: 5
           }} />
         )
-      });
-  });
-
-  if (isLoading) return <p>Loading...</p>
+  }
   if (!data) return <p>No Timeline</p>
 
   // nickname = tweets[0].author.name ?? "New Placeholder";

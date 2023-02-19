@@ -35,9 +35,9 @@ export default async (req, res) => {
     // console.log("homeTimeline: ", homeTimeline)
     // console.log("first tweet: ", homeTimeline.tweets[0], includes.author(homeTimeline.tweets[0]));
     for (const tweet of homeTimeline.tweets) {
-      console.log("tweet: ", tweet, includes.author(tweet));
+      // console.log("tweet: ", tweet, includes.author(tweet));
       body.push({
-        tweet:tweet, 
+        tweet: tweet, 
         author: includes.author(tweet)
       });
     }
