@@ -109,6 +109,21 @@ const Home: NextPage = () => {
     setLoading(false);
   };
 
+  const getTweets = async (e: any) => {
+    const response = await fetch("/api/twitter/timeline", {
+      method: "POST",
+      body: "",
+    });
+    console.log("got tweets!");
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    return response.json();
+
+  };
+
   return (
     // <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
     <div className="flex flex-col items-center">
@@ -128,6 +143,7 @@ const Home: NextPage = () => {
         {/* fake tweet generator for timeline-style view */}
       <FakeTweet config={config1} />
       <FakeTweet config={config2} />
+      {getTweets}
       <Head>
         <title>Twitter Generator</title>
         <link rel="icon" href="/favicon.ico" />
