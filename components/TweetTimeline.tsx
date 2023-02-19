@@ -1,4 +1,3 @@
-import { useSession } from 'next-auth/react';
 import { TweetHomeTimelineV2Paginator, TwitterApi, TwitterV2IncludesHelper } from 'twitter-api-v2';
 import FakeTweet from "fake-tweet";
 
