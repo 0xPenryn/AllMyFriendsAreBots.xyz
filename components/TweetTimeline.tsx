@@ -16,7 +16,7 @@ const getTweets = async () => {
 };
 
 
-const [data, setData] = useState(null)
+const [data, setData] = useState([])
 const [isLoading, setLoading] = useState(false)
 
 var tweets = [] as any;
