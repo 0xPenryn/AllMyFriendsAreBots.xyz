@@ -2,18 +2,18 @@ import { useSession } from 'next-auth/react';
 import { TwitterApi, TwitterV2IncludesHelper } from 'twitter-api-v2';
 import FakeTweet from "fake-tweet";
 
-const getTweets = async (e: any) => {
+const getTweets = async () => {
   const tweets = await fetch("/api/twitter/timeline")
   .then(
     (response) => response.json()
   );
-  console.log("got tweets!", await tweets);
+  console.log("got tweets!", await tweets.data.data);
 
   // if (!response.ok) {
   //   throw new Error(response.statusText);
   // }
 
-  return await tweets;
+  return await tweets.data;
 
 };
 
@@ -69,7 +69,9 @@ export default function TweetTimeline(): JSX.Element {
     //   </div>
     // );
 
-    getTweets("").then((homeTimeline) => {
+    console.log("getting tweets: ", getTweets());
+
+    getTweets().then((homeTimeline) => {
       const includes = new TwitterV2IncludesHelper(homeTimeline);
 
       console.log("first tweet: ", homeTimeline.tweets[0], includes.author(homeTimeline.tweets[0]));

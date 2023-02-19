@@ -8,7 +8,7 @@ import { TwitterV2IncludesHelper } from 'twitter-api-v2';
 
 export default async (req, res) => {
 
-  const session = await getSession({ req });
+  // const session = await getSession({ req });
   const token = await getToken({ req });
 
   if (!token) {
