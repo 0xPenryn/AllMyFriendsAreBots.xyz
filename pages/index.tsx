@@ -119,7 +119,8 @@ const Home: NextPage = () => {
       locked: false
     },
     display: "default",
-    text: JSON.stringify(tweetlist) ?? "no text",
+    // text: JSON.stringify(tweetlist) ?? "no text",
+    text: "This is a fake tweet",
     image: "",
     date: "3:32 PM · Feb 14, 1997",
     app: "Twitter for iPhone",
