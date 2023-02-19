@@ -124,6 +124,9 @@ const Home: NextPage = () => {
 
   };
 
+  const tweetlist = getTweets("");
+  console.log(tweetlist)
+
   return (
     // <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
     <div className="flex flex-col items-center">
@@ -143,7 +146,7 @@ const Home: NextPage = () => {
         {/* fake tweet generator for timeline-style view */}
       <FakeTweet config={config1} />
       <FakeTweet config={config2} />
-      {getTweets}
+    
       <Head>
         <title>Twitter Generator</title>
         <link rel="icon" href="/favicon.ico" />
