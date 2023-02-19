@@ -1,4 +1,4 @@
-import { TwitterApi } from 'twitter-api-v2';
+import { TweetHomeTimelineV2Paginator, TwitterApi } from 'twitter-api-v2';
 import { TwitterV2IncludesHelper } from 'twitter-api-v2';
 
 const getTweets = async (e: any) => {
@@ -16,13 +16,13 @@ const getTweets = async (e: any) => {
 
 };
 
-// const client = new TwitterApi();
+const client = new TwitterApi();
 
 export default function TweetTimeline({ className }: { className?: string }) {
 
-  getTweets("").then((list) => {
+  getTweets("").then((list: TweetHomeTimelineV2Paginator) => {
     const includes = new TwitterV2IncludesHelper(list);
-    for (const tweet of list.data) {
+    for (const tweet of list.tweets) {
       console.log("item: ", tweet);
       const author = includes.author(tweet);
       console.log("author: ", author);
