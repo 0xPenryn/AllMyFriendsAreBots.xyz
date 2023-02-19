@@ -20,7 +20,7 @@ export default async (req, res) => {
     // const user = await client.currentUserV2();
     const homeTimeline = await client.v2.homeTimeline({ 
       exclude: 'replies',
-      fields: ['attachments', 'author_id', 'context_annotations', 'conversation_id', 'created_at', 'entities', 'geo', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'public_metrics', 'referenced_tweets', 'reply_settings', 'source', 'text', 'withheld'],
+      fields: ['attachments', 'author_id', 'context_annotations', 'conversation_id', 'created_at', 'entities', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'reply_settings', 'source', 'text', 'withheld'],
       expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', ],
       'media.fields': ['url'], 
     });
