@@ -92,16 +92,17 @@ const Home: NextPage = () => {
   };
 
   const getTweets = async (e: any) => {
-    const response = await fetch("/api/twitter/timeline", {
-      method: "GET",
-    });
+    const tweets = await fetch("/api/twitter/timeline")
+    .then(
+      (response) => response.json()
+    );
     // console.log("got tweets!");
 
     // if (!response.ok) {
     //   throw new Error(response.statusText);
     // }
 
-    return response;
+    return tweets;
 
   };
 
