@@ -133,22 +133,21 @@ const Home: NextPage = () => {
     <div className="flex flex-col items-center">
       {/* THIS HANDLES SIGNING IN W TWITTER */}
       {!session && <>
-          Not signed in <br />
-          <button onClick={() => signIn("twitter")}>Sign in with Twitter</button>
-        </>}
-        {session && <>
-          Signed in as {session.user?.name ?? "no user object"} <br />
-          {/* Signed in<br /> */}
-          <button onClick={() => signOut()}>Sign out</button>
-          {/* Token: {session?.access_token ?? "no access token"} <br />
+        Not signed in <br />
+        <button onClick={() => signIn("twitter")}>Sign in with Twitter</button>
+      </>}
+      {session && <>
+        Signed in as {session.user?.name ?? "no user object"} <br />
+        {/* Signed in<br /> */}
+        <button onClick={() => signOut()}>Sign out</button>
+        {/* Token: {session?.access_token ?? "no access token"} <br />
           Secret: {session?.refresh_token ?? "no access secret"} */}
-        </>}
-        {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
-        {/* fake tweet generator for timeline-style view */}
-      {console.log(tweetlist)}
+      </>}
+      {/* I DO NOT KNOW WHAT I AM DOING MIGUEL DO NOT CRITICIZE ME */}
+      {/* fake tweet generator for timeline-style view */}
       <FakeTweet config={config1} />
       <FakeTweet config={config2} />
-    
+
       <Head>
         <title>is this tweet ai? idk</title>
         <link rel="icon" href="/favicon.ico" />
