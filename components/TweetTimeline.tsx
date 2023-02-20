@@ -70,6 +70,28 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
   // const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
   useEffect(() => {
+    // if (!handoff) return () => {<p>what the hell is going on</p>}
+    if (loading) return () => { <p>Loading Tweet...</p> }
+    if (!data) return () => { <p>No Tweet :/</p> }
+    // console.log("second data: ", data)
+    console.log("second tweetNumber: ", tweetNumber)
+    nickname = data[tweetNumber]?.author.username ?? ["New Placeholder ", tweetNumber];
+    console.log("second nickname: ", nickname)
+    name = data[tweetNumber]?.author.name ?? ["New Placeholder ", tweetNumber];
+    avatar = data[tweetNumber]?.author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+    text = data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") || ["Placeholder Tweet ", tweetNumber];
+    image = [];
+    for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
+      image.push(data[tweetNumber]?.media[i].url)
+    }
+    date = Date.parse(data[tweetNumber]?.tweet.created_at) ?? "New Placeholder";
+    retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? 10;
+    quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? 10;
+    likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? 10;
+    console.log("end of second effect")
+  }, [tweetNumber, handoff, data])
+
+  useEffect(() => {
     setLoading(true)
     fetch('/api/twitter/timeline')
       .then((res) => res.json())
@@ -96,28 +118,6 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         console.log("end of first effect")
       })
   }, [])
-
-  useEffect(() => {
-    // if (!handoff) return () => {<p>what the hell is going on</p>}
-    if (loading) return () => { <p>Loading Tweet...</p> }
-    if (!data) return () => { <p>No Tweet :/</p> }
-    // console.log("second data: ", data)
-    console.log("second tweetNumber: ", tweetNumber)
-    nickname = data[tweetNumber]?.author.username ?? ["New Placeholder ", tweetNumber];
-    console.log("second nickname: ", nickname)
-    name = data[tweetNumber]?.author.name ?? ["New Placeholder ", tweetNumber];
-    avatar = data[tweetNumber]?.author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-    text = data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") || ["Placeholder Tweet ", tweetNumber];
-    image = [];
-    for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
-      image.push(data[tweetNumber]?.media[i].url)
-    }
-    date = Date.parse(data[tweetNumber]?.tweet.created_at) ?? "New Placeholder";
-    retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? 10;
-    quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? 10;
-    likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? 10;
-    console.log("end of second effect")
-  }, [tweetNumber, handoff, data])
 
   if (loading) return <p>Loading Tweet...</p>
   if (!data) return <p>No tweet :/</p>
