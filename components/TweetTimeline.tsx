@@ -61,8 +61,8 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
   }, [])
 
   useEffect(() => {
-    if (loading) return () => {<p>Loading Tweet...</p>}
-    if (!data) return () => {<p>No Tweet :/</p>}
+    // if (loading) return () => {<p>Loading Tweet...</p>}
+    // if (!data) return () => {<p>No Tweet :/</p>}
     console.log("second data: ", data)
     console.log("second tweetNumber: ", tweetNumber)
     nickname = data[tweetNumber].author.name ?? "New Placeholder";
