@@ -28,6 +28,16 @@ const Home: NextPage = () => {
 
   const [tweetIndex, setTweetIndex] = useState(0);
 
+  const getTweets = async () => {
+    const homeTimeline = await fetch("/api/twitter/timeline")
+      .then(
+        (response) => response.json()
+      );
+    return await homeTimeline;
+  };
+
+  const tweetList = getTweets();
+
   return (
     <div className="flex flex-col items-center">
       {/* THIS HANDLES SIGNING IN W TWITTER */}
