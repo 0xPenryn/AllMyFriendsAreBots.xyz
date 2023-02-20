@@ -26,7 +26,7 @@ const Home: NextPage = () => {
     likes: 5
   };
 
-  var tweetNumber = 0;
+  const [tweetIndex, setTweetIndex] = useState(0);
 
   return (
     <div className="flex flex-col items-center">
@@ -47,8 +47,8 @@ const Home: NextPage = () => {
         <title>is this tweet ai? idk</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <TweetTimeline tweetNumber={tweetNumber} />
+      <button onClick={() => setTweetIndex(tweetIndex + 1)}>Next Tweet!</button>
+      <TweetTimeline tweetNumber={tweetIndex} />
     </div>
   );
 };

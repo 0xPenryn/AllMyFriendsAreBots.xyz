@@ -51,31 +51,40 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
         setLoading(false)
       })
-  }, [tweetNumber])
+  }, [])
+
+  // useEffect(() => {
+  //   // console.log("data: ", data)
+  //   nickname = data[tweetNumber].author.name ?? "New Placeholder";
+  //   name = data[tweetNumber].author.username ?? "New Placeholder";
+  //   avatar = data[tweetNumber].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+  //   text = data[tweetNumber].tweet.text ?? "New Placeholder";
+  //   date = Date.parse(data[tweetNumber].tweet.created_at) ?? "New Placeholder";
+  //   retweets = data[tweetNumber].tweet.public_metrics.retweet_count ?? 10;
+  //   quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
+  //   likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
+  // }, [tweetNumber])
 
   if (loading) return <p>Loading Tweet...</p>
   if (!data) return <p>No tweet :/</p>
 
   return (
-    <div>
-      <button onClick={() => tweetNumber = (tweetNumber + 1)}>Next Tweet</button>
-      <FakeTweet config={{
-        user: {
-          nickname: nickname,
-          name: name,
-          avatar: avatar,
-          verified: false,
-          locked: false
-        },
-        display: "default",
-        text: text,
-        image: "",
-        date: new Date(date).toLocaleString('en-US'),
-        app: "Twitter for AI",
-        retweets: retweets,
-        quotedTweets: quotedTweets,
-        likes: likes
-      }} />
-    </div>
+    <FakeTweet config={{
+      user: {
+        nickname: nickname,
+        name: name,
+        avatar: avatar,
+        verified: false,
+        locked: false
+      },
+      display: "default",
+      text: text,
+      image: "",
+      date: new Date(date).toLocaleString('en-US'),
+      app: "Twitter for AI",
+      retweets: retweets,
+      quotedTweets: quotedTweets,
+      likes: likes
+    }} />
   )
 }
