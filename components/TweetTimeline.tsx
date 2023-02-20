@@ -28,6 +28,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
       .then((data) => {
         setData(data)
         console.log("first data: ", data)
+        console.log("first tweetNumber: ", tweetNumber)
         nickname = data[tweetNumber].author.name ?? "New Placeholder";
         name = data[tweetNumber].author.username ?? "New Placeholder";
         avatar = data[tweetNumber].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
@@ -63,6 +64,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     if (loading) return () => {<p>Loading Tweet...</p>}
     if (!data) return () => {<p>No Tweet :/</p>}
     console.log("second data: ", data)
+    console.log("second tweetNumber: ", tweetNumber)
     nickname = data[tweetNumber].author.name ?? "New Placeholder";
     name = data[tweetNumber].author.username ?? "New Placeholder";
     avatar = data[tweetNumber].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
