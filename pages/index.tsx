@@ -36,8 +36,6 @@ const Home: NextPage = () => {
     return await homeTimeline;
   };
 
-  const tweetList = getTweets();
-
   return (
     <div className="flex flex-col items-center">
       {/* THIS HANDLES SIGNING IN W TWITTER */}

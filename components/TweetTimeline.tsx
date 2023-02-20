@@ -17,7 +17,7 @@ interface TweetTimeline {
 
 export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Element {
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([] as Array<any>);
   const [loading, setLoading] = useState(false);
   // const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -60,16 +60,15 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
   }, [])
 
   useEffect(() => {
-    var tweetList: Array<any> = data;
     console.log("data: ", data)
-    nickname = tweetList[tweetNumber].author.name ?? "New Placeholder";
-    name = tweetList[tweetNumber].author.username ?? "New Placeholder";
-    avatar = tweetList[tweetNumber].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-    text = tweetList[tweetNumber].tweet.text ?? "New Placeholder";
-    date = Date.parse(tweetList[tweetNumber].tweet.created_at) ?? "New Placeholder";
-    retweets = tweetList[tweetNumber].tweet.public_metrics.retweet_count ?? 10;
-    quotedTweets = tweetList[tweetNumber].tweet.public_metrics.quote_count ?? 10;
-    likes = tweetList[tweetNumber].tweet.public_metrics.like_count ?? 10;
+    nickname = data[tweetNumber].author.name ?? "New Placeholder";
+    name = data[tweetNumber].author.username ?? "New Placeholder";
+    avatar = data[tweetNumber].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+    text = data[tweetNumber].tweet.text ?? "New Placeholder";
+    date = Date.parse(data[tweetNumber].tweet.created_at) ?? "New Placeholder";
+    retweets = data[tweetNumber].tweet.public_metrics.retweet_count ?? 10;
+    quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
+    likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
     return () => {
       <FakeTweet config={{
         user: {
