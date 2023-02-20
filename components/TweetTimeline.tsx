@@ -28,6 +28,7 @@ export default function TweetTimeline(): JSX.Element {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
   useEffect(() => {
     setLoading(true)
@@ -63,7 +64,7 @@ export default function TweetTimeline(): JSX.Element {
       display: "default",
       text: text,
       image: "",
-      date: date.toLocaleString('en-US'),
+      date: new Date(date).toLocaleString('en-US'),
       app: "Twitter for iPhone",
       retweets: retweets,
       quotedTweets: quotedTweets,
