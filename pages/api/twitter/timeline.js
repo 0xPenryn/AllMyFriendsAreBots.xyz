@@ -35,7 +35,7 @@ export default async (req, res) => {
         });
       } */
       // to avoid media in tweets
-      if (!includes.poll(tweet) && !includes.quote(tweet) && !includes.medias(tweet)) {
+      if (!includes.poll(tweet) && !includes.quote(tweet) && !includes.media(tweet)) {
         body.push({
           tweet: tweet,
           author: includes.author(tweet),
