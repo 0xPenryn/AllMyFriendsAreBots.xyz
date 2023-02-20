@@ -29,14 +29,14 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
       .then((res) => res.json())
       .then((data) => {
         setData(data)
-        // console.log("first data: ", data)
+        console.log("first data: ", data)
         console.log("first tweetNumber: ", tweetNumber)
         nickname = data[tweetNumber].author.username ?? "New Placeholder";
         console.log("first nickname: ", nickname)
         name = data[tweetNumber].author.name ?? "New Placeholder";
         avatar = data[tweetNumber].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
         text = data[tweetNumber].tweet.text ?? "New Placeholder";
-        for (let i = 0; i < data[tweetNumber].includes.media.length; i++) {
+        for (let i = 0; i < data[tweetNumber].includes.medias.length; i++) {
           image.push(data[tweetNumber].includes.media[i].url)
         }
         date = Date.parse(data[tweetNumber].tweet.created_at) ?? "New Placeholder";
