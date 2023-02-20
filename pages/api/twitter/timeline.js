@@ -26,11 +26,19 @@ export default async (req, res) => {
     const includes = new TwitterV2IncludesHelper(homeTimeline);
     const body = [];
     for (const tweet of homeTimeline.tweets) {
-      if (!includes.poll(tweet) && !includes.quote(tweet)) {
+      // to show media in tweets
+      /* if (!includes.poll(tweet) && !includes.quote(tweet)) {
         body.push({
           tweet: tweet,
           author: includes.author(tweet),
           media: includes.medias(tweet) ?? null,
+        });
+      } */
+      // to avoid media in tweets
+      if (!includes.poll(tweet) && !includes.quote(tweet) && !includes.medias(tweet)) {
+        body.push({
+          tweet: tweet,
+          author: includes.author(tweet),
         });
       }
     }
