@@ -28,7 +28,7 @@ export default function TweetTimeline(): JSX.Element {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  // const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
   useEffect(() => {
     setLoading(true)
@@ -49,8 +49,8 @@ export default function TweetTimeline(): JSX.Element {
       })
   }, [])
 
-  if (loading) return <p>Loading Timeline...</p>
-  if (!data) return <p>No timeline</p>
+  if (loading) return <p>Loading Tweet...</p>
+  if (!data) return <p>No tweet :\</p>
 
   return (
     <FakeTweet config={{
@@ -65,7 +65,7 @@ export default function TweetTimeline(): JSX.Element {
       text: text,
       image: "",
       date: new Date(date).toLocaleString('en-US'),
-      app: "Twitter for iPhone",
+      app: "¯\_(ツ)_/¯",
       retweets: retweets,
       quotedTweets: quotedTweets,
       likes: likes
