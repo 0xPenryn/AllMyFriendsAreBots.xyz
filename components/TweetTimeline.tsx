@@ -24,7 +24,7 @@ var retweets = 1;
 var quotedTweets = 0;
 var likes = 5;
 
-interface TweetTimeline{
+interface TweetTimeline {
   tweetNumber: number;
 }
 
@@ -57,22 +57,25 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
   if (!data) return <p>No tweet :/</p>
 
   return (
-    <FakeTweet config={{
-      user: {
-        nickname: nickname,
-        name: name,
-        avatar: avatar,
-        verified: false,
-        locked: false
-      },
-      display: "default",
-      text: text,
-      image: "",
-      date: new Date(date).toLocaleString('en-US'),
-      app: "Twitter for AI",
-      retweets: retweets,
-      quotedTweets: quotedTweets,
-      likes: likes
-    }} />
+    <div>
+      <button onClick={() => tweetNumber = (tweetNumber + 1)}>Next Tweet</button>
+      <FakeTweet config={{
+        user: {
+          nickname: nickname,
+          name: name,
+          avatar: avatar,
+          verified: false,
+          locked: false
+        },
+        display: "default",
+        text: text,
+        image: "",
+        date: new Date(date).toLocaleString('en-US'),
+        app: "Twitter for AI",
+        retweets: retweets,
+        quotedTweets: quotedTweets,
+        likes: likes
+      }} />
+    </div>
   )
 }

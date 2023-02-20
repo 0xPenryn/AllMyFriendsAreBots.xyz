@@ -6,9 +6,6 @@ import FakeTweet from "fake-tweet";
 import TweetTimeline from "../components/TweetTimeline";
 
 const Home: NextPage = () => {
-
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
 
   const blankTweet = { // used for fake tweet testing
@@ -28,23 +25,6 @@ const Home: NextPage = () => {
     quotedTweets: 0,
     likes: 5
   };
-
-  const getTweets = async () => {
-    const homeTimeline = await fetch("/api/twitter/timeline")
-      .then(
-        (response) => response.json()
-      );
-  
-    return await homeTimeline;
-  };
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   getTweets().then((data) => {
-  //     setData(data);
-  //     setLoading(false);
-  //   });
-  // }, [data]);
 
   var tweetNumber = 0;
 
@@ -67,8 +47,6 @@ const Home: NextPage = () => {
         <title>is this tweet ai? idk</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <button onClick={() => tweetNumber = (tweetNumber + 1)}>Next Tweet</button>
 
       <TweetTimeline tweetNumber={tweetNumber} />
     </div>
