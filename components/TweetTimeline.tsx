@@ -76,25 +76,25 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     retweets = data[tweetNumber].tweet.public_metrics.retweet_count ?? 10;
     quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
     likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
-    return () => {
-      <FakeTweet config={{
-        user: {
-          nickname: nickname,
-          name: name,
-          avatar: avatar,
-          verified: false,
-          locked: false
-        },
-        display: "default",
-        text: text,
-        image: "",
-        date: new Date(date).toLocaleString('en-US'),
-        app: "Twitter for AI",
-        retweets: retweets,
-        quotedTweets: quotedTweets,
-        likes: likes
-      }} />
-    }
+    // return () => {
+    //   <FakeTweet config={{
+    //     user: {
+    //       nickname: nickname,
+    //       name: name,
+    //       avatar: avatar,
+    //       verified: false,
+    //       locked: false
+    //     },
+    //     display: "default",
+    //     text: text,
+    //     image: "",
+    //     date: new Date(date).toLocaleString('en-US'),
+    //     app: "Twitter for AI",
+    //     retweets: retweets,
+    //     quotedTweets: quotedTweets,
+    //     likes: likes
+    //   }} />
+    // }
   }, [tweetNumber])
 
   if (loading) return <p>Loading Tweet...</p>
