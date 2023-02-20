@@ -95,7 +95,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     //     likes: likes
     //   }} />
     // }
-  }, [tweetNumber])
+  }, [tweetNumber, handoff])
 
   if (loading) return <p>Loading Tweet...</p>
   if (!data) return <p>No tweet :/</p>
