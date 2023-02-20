@@ -20,6 +20,9 @@ var name = "Placeholder";
 var avatar = "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
 var text = "Placeholder";
 var date = "Placeholder";
+var retweets = 1;
+var quotedTweets = 0;
+var likes = 5;
 
 export default function TweetTimeline(): JSX.Element {
 
@@ -37,7 +40,10 @@ export default function TweetTimeline(): JSX.Element {
         name = data[0].author.username ?? "New Placeholder";
         avatar = data[0].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
         text = data[0].tweet.text ?? "New Placeholder";
-        date = data[0].tweet.created_at ?? "New Placeholder";
+        date = Date.parse(data[0].tweet.created_at).toLocaleString('en-US') ?? "New Placeholder";
+        retweets = data[0].tweet.public_metrics.retweet_count ?? 10;
+        quotedTweets = data[0].tweet.public_metrics.quote_count ?? 10;
+        likes = data[0].tweet.public_metrics.like_count ?? 10;
         setLoading(false)
       })
   }, [])
