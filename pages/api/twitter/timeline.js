@@ -16,20 +16,22 @@ export default async (req, res) => {
 
   try {
     const client = new TwitterApi(token.access_token);
-    const homeTimeline = await client.v2.homeTimeline({ 
+    const homeTimeline = await client.v2.homeTimeline({
       'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
-      expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id' ],
-      'media.fields': ['url'], 
+      expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
+      'media.fields': ['url'],
       'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
       exclude: ['retweets', 'replies'],
     });
     const includes = new TwitterV2IncludesHelper(homeTimeline);
     const body = [];
     for (const tweet of homeTimeline.tweets) {
-      body.push({
-        tweet: tweet, 
-        author: includes.author(tweet)
-      });
+      if (!includes.poll(tweet) && !includes.quote(tweet)) {
+        body.push({
+          tweet: tweet,
+          author: includes.author(tweet)
+        });
+      }
     }
 
     return res.status(200).json(body);

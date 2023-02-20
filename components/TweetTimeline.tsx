@@ -6,6 +6,7 @@ var nickname = "Placeholder";
 var name = "Placeholder";
 var avatar = "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
 var text = "Placeholder";
+var image: Array<string> = [];
 var date: number = 0;
 var retweets = 1;
 var quotedTweets = 0;
@@ -35,6 +36,9 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         name = data[tweetNumber].author.name ?? "New Placeholder";
         avatar = data[tweetNumber].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
         text = data[tweetNumber].tweet.text ?? "New Placeholder";
+        for (let i = 0; i < data[tweetNumber].tweet.attachments.media_keys.length; i++) {
+          image.push(data[tweetNumber].includes.media[i].url)
+        }
         date = Date.parse(data[tweetNumber].tweet.created_at) ?? "New Placeholder";
         retweets = data[tweetNumber].tweet.public_metrics.retweet_count ?? 10;
         quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
@@ -57,6 +61,9 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     name = data[tweetNumber].author.name ?? "New Placeholder";
     avatar = data[tweetNumber].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
     text = data[tweetNumber].tweet.text ?? "New Placeholder";
+    for (let i = 0; i < data[tweetNumber].tweet.attachments.media_keys.length; i++) {
+      image.push(data[tweetNumber].includes.media[i].url)
+    }
     date = Date.parse(data[tweetNumber].tweet.created_at) ?? "New Placeholder";
     retweets = data[tweetNumber].tweet.public_metrics.retweet_count ?? 10;
     quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
@@ -73,9 +80,9 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         },
         display: "default",
         text: text,
-        image: "",
+        image: image,
         date: new Date(date).toLocaleString('en-US'),
-        app: "Twitter for AI",
+        app: "Twitter for AI effect",
         retweets: retweets,
         quotedTweets: quotedTweets,
         likes: likes
@@ -97,7 +104,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
       },
       display: "default",
       text: text,
-      image: "",
+      image: image,
       date: new Date(date).toLocaleString('en-US'),
       app: "Twitter for AI",
       retweets: retweets,
