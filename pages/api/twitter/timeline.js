@@ -5,7 +5,7 @@ import { TwitterV2IncludesHelper } from 'twitter-api-v2';
 // https://github.com/PLhery/node-twitter-api-v2/blob/master/doc/paginators.md for reference here
 
 export default async (req, res) => {
-  
+
   const token = await getToken({ req });
 
   if (!token) {
@@ -17,7 +17,7 @@ export default async (req, res) => {
   try {
     const client = new TwitterApi(token.access_token);
     const homeTimeline = await client.v2.homeTimeline({ 
-      'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld'],
+      'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
       expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id' ],
       'media.fields': ['url'], 
       'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
