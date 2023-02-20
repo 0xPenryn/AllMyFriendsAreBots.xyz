@@ -19,7 +19,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
 
   const [data, setData] = useState([] as Array<any>);
   const [loading, setLoading] = useState(true);
-  // const [handoff, setHandoff] = useState(false);
+  const [handoff, setHandoff] = useState(false);
   // const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         // quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
         // likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
         // setLoading(false)
-        // setHandoff(true)
+        setHandoff(true)
         console.log("end of first effect")
       })
   }, [])
@@ -63,7 +63,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
     setLoading(false)
     console.log("end of second effect")
-  }, [tweetNumber, data])
+  }, [tweetNumber, handoff, data])
 
   return (
     <FakeTweet config={{
@@ -78,7 +78,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
       text: text,
       image: "",
       date: new Date(date).toLocaleString('en-US'),
-      app: "Twitter for AI (outside effect)",
+      app: "Twitter for AI",
       retweets: retweets,
       quotedTweets: quotedTweets,
       likes: likes
