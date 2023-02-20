@@ -9,15 +9,15 @@ const Home: NextPage = () => {
 
   const [tweetIndex, setTweetIndex] = useState(0);
 
-  const getTweets = async () => {
-    const homeTimeline = await fetch("/api/twitter/timeline")
-      .then(
-        (response) => response.json()
-      );
-    return await homeTimeline;
-  };
+  // const getTweets = async () => {
+  //   const homeTimeline = await fetch("/api/twitter/timeline")
+  //     .then(
+  //       (response) => response.json()
+  //     );
+  //   return await homeTimeline;
+  // };
 
-  {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
+  {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */}
 
   return (
     <div className="flex flex-col items-center">
