@@ -37,12 +37,31 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
         likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
         setLoading(false)
+        return () => {
+          <FakeTweet config={{
+            user: {
+              nickname: nickname,
+              name: name,
+              avatar: avatar,
+              verified: false,
+              locked: false
+            },
+            display: "default",
+            text: text,
+            image: "",
+            date: new Date(date).toLocaleString('en-US'),
+            app: "Twitter for AI",
+            retweets: retweets,
+            quotedTweets: quotedTweets,
+            likes: likes
+          }} />
+        }
       })
-  }, [tweetNumber])
+  }, [])
 
   useEffect(() => {
     var tweetList: Array<any> = data;
-    // console.log("data: ", data)
+    console.log("data: ", data)
     nickname = tweetList[tweetNumber].author.name ?? "New Placeholder";
     name = tweetList[tweetNumber].author.username ?? "New Placeholder";
     avatar = tweetList[tweetNumber].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
@@ -51,6 +70,25 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     retweets = tweetList[tweetNumber].tweet.public_metrics.retweet_count ?? 10;
     quotedTweets = tweetList[tweetNumber].tweet.public_metrics.quote_count ?? 10;
     likes = tweetList[tweetNumber].tweet.public_metrics.like_count ?? 10;
+    return () => {
+      <FakeTweet config={{
+        user: {
+          nickname: nickname,
+          name: name,
+          avatar: avatar,
+          verified: false,
+          locked: false
+        },
+        display: "default",
+        text: text,
+        image: "",
+        date: new Date(date).toLocaleString('en-US'),
+        app: "Twitter for AI",
+        retweets: retweets,
+        quotedTweets: quotedTweets,
+        likes: likes
+      }} />
+    }
   }, [tweetNumber])
 
   if (loading) return <p>Loading Tweet...</p>
