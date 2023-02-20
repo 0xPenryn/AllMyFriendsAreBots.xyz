@@ -19,6 +19,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
 
   const [data, setData] = useState([] as Array<any>);
   const [loading, setLoading] = useState(true);
+  const [handoff, setHandoff] = useState(false);
   // const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
   useEffect(() => {
@@ -38,6 +39,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
         likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
         setLoading(false)
+        setHandoff(true)
         return () => {
           <FakeTweet config={{
             user: {
@@ -61,8 +63,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
   }, [])
 
   useEffect(() => {
-    // if (loading) return () => {<p>Loading Tweet...</p>}
-    // if (!data) return () => {<p>No Tweet :/</p>}
+    if (!handoff) return () => {<p>what the hell is going on</p>}
     console.log("second data: ", data)
     console.log("second tweetNumber: ", tweetNumber)
     nickname = data[tweetNumber].author.name ?? "New Placeholder";
