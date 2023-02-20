@@ -45,9 +45,6 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
       })
   }, [])
 
-  if (loading) return <p>Loading Tweet...</p>
-  if (!data) return <p>No tweet :/</p>
-
   useEffect(() => {
     // if (!handoff) return () => {<p>what the hell is going on</p>}
     // console.log("second data: ", data)
@@ -64,6 +61,9 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     setLoading(false)
     console.log("end of second effect")
   }, [tweetNumber, handoff, data])
+
+  if (loading) return <p>Loading Tweet...</p>
+  if (!data) return <p>No tweet :/</p>
 
   return (
     <FakeTweet config={{
