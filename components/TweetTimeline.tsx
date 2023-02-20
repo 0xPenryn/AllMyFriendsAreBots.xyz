@@ -60,6 +60,8 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
   }, [])
 
   useEffect(() => {
+    if (loading) return () => {<p>Loading Tweet...</p>}
+    if (!data) return () => {<p>No Tweet :/</p>}
     console.log("data: ", data)
     nickname = data[tweetNumber].author.name ?? "New Placeholder";
     name = data[tweetNumber].author.username ?? "New Placeholder";
@@ -69,7 +71,6 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     retweets = data[tweetNumber].tweet.public_metrics.retweet_count ?? 10;
     quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
     likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
-    setTimeout(() => {}, 10000)
     return () => {
       <FakeTweet config={{
         user: {
