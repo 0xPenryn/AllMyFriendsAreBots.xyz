@@ -69,6 +69,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     retweets = data[tweetNumber].tweet.public_metrics.retweet_count ?? 10;
     quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
     likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
+    setTimeout(() => {}, 10000)
     return () => {
       <FakeTweet config={{
         user: {
