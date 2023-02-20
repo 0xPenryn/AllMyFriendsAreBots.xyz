@@ -35,7 +35,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         console.log("first nickname: ", nickname)
         name = data[tweetNumber].author.name ?? "New Placeholder";
         avatar = data[tweetNumber].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-        text = data[tweetNumber].tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '') ?? "New Placeholder";
+        text = data[tweetNumber].tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '').replace(/&amp;/g, "&") ?? "New Placeholder";
         image = [];
         for (let i = 0; i < data[tweetNumber].tweet?.attachments?.media_keys.length ?? 0; i++) {
           image.push(data[tweetNumber].media[i].url)
@@ -61,7 +61,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     console.log("second nickname: ", nickname)
     name = data[tweetNumber].author.name ?? "New Placeholder";
     avatar = data[tweetNumber].author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-    text = data[tweetNumber].tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '') ?? "New Placeholder";
+    text = data[tweetNumber].tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '').replace(/&amp;/g, "&") ?? "New Placeholder";
     image = [];
     for (let i = 0; i < data[tweetNumber].tweet?.attachments?.media_keys.length ?? 0; i++) {
       image.push(data[tweetNumber].media[i].url)
