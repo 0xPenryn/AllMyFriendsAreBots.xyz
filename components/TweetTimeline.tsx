@@ -38,7 +38,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         text = data[tweetNumber].tweet.text ?? "New Placeholder";
         image = [];
         for (let i = 0; i < data[tweetNumber].tweet?.attachments?.media_keys.length ?? 0; i++) {
-          image.push(data[tweetNumber].includes.media[i].url)
+          image.push(data[tweetNumber].media[i].url)
         }
         date = Date.parse(data[tweetNumber].tweet.created_at) ?? "New Placeholder";
         retweets = data[tweetNumber].tweet.public_metrics.retweet_count ?? 10;
@@ -64,7 +64,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     text = data[tweetNumber].tweet.text ?? "New Placeholder";
     image = [];
     for (let i = 0; i < data[tweetNumber].tweet?.attachments?.media_keys.length ?? 0; i++) {
-      image.push(data[tweetNumber].includes.media[i].url)
+      image.push(data[tweetNumber].media[i].url)
     }
     date = Date.parse(data[tweetNumber].tweet.created_at) ?? "New Placeholder";
     retweets = data[tweetNumber].tweet.public_metrics.retweet_count ?? 10;

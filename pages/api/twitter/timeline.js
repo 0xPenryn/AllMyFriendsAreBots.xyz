@@ -29,7 +29,8 @@ export default async (req, res) => {
       if (!includes.poll(tweet) && !includes.quote(tweet)) {
         body.push({
           tweet: tweet,
-          author: includes.author(tweet)
+          author: includes.author(tweet),
+          media: includes.media(tweet),
         });
       }
     }
