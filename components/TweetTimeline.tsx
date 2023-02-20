@@ -19,7 +19,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
 
   const [data, setData] = useState([] as Array<any>);
   const [loading, setLoading] = useState(true);
-  const [handoff, setHandoff] = useState(false);
+  // const [handoff, setHandoff] = useState(false);
   // const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
   useEffect(() => {
@@ -28,8 +28,8 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
       .then((res) => res.json())
       .then((data) => {
         setData(data)
-        // // console.log("first data: ", data)
-        // console.log("first tweetNumber: ", tweetNumber)
+        // console.log("first data: ", data)
+        console.log("first tweetNumber: ", tweetNumber)
         // nickname = data[tweetNumber].author.username ?? "New Placeholder";
         // console.log("first nickname: ", nickname)
         // name = data[tweetNumber].author.name ?? "New Placeholder";
@@ -40,32 +40,16 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         // quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
         // likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
         // setLoading(false)
-        setHandoff(true)
+        // setHandoff(true)
         console.log("end of first effect")
-        return () => {
-          <FakeTweet config={{
-            user: {
-              nickname: nickname,
-              name: name,
-              avatar: avatar,
-              verified: false,
-              locked: false
-            },
-            display: "default",
-            text: text,
-            image: "",
-            date: new Date(date).toLocaleString('en-US'),
-            app: "Twitter for AI (first effect)",
-            retweets: retweets,
-            quotedTweets: quotedTweets,
-            likes: likes
-          }} />
-        }
       })
   }, [])
 
+  if (loading) return <p>Loading Tweet...</p>
+  if (!data) return <p>No tweet :/</p>
+
   useEffect(() => {
-    if (!handoff) return () => {<p>what the hell is going on</p>}
+    // if (!handoff) return () => {<p>what the hell is going on</p>}
     // console.log("second data: ", data)
     console.log("second tweetNumber: ", tweetNumber)
     nickname = data[tweetNumber].author.username ?? "New Placeholder";
@@ -79,29 +63,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
     setLoading(false)
     console.log("end of second effect")
-    return () => {
-      <FakeTweet config={{
-        user: {
-          nickname: nickname,
-          name: name,
-          avatar: avatar,
-          verified: false,
-          locked: false
-        },
-        display: "default",
-        text: text,
-        image: "",
-        date: new Date(date).toLocaleString('en-US'),
-        app: "Twitter for AI (second effect)",
-        retweets: retweets,
-        quotedTweets: quotedTweets,
-        likes: likes
-      }} />
-    }
-  }, [tweetNumber, handoff, data])
-
-  if (loading) return <p>Loading Tweet...</p>
-  if (!data) return <p>No tweet :/</p>
+  }, [tweetNumber, data])
 
   return (
     <FakeTweet config={{
