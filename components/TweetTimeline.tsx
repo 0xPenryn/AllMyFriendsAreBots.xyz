@@ -41,25 +41,25 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
         setLoading(false)
         setHandoff(true)
-        return () => {
-          <FakeTweet config={{
-            user: {
-              nickname: nickname,
-              name: name,
-              avatar: avatar,
-              verified: false,
-              locked: false
-            },
-            display: "default",
-            text: text,
-            image: "",
-            date: new Date(date).toLocaleString('en-US'),
-            app: "Twitter for AI",
-            retweets: retweets,
-            quotedTweets: quotedTweets,
-            likes: likes
-          }} />
-        }
+        // return () => {
+        //   <FakeTweet config={{
+        //     user: {
+        //       nickname: nickname,
+        //       name: name,
+        //       avatar: avatar,
+        //       verified: false,
+        //       locked: false
+        //     },
+        //     display: "default",
+        //     text: text,
+        //     image: "",
+        //     date: new Date(date).toLocaleString('en-US'),
+        //     app: "Twitter for AI",
+        //     retweets: retweets,
+        //     quotedTweets: quotedTweets,
+        //     likes: likes
+        //   }} />
+        // }
       })
   }, [])
 
