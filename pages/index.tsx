@@ -46,6 +46,8 @@ const Home: NextPage = () => {
   //   });
   // }, [data]);
 
+  var tweetNumber = 0;
+
   return (
     <div className="flex flex-col items-center">
       {/* THIS HANDLES SIGNING IN W TWITTER */}
@@ -66,7 +68,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <TweetTimeline />
+      <button onClick={() => tweetNumber = (tweetNumber + 1)}>Next Tweet</button>
+
+      <TweetTimeline tweetNumber={tweetNumber} />
     </div>
   );
 };
