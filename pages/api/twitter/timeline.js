@@ -30,7 +30,7 @@ export default async (req, res) => {
         body.push({
           tweet: tweet,
           author: includes.author(tweet),
-          media: includes.media(tweet),
+          media: includes.medias(tweet) ?? null,
         });
       }
     }
