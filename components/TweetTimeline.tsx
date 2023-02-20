@@ -51,7 +51,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
         setLoading(false)
       })
-  }, [])
+  }, [tweetNumber])
 
   // useEffect(() => {
   //   // console.log("data: ", data)
