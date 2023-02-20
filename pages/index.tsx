@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession } from 'next-auth/react';
-import FakeTweet from "fake-tweet";
 import TweetTimeline from "../components/TweetTimeline";
 
 const Home: NextPage = () => {
