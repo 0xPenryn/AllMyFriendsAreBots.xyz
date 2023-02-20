@@ -8,24 +8,6 @@ import TweetTimeline from "../components/TweetTimeline";
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
 
-  const blankTweet = { // used for fake tweet testing
-    user: {
-      nickname: "twitter",
-      name: "Twitter",
-      avatar: "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg",
-      verified: false,
-      locked: false
-    },
-    display: "default",
-    text: "This is a placeholder tweet.",
-    image: "",
-    date: "3:32 PM · Feb 14, 1997",
-    app: "Twitter for iPhone",
-    retweets: 1,
-    quotedTweets: 0,
-    likes: 5
-  };
-
   const [tweetIndex, setTweetIndex] = useState(0);
 
   const getTweets = async () => {
