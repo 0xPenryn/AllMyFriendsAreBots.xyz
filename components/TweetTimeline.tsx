@@ -6,7 +6,7 @@ var nickname = "Placeholder";
 var name = "Placeholder";
 var avatar = "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
 var text = "Placeholder";
-var date: number;
+var date: number = 0;
 var retweets = 1;
 var quotedTweets = 0;
 var likes = 5;
@@ -62,6 +62,25 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
     likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
     console.log("end of second effect")
+    return () => {
+      <FakeTweet config={{
+        user: {
+          nickname: nickname,
+          name: name,
+          avatar: avatar,
+          verified: false,
+          locked: false
+        },
+        display: "default",
+        text: text,
+        image: "",
+        date: new Date(date).toLocaleString('en-US'),
+        app: "Twitter for AI",
+        retweets: retweets,
+        quotedTweets: quotedTweets,
+        likes: likes
+      }} />
+    }
   }, [tweetNumber, handoff, data])
 
   if (loading) return <p>Loading Tweet...</p>
