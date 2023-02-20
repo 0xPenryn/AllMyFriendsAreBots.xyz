@@ -41,25 +41,26 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         // likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
         // setLoading(false)
         setHandoff(true)
-        // return () => {
-        //   <FakeTweet config={{
-        //     user: {
-        //       nickname: nickname,
-        //       name: name,
-        //       avatar: avatar,
-        //       verified: false,
-        //       locked: false
-        //     },
-        //     display: "default",
-        //     text: text,
-        //     image: "",
-        //     date: new Date(date).toLocaleString('en-US'),
-        //     app: "Twitter for AI",
-        //     retweets: retweets,
-        //     quotedTweets: quotedTweets,
-        //     likes: likes
-        //   }} />
-        // }
+        console.log("end of first effect")
+        return () => {
+          <FakeTweet config={{
+            user: {
+              nickname: nickname,
+              name: name,
+              avatar: avatar,
+              verified: false,
+              locked: false
+            },
+            display: "default",
+            text: text,
+            image: "",
+            date: new Date(date).toLocaleString('en-US'),
+            app: "Twitter for AI (first effect)",
+            retweets: retweets,
+            quotedTweets: quotedTweets,
+            likes: likes
+          }} />
+        }
       })
   }, [])
 
@@ -77,6 +78,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
     likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
     setLoading(false)
+    console.log("end of second effect")
     return () => {
       <FakeTweet config={{
         user: {
@@ -90,7 +92,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         text: text,
         image: "",
         date: new Date(date).toLocaleString('en-US'),
-        app: "Twitter for AI",
+        app: "Twitter for AI (second effect)",
         retweets: retweets,
         quotedTweets: quotedTweets,
         likes: likes
@@ -114,7 +116,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
       text: text,
       image: "",
       date: new Date(date).toLocaleString('en-US'),
-      app: "Twitter for AI",
+      app: "Twitter for AI (outside effect)",
       retweets: retweets,
       quotedTweets: quotedTweets,
       likes: likes
