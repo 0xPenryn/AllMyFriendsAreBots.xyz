@@ -40,7 +40,8 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         // quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
         // likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
         // setLoading(false)
-        setHandoff(true)
+        setLoading(false)
+        // setHandoff(true)
         console.log("end of first effect")
       })
   }, [])
@@ -58,7 +59,6 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     retweets = data[tweetNumber].tweet.public_metrics.retweet_count ?? 10;
     quotedTweets = data[tweetNumber].tweet.public_metrics.quote_count ?? 10;
     likes = data[tweetNumber].tweet.public_metrics.like_count ?? 10;
-    setLoading(false)
     console.log("end of second effect")
   }, [tweetNumber, handoff, data])
 
