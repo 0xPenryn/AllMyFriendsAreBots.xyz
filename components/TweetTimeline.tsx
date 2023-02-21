@@ -105,7 +105,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
       if (localStorage.getItem("tweetData") !== null) {
         console.log("local storage")
         setData(JSON.parse(localStorage.getItem("tweetData")!))
-        console.log("first data: ", data)
+        console.log("first from local storage data: ", data)
         console.log("end of effect")
         setLoading(false)
       } else {
@@ -114,6 +114,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
           .then((data) => {
             // setTweet(data, tweetNumber)
             setData(data)
+            localStorage.setItem("tweetData", JSON.stringify(data))
             console.log("first data: ", data)
             console.log("end of effect")
             setLoading(false)
