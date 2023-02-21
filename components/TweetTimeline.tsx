@@ -139,9 +139,9 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
   useEffect(() => {
     const thing = async () => {
       setTweet(data, tweetNumber, ans);
-      if (ans = "ai") {
-        await setTweetPost();
-      }
+      // if (ans = "ai") {
+      //   await setTweetPost();
+      // }
     }
     thing();
   }, [tweetNumber])
