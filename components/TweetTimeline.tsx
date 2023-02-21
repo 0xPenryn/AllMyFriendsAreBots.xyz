@@ -5,14 +5,14 @@ import { useState, useEffect } from "react";
 var prompt =
   "Generate a tweet that would fool a human into thinking it was written by a human, inspired by the following tweet in brackets: [";
 
-const [loadingOAI, setLoadingOAI] = useState(false);
+// const [loadingOAI, setLoadingOAI] = useState(false);
 
 async function generateTweet(e: any) {
   // const [tweetAI, setTweetAI] = useState("");
   var tweetAI = "";
   e.preventDefault();
   // setTweetAI("");
-  setLoadingOAI(true);
+  // setLoadingOAI(true);
   const response = await fetch("/api/openai/generate", {
     method: "POST",
     headers: {
@@ -98,7 +98,7 @@ function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
       quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? -1;
       likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? -1;
     })
-    }, [loadingOAI])
+    }, [])
   }
 }
 
@@ -115,7 +115,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
         setData(JSON.parse(localStorage.getItem("tweetData")!))
         console.log("first from local storage data: ", data)
         console.log("end of effect")
-        // setTweet(data, tweetNumber, ans);
+        setTweet(data, tweetNumber, ans);
         setLoading(false)
       } else {
         fetch('/api/twitter/timeline')
@@ -126,7 +126,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
             console.log("stored in local storage")
             console.log("first data: ", data)
             console.log("end of effect")
-            // setTweet(data, tweetNumber, ans);
+            setTweet(data, tweetNumber, ans);
             setLoading(false)
           }
           )
@@ -139,7 +139,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
   if (!data) return <p>No tweets :/</p>
   if (tweetNumber > data.length - 1) return <p>Out of tweets! Pat yourself on the back. Now sign out and sign back in, and you can get the newest Tweets from your timeline!</p>
 
-  setTweet(data, tweetNumber, ans);
+  // setTweet(data, tweetNumber, ans);
 
   return (
     <FakeTweet config={{
