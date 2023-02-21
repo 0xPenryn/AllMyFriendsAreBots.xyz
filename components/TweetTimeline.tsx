@@ -5,23 +5,16 @@ import { useState, useEffect } from "react";
 const prompt =
   "Generate a tweet that would fool a human into thinking it was written by a human, inspired by the following tweet in brackets: [";
 
-// const [loadingOAI, setLoadingOAI] = useState(false);
-
-
 var tweetAI = "";
 
-async function generateTweet(prompt: string) {
-  // const [tweetAI, setTweetAI] = useState("");
-  // e.preventDefault();
-  // setTweetAI("");
-  // setLoadingOAI(true);
+async function generateTweet(_prompt: string) {
   const response = await fetch("/api/openai/generate", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "prompt": prompt,
+      "prompt": _prompt,
     }),
   });
   console.log("Edge function returned.");
@@ -45,10 +38,7 @@ async function generateTweet(prompt: string) {
     done = doneReading;
     const chunkValue = decoder.decode(value);
     tweetAI = tweetAI + chunkValue;
-    // setTweetAI((prev) => prev + chunkValue);
   }
-
-  // setLoadingOAI(false);
   return tweetAI;
 };
 
@@ -67,95 +57,46 @@ interface TweetTimeline {
   ans: string;
 }
 
-async function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
-
-  if (ans == "human") {
+function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
+  // if (ans == "human") {
     nickname = data[tweetNumber]?.author.username!;
     name = data[tweetNumber]?.author.name!;
     avatar = data[tweetNumber]?.author.profile_image_url!;
     text = data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">") || ["Placeholder Tweet Number ", tweetNumber];
     image = [];
-    for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
-      image.push(data[tweetNumber]?.media[i].url)
-    }
+    // for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
+    //   image.push(data[tweetNumber]?.media[i].url)
+    // }
     date = Date.parse(data[tweetNumber]?.tweet.created_at)!;
     retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? -1;
     quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? -1;
     likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? -1;
-  } else {
-    const _prompt = prompt + data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") + "]"
-    // fetch("/api/openai/generate", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     "prompt": _prompt,
-    //   }),
-    // })
-    //   .then((response) => {
-    //     console.log("Edge function returned.");
+  // } else {
 
-    //     if (!response.ok) {
-    //       throw new Error(response.statusText);
-    //     }
+  //   const _prompt = prompt + data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") + "]"
+  //   const tweetText = await generateTweet(_prompt);
 
-    //     // This data is a ReadableStream
-    //     const stream = response.body;
-    //     if (!stream) {
-    //       console.log("No stream returned.")
-    //       return "";
-    //     }
-
-    //     const reader = stream.getReader();
-    //     const decoder = new TextDecoder();
-    //     let done = false;
-
-    //     while (!done) {
-    //       const { value, done: doneReading } = await reader.read();
-    //       done = doneReading;
-    //       const chunkValue = decoder.decode(value);
-    //       // tweetAI = tweetAI + chunkValue;
-    //       setTweetAI((prev) => prev + chunkValue);
-    //     }
-    //   })
-
-    const tweetText = await generateTweet(_prompt);
-
-
-
-
-    // fetch(new Request('/api/openai/aiTweet', { body: prompt }))
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     // localStorage.setItem("tweetData", JSON.stringify(data))
-    //     // console.log("stored in local storage")
-    //     // console.log("first data: ", data)
-    //     // console.log("end of effect")
-    //     setTweetAI(data);
-    //   }
-    //   )
-
-
-
-
-
-
-    nickname = data[tweetNumber]?.author.username!;
-    name = data[tweetNumber]?.author.name!;
-    avatar = data[tweetNumber]?.author.profile_image_url!;
-    // text = data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") || ["Placeholder Tweet Number ", tweetNumber];
-    text = tweetText;
-    image = [];
-    for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
-      image.push(data[tweetNumber]?.media[i].url)
-    }
-    date = Date.parse(data[tweetNumber]?.tweet.created_at)!;
-    retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? -1;
-    quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? -1;
-    likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? -1;
-  }
+  //   nickname = data[tweetNumber]?.author.username!;
+  //   name = data[tweetNumber]?.author.name!;
+  //   avatar = data[tweetNumber]?.author.profile_image_url!;
+  //   // text = data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") || ["Placeholder Tweet Number ", tweetNumber];
+  //   text = tweetText;
+  //   image = [];
+  //   // for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
+  //   //   image.push(data[tweetNumber]?.media[i].url)
+  //   // }
+  //   date = Date.parse(data[tweetNumber]?.tweet.created_at)!;
+  //   retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? -1;
+  //   quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? -1;
+  //   likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? -1;
+  // }
 }
+
+async function setTweetPost() {
+    const _prompt = prompt + text + "]"
+    const tweetText = await generateTweet(_prompt);
+    text = tweetText;
+  }
 
 export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX.Element {
 
@@ -195,12 +136,15 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
   if (tweetNumber > data.length - 1) return <p>Out of tweets! Pat yourself on the back. Now sign out and sign back in, and you can get the newest Tweets from your timeline!</p>
 
 
-useEffect(() => {
-  const thing = async () => {
-    await setTweet(data, tweetNumber, ans);
-  }
-  thing();
-}, [])
+  useEffect(() => {
+    const thing = async () => {
+      setTweet(data, tweetNumber, ans);
+      if (ans = "ai") {
+        await setTweetPost();
+      }
+    }
+    thing();
+  }, [tweetNumber])
 
   return (
     <FakeTweet config={{
