@@ -105,6 +105,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         // setLoading(false)
         setLoading(false)
         // setHandoff(true)
+        tweetNumber = tweetNumber + 1
         console.log("end of first effect")
       })
   }, [])

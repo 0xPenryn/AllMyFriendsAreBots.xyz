@@ -8,4 +8,5 @@ svg {
 
 img {
   display: inline;
+  vertical-align: top;
 }
