@@ -86,11 +86,6 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
   const [handoff, setHandoff] = useState(false);
 
   useEffect(() => {
-    setTweet(data, tweetNumber)
-    console.log("end of second effect")
-  }, [tweetNumber, handoff, data])
-
-  useEffect(() => {
     setLoading(true)
     fetch('/api/twitter/timeline')
       .then((res) => res.json())
@@ -102,11 +97,16 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         console.log("end of first effect")
       })
       setLoading(false)
-      setHandoff(true)
+      // setHandoff(true)
   }, [])
 
+  useEffect(() => {
+    setTweet(data, tweetNumber)
+    console.log("end of second effect")
+  }, [tweetNumber, handoff, data])
+
   if (loading) return <p>Loading Tweet...</p>
-  if (!data) return <p>No tweet :/</p>
+  if (!data) return <p>No tweets :/</p>
 
   return (
     <FakeTweet config={{
