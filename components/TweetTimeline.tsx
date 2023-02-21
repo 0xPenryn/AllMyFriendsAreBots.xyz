@@ -125,6 +125,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
 
   useEffect(() => {
     const updateEffect = async () => {
+      console.log("second tweetNumber: ", tweetNumber)
       setTweet(data, tweetNumber)
       console.log("end of second effect")
       return (
@@ -148,7 +149,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
       )
     }
     updateEffect();
-  }, [tweetNumber, handoff, data])
+  }, [tweetNumber])
 
   if (loading) return <p>Loading Tweet...</p>
   if (!data) return <p>No tweets :/</p>
