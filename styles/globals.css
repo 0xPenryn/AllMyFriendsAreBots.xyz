@@ -28,3 +28,9 @@ img {
 .tweet {
   width: 100%;
 }
+
+@supports (-webkit-touch-callout: none) {
+  .h-screen {
+    height: -webkit-fill-available;
+  }
+}
