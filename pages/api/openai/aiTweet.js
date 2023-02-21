@@ -4,7 +4,7 @@ export default async (req, res) => {
 
     try {
         var tweetAI = "";
-        const response = await fetch(process.env.VERCEL_URL + "/api/openai/generate", {
+        const response = await fetch("https://" + process.env.VERCEL_URL + "/api/openai/generate", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
