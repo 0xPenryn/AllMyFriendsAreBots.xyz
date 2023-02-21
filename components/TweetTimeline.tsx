@@ -5,13 +5,14 @@ import { useState, useEffect } from "react";
 var prompt =
   "Generate a tweet that would fool a human into thinking it was written by a human, inspired by the following tweet in brackets: [";
 
-// const [loadingOAI, setLoadingOAI] = useState(false);
+const [loadingOAI, setLoadingOAI] = useState(false);
 
 async function generateTweet(e: any) {
-  const [tweetAI, setTweetAI] = useState("");
+  // const [tweetAI, setTweetAI] = useState("");
+  var tweetAI = "";
   e.preventDefault();
-  setTweetAI("");
-  // setLoadingOAI(true);
+  // setTweetAI("");
+  setLoadingOAI(true);
   const response = await fetch("/api/openai/generate", {
     method: "POST",
     headers: {
@@ -30,7 +31,7 @@ async function generateTweet(e: any) {
   // This data is a ReadableStream
   const stream = response.body;
   if (!stream) {
-    return;
+    return "";
   }
 
   const reader = stream.getReader();
@@ -41,10 +42,12 @@ async function generateTweet(e: any) {
     const { value, done: doneReading } = await reader.read();
     done = doneReading;
     const chunkValue = decoder.decode(value);
-    setTweetAI((prev) => prev + chunkValue);
+    tweetAI = tweetAI + chunkValue;
+    // setTweetAI((prev) => prev + chunkValue);
   }
 
   // setLoadingOAI(false);
+  return tweetAI;
 };
 
 var nickname = "Placeholder";
@@ -78,8 +81,9 @@ function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
     likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? -1;
   } else {
     useEffect(() => {
+      (async () => {
       prompt = prompt + data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") + "]";
-      generateTweet;
+      const tweetAI = await generateTweet("");
       nickname = data[tweetNumber]?.author.username!;
       name = data[tweetNumber]?.author.name!;
       avatar = data[tweetNumber]?.author.profile_image_url!;
@@ -93,7 +97,8 @@ function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
       retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? -1;
       quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? -1;
       likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? -1;
-    }, [])
+    })
+    }, [loadingOAI])
   }
 }
 
@@ -124,7 +129,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
             // setTweet(data, tweetNumber, ans);
             setLoading(false)
           }
-        )
+          )
       }
     }
     loadEffect();
