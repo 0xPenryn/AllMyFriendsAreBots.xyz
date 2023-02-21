@@ -62,6 +62,21 @@ interface TweetTimeline {
 //   setLoadingOAI(false);
 // };
 
+function setTweet(data: Array<any>, tweetNumber: number) {
+  nickname = data[tweetNumber]?.author.username ?? ["Account", tweetNumber];
+  name = data[tweetNumber]?.author.name ?? ["Account ", tweetNumber];
+  avatar = data[tweetNumber]?.author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+  text = data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") || ["Placeholder Tweet Number ", tweetNumber];
+  image = [];
+  for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
+    image.push(data[tweetNumber]?.media[i].url)
+  }
+  date = Date.parse(data[tweetNumber]?.tweet.created_at) ?? Date();
+  retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? -1;
+  quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? -1;
+  likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? -1;
+}
+
 export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Element {
 
   const [data, setData] = useState([] as Array<any>);
@@ -71,23 +86,10 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
 
   useEffect(() => {
     // if (!handoff) return () => {<p>what the hell is going on</p>}
-    if (loading) return () => { <p>Loading Tweet...</p> }
-    if (!data) return () => { <p>No Tweet :/</p> }
+    // if (loading) return () => { <p>Loading Tweet...</p> }
+    // if (!data) return () => { <p>No Tweet :/</p> }
     // console.log("second data: ", data)
-    console.log("second tweetNumber: ", tweetNumber)
-    nickname = data[tweetNumber]?.author.username ?? ["New Placeholder ", tweetNumber];
-    console.log("second nickname: ", nickname)
-    name = data[tweetNumber]?.author.name ?? ["New Placeholder ", tweetNumber];
-    avatar = data[tweetNumber]?.author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-    text = data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") || ["Placeholder Tweet ", tweetNumber];
-    image = [];
-    for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
-      image.push(data[tweetNumber]?.media[i].url)
-    }
-    date = Date.parse(data[tweetNumber]?.tweet.created_at) ?? "New Placeholder";
-    retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? 10;
-    quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? 10;
-    likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? 10;
+    setTweet(data, tweetNumber)
     console.log("end of second effect")
   }, [tweetNumber, handoff, data])
 
@@ -99,19 +101,7 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
         setData(data)
         console.log("first data: ", data)
         console.log("first tweetNumber: ", tweetNumber)
-        nickname = data[tweetNumber]?.author.username ?? "New Placeholder";
-        console.log("first nickname: ", nickname)
-        name = data[tweetNumber]?.author.name ?? "New Placeholder";
-        avatar = data[tweetNumber]?.author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-        text = data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") || "New Placeholder";
-        image = [];
-        for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
-          image.push(data[tweetNumber].media[i].url)
-        }
-        date = Date.parse(data[tweetNumber]?.tweet.created_at) ?? "New Placeholder";
-        retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? 10;
-        quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? 10;
-        likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? 10;
+        setTweet(data, tweetNumber)
         // setLoading(false)
         setLoading(false)
         // setHandoff(true)

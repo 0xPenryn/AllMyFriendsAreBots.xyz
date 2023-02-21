@@ -25,7 +25,9 @@ const Home: NextPage = () => {
       {/* {session && <> */}
       Signed in as {session?.user?.name ?? "no user object"} <br />
       <button onClick={() => signOut()}>Sign out</button> <br />
+      {/* <div className="tweet"> */}
       <TweetTimeline tweetNumber={tweetIndex} />
+      {/* </div> <br /> */}
       <div className="flex flex-row">
         <button className="mx-5" onClick={() => setTweetIndex(tweetIndex + 1)}>Human</button>
         <button className="mx-5" onClick={() => setTweetIndex(tweetIndex + 1)}>AI</button>
