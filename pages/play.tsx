@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   return (
     <div className="flex flex-col h-screen justify-between items-center">
       <Head>
-        <title>is this tweet ai? idk</title>
+        <title>PoP Game</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="self-stretch flex flex-nowrap flex-row m-5 items-center justify-center">
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
           <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => setTweetIndex(tweetIndex + 1)}>AI</button>
         </div>
       </div>
-      <button className="bg-slate-400 text-white rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://google.com'}>Read more</button>
+      <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://blog.worldcoin.org'}>Read more about Proof-of-Personhood</button>
     </div>
   );
 };
