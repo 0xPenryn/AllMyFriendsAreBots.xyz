@@ -123,36 +123,38 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     loadEffect();
   }, [])
 
-  useEffect(() => {
-    const updateEffect = async () => {
-      console.log("second tweetNumber: ", tweetNumber)
-      setTweet(data, tweetNumber)
-      console.log("end of second effect")
-      return (
-        <FakeTweet config={{
-          user: {
-            nickname: nickname,
-            name: name,
-            avatar: avatar,
-            verified: false,
-            locked: false
-          },
-          display: "default",
-          text: text,
-          image: image,
-          date: new Date(date).toLocaleString('en-US'),
-          app: "Twitter for AI",
-          retweets: retweets,
-          quotedTweets: quotedTweets,
-          likes: likes
-        }} />
-      )
-    }
-    updateEffect();
-  }, [tweetNumber])
+  // useEffect(() => {
+  //   const updateEffect = async () => {
+  //     console.log("second tweetNumber: ", tweetNumber)
+  //     setTweet(data, tweetNumber)
+  //     console.log("end of second effect")
+  //     return (
+  //       <FakeTweet config={{
+  //         user: {
+  //           nickname: nickname,
+  //           name: name,
+  //           avatar: avatar,
+  //           verified: false,
+  //           locked: false
+  //         },
+  //         display: "default",
+  //         text: text,
+  //         image: image,
+  //         date: new Date(date).toLocaleString('en-US'),
+  //         app: "Twitter for AI",
+  //         retweets: retweets,
+  //         quotedTweets: quotedTweets,
+  //         likes: likes
+  //       }} />
+  //     )
+  //   }
+  //   updateEffect();
+  // }, [tweetNumber])
 
   if (loading) return <p>Loading Tweet...</p>
   if (!data) return <p>No tweets :/</p>
+
+  setTweet(data, tweetNumber)
 
   return (
     <FakeTweet config={{
