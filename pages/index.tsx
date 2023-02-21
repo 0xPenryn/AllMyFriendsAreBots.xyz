@@ -18,7 +18,7 @@ const Home: NextPage = () => {
           <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
           <div className="w-1/2 text-center flex flex-row flex-nowrap items-center justify-center">
             {session?.user?.image && <>
-            <img src={session.user.image} className="h-10" />
+            <img src={session.user.image} className="h-10 mr-2.5 rounded-full" />
             </>}
             Signed in as @{session?.user?.name}
           </div>
@@ -35,7 +35,7 @@ const Home: NextPage = () => {
           <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => signIn("twitter", {
             callbackUrl: `${window.location.origin}/play`,
           })}>Sign in with Twitter</button>
-          <p className="text-slate-500 text-center text-xs mt-2 mx-5">We personalize the game to your feed. We only use public Tweets, and we won't post or act on your behalf.</p>
+          <p className="w-1/3 text-slate-500 text-center text-xs mt-2 mx-5">We personalize the game to your feed. We only use public Tweets, and we won't post or act on your behalf.</p>
           <button className="bg-slate-400 text-white opacity-80 text-xs rounded-md px-5 py-1.5 mt-4" onClick={() => alert("Not yet supported.")}>Play without Signing In</button>
         </>}
       </div>
