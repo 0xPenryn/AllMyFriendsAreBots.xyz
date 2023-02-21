@@ -6,9 +6,9 @@ var prompt =
   "Generate a tweet that would fool a human into thinking it was written by a human, inspired by the following tweet in brackets: [";
 
 // const [loadingOAI, setLoadingOAI] = useState(false);
-const [tweetAI, setTweetAI] = useState("");
 
-const generateTweet = async (e: any) => {
+async function generateTweet(e: any) {
+  const [tweetAI, setTweetAI] = useState("");
   e.preventDefault();
   setTweetAI("");
   // setLoadingOAI(true);
