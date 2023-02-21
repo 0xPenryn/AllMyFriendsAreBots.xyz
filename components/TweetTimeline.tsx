@@ -102,15 +102,24 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
   useEffect(() => {
     const loadEffect = async () => {
       setLoading(true)
-      fetch('/api/twitter/timeline')
-        .then((res) => res.json())
-        .then((data) => {
-          // setTweet(data, tweetNumber)
-          setData(data)
-          console.log("first data: ", data)
-          console.log("end of effect")
-          setLoading(false)
-        })
+      if (localStorage.getItem("tweetData") !== null) {
+        console.log("local storage")
+        setData(JSON.parse(localStorage.getItem("tweetData")!))
+        console.log("first data: ", data)
+        console.log("end of effect")
+        setLoading(false)
+      } else {
+        fetch('/api/twitter/timeline')
+          .then((res) => res.json())
+          .then((data) => {
+            // setTweet(data, tweetNumber)
+            setData(data)
+            console.log("first data: ", data)
+            console.log("end of effect")
+            setLoading(false)
+          }
+        )
+      }
     }
     loadEffect();
   }, [])
