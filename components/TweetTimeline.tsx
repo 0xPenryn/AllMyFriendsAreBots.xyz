@@ -95,10 +95,9 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
           console.log("first data: ", data)
           console.log("first tweetNumber: ", tweetNumber)
           console.log("end of first effect")
+          setLoading(false)
         })
-      setLoading(false)
     }
-
     loadEffect();
   }, [])
 
