@@ -9,30 +9,34 @@ const Home: NextPage = () => {
   const [tweetIndex, setTweetIndex] = useState(0);
   const [score, setScore] = useState(0);
 
-  {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */}
+  {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
 
   return (
-    <div className="flex flex-col items-center">
-      <Head>
-        <title>is this tweet ai? idk</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      {!session && <>
-        {/* Not signed in.<br /> */}
+    <div className="flex flex-col h-screen justify-center items-center">
+      <div className="flex flex-col h-screen justify-center items-center">
+        <Head>
+          <title>is this tweet ai? idk</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
         <h1>Personhood is hard to prove. <br /></h1>
-        <button onClick={() => signIn("twitter")}>Sign in with Twitter</button>
-      </>}
-      {/* {session && <> */}
-      Signed in as {session?.user?.name ?? "no user object"} <br />
-      <button onClick={() => signOut()}>Sign out</button> <br />
-      {/* <div className="tweet"> */}
-      <TweetTimeline tweetNumber={tweetIndex} />
-      {/* </div> <br /> */}
-      <div className="flex flex-row">
-        <button className="mx-5" onClick={() => setTweetIndex(tweetIndex + 1)}>Human</button>
-        <button className="mx-5" onClick={() => setTweetIndex(tweetIndex + 1)}>AI</button>
+        {!session && <>
+          {/* Not signed in.<br /> */}
+          <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-10 text-xl" onClick={() => signIn("twitter")}>Sign in with Twitter</button>
+          <button className="bg-slate-400 text-slate-700 opacity-80 text-xs rounded-md px-5 py-1.5 mt-4">Play without Signing In</button>
+        </>}
+        {session && <>
+          Signed in as {session?.user?.name ?? "no user object"} <br />
+          <button onClick={() => signOut()}>Sign out</button> <br />
+          {/* <div className="tweet"> */}
+          <TweetTimeline tweetNumber={tweetIndex} />
+          {/* </div> <br /> */}
+          <div className="flex flex-row">
+            <button className="mx-5" onClick={() => setTweetIndex(tweetIndex + 1)}>Human</button>
+            <button className="mx-5" onClick={() => setTweetIndex(tweetIndex + 1)}>AI</button>
+          </div>
+        </>}
       </div>
-      {/* </>} */}
+      <button className="justify-self-end bg-slate-400 text-white rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://google.com'}>Read more</button>
     </div>
   );
 };
