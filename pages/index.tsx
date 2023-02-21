@@ -27,7 +27,7 @@ const Home: NextPage = () => {
         </>}
       </div> */}
       <div className="flex flex-col h-screen w-screen justify-center items-center">
-        {!session && <>
+        {/* {!session && <> */}
           <h1>Personhood is hard to prove. <br /></h1>
           <h3 className="mt-5 text-base">Can you tell which Tweets are made by humans and AI?</h3>
           <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => signIn("twitter", {
@@ -35,7 +35,7 @@ const Home: NextPage = () => {
           })}>Sign in with Twitter</button>
           <p className="w-1/3 text-slate-500 text-center text-xs mt-2">We personalize the game to your feed. We only use public Tweets, and we won't post or act on your behalf.</p>
           <button className="bg-slate-400 text-white opacity-80 text-xs rounded-md px-5 py-1.5 mt-4" onClick={() => alert("Not yet supported.")}>Play without Signing In</button>
-        </>}
+        {/* </>} */}
         {/* <div className=""> */}
         {/* <TweetTimeline tweetNumber={tweetIndex} /> */}
         {/* </div> <br /> */}
