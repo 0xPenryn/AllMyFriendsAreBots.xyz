@@ -102,7 +102,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
   useEffect(() => {
     const loadEffect = async () => {
       setLoading(true)
-      if (localStorage.getItem("tweetData") !== null || []) {
+      if (localStorage.getItem("tweetData") !== null || "") {
         console.log("local storage")
         setData(JSON.parse(localStorage.getItem("tweetData")!))
         console.log("first from local storage data: ", data)
@@ -112,7 +112,6 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
         fetch('/api/twitter/timeline')
           .then((res) => res.json())
           .then((data) => {
-            // setTweet(data, tweetNumber)
             setData(data)
             localStorage.setItem("tweetData", JSON.stringify(data))
             console.log("stored in local storage")
@@ -127,33 +126,6 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
   }, [])
 
   // useEffect(() => {
-  //   const updateEffect = async () => {
-  //     console.log("second tweetNumber: ", tweetNumber)
-  //     setTweet(data, tweetNumber)
-  //     console.log("end of second effect")
-  //     return (
-  //       <FakeTweet config={{
-  //         user: {
-  //           nickname: nickname,
-  //           name: name,
-  //           avatar: avatar,
-  //           verified: false,
-  //           locked: false
-  //         },
-  //         display: "default",
-  //         text: text,
-  //         image: image,
-  //         date: new Date(date).toLocaleString('en-US'),
-  //         app: "Twitter for AI",
-  //         retweets: retweets,
-  //         quotedTweets: quotedTweets,
-  //         likes: likes
-  //       }} />
-  //     )
-  //   }
-  //   updateEffect();
-  // }, [tweetNumber])
-
   if (loading) return <p>Loading Tweet...</p>
   if (!data) return <p>No tweets :/</p>
 
