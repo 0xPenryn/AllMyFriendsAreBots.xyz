@@ -40,7 +40,7 @@ const Home: NextPage = () => {
         <h1>Personhood is hard to prove. <br /></h1>
         <h3 className="mt-5 mx-10 text-base text-center">Can you tell which Tweets are made by humans and AI?</h3>
         {session && <>
-          <button className="bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => location.href = '/play'}>You're already signed in -- play now!</button>
+          <button className="bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => location.href = '/play'}>You're signed in -- play now!</button>
         </>}
         {!session && <>
           <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => {
