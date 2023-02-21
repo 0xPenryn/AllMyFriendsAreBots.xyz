@@ -10,7 +10,7 @@ const Play: NextPage = () => {
   const [score, setScore] = useState(0);
   const [correctAns, setCorrectAns] = useState("human");
 
-  const userGuess = (userAns: string) => {
+  function userGuess(userAns: string) {
     if (userAns === correctAns) {
       var nextAns = Math.random() > 0.5 ? "human" : "ai";
       setCorrectAns(nextAns);

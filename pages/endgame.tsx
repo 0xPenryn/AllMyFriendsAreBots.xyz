@@ -14,17 +14,16 @@ const Endgame: NextPage = () => {
 
   useEffect(() => {
     function checkUserData() {
-
-    setLastScore(localStorage.getItem("lastScore") ?? "0")
-    setHighScore(localStorage.getItem("highScore") ?? "0")
-    setLastTweet(localStorage.getItem("lastTweet") ?? "0")
+      setLastScore(localStorage.getItem("lastScore") ?? "0")
+      setHighScore(localStorage.getItem("highScore") ?? "0")
+      setLastTweet(localStorage.getItem("lastTweet") ?? "0")
     }
 
     window.addEventListener('storage', checkUserData)
     console.log(lastScore, highScore, lastTweet, "end of effect")
-
     return () => {
       window.removeEventListener('storage', checkUserData)
+      console.log(lastScore, highScore, lastTweet, "end of listener")
     }
   }, [])
 

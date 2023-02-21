@@ -102,7 +102,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
   useEffect(() => {
     const loadEffect = async () => {
       setLoading(true)
-      if (localStorage.getItem("tweetData") !== null) {
+      if (localStorage.getItem("tweetData") !== null || []) {
         console.log("local storage")
         setData(JSON.parse(localStorage.getItem("tweetData")!))
         console.log("first from local storage data: ", data)
@@ -115,6 +115,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
             // setTweet(data, tweetNumber)
             setData(data)
             localStorage.setItem("tweetData", JSON.stringify(data))
+            console.log("stored in local storage")
             console.log("first data: ", data)
             console.log("end of effect")
             setLoading(false)
