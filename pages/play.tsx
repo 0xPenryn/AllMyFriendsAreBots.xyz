@@ -1,13 +1,30 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState, useEffect } from "react";
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { useState } from "react";
+import { signOut, useSession } from 'next-auth/react';
 import TweetTimeline from "../components/TweetTimeline";
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
   const [tweetIndex, setTweetIndex] = useState(0);
   const [score, setScore] = useState(0);
+  const [correctAns, setCorrectAns] = useState("human");
+
+  const chooseCorrectAns = (ans: string) => {
+    setCorrectAns(ans);
+  };
+
+  const userGuess = (userAns: string) => {
+    if (userAns === correctAns) {
+      setTweetIndex(tweetIndex + 1)
+      setScore(score + 1)
+    } else {
+      // store last score
+      // store highest score, if needed
+      // store tweet that fooled them
+      location.href = '/endgame'
+    }
+  };
 
   {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
 
@@ -29,7 +46,8 @@ const Home: NextPage = () => {
           <div className="w-1/4 text-right"><button onClick={() => signOut({ callbackUrl: "/" })}>Sign out</button></div>
         </div>
         <div className="flex flex-col w-screen justify-center items-center">
-          <TweetTimeline tweetNumber={tweetIndex} />
+          <p>Your Score: {score}</p>
+          <TweetTimeline tweetNumber={tweetIndex} ans={correctAns} />
           <div className="flex flex-row content-center">
             <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => setTweetIndex(tweetIndex + 1)}>Human</button>
             <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => setTweetIndex(tweetIndex + 1)}>AI</button>
