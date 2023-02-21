@@ -17,32 +17,34 @@ const Home: NextPage = () => {
         <title>is this tweet ai? idk</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="self-stretch flex flex-nowrap flex-row m-5 items-center justify-center">
+      {/* <div className="self-stretch flex flex-nowrap flex-row m-5 items-center justify-center">
         {session && <>
           <div className="w-1/4"></div>
           <div className="w-1/2 text-center">
             Signed in as {session?.user?.name ?? "User"}
           </div>
-          <div className="w-1/4 text-right"><button onClick={() => signOut()}>Sign out</button></div>
+          <div className="w-1/4 text-right"><button onClick={() => signOut({ callbackUrl: "/" })}>Sign out</button></div>
         </>}
-      </div>
-      <div className="flex flex-col h-screen justify-center items-center">
+      </div> */}
+      <div className="flex flex-col h-screen w-screen justify-center items-center">
         {!session && <>
           <h1>Personhood is hard to prove. <br /></h1>
-          <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-10 text-xl" onClick={() => signIn("twitter", {
+          <h3 className="mt-5 text-base">Can you tell which Tweets are made by humans and AI?</h3>
+          <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => signIn("twitter", {
             callbackUrl: `${window.location.origin}/play`,
           })}>Sign in with Twitter</button>
-          <button className="bg-slate-400 text-slate-700 opacity-80 text-xs rounded-md px-5 py-1.5 mt-4">Play without Signing In</button>
+          <p className="w-1/3 text-slate-500 text-center text-xs mt-2">We personalize the game to your feed. We only use public Tweets, and we won't post or act on your behalf.</p>
+          <button className="bg-slate-400 text-white opacity-80 text-xs rounded-md px-5 py-1.5 mt-4" onClick={() => alert("Not yet supported.")}>Play without Signing In</button>
         </>}
-        <div className="">
-          <TweetTimeline tweetNumber={tweetIndex} />
-        </div> <br />
-        <div className="flex flex-row">
+        {/* <div className=""> */}
+        {/* <TweetTimeline tweetNumber={tweetIndex} /> */}
+        {/* </div> <br /> */}
+        {/* <div className="flex flex-row">
           <button className="mx-5" onClick={() => setTweetIndex(tweetIndex + 1)}>Human</button>
           <button className="mx-5" onClick={() => setTweetIndex(tweetIndex + 1)}>AI</button>
-        </div>
+        </div> */}
       </div>
-      <button className="bg-slate-400 text-white rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://google.com'}>Read more</button>
+      <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://blog.worldcoin.org'}>Read more about Proof-of-Personhood</button>
     </div>
   );
 };
