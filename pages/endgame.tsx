@@ -3,20 +3,30 @@ import Head from "next/head";
 import { signIn, signOut, useSession } from 'next-auth/react';
 import TweetTimeline from "../components/TweetTimeline";
 import { useEffect } from "react";
+import { useState } from "react";
 
 const Endgame: NextPage = () => {
   const { data: session, status } = useSession();
 
-  var lastScore: string | null = null
-  var highScore: string | null = null
-  var lastTweet: string | null = null
+  const [lastScore, setLastScore] = useState("0");
+  const [highScore, setHighScore] = useState("0");
+  const [lastTweet, setLastTweet] = useState("0");
 
   useEffect(() => {
-    lastScore = localStorage.getItem("lastScore")
-    highScore = localStorage.getItem("highScore")
-    lastTweet = localStorage.getItem("lastTweet")
+    function checkUserData() {
+
+    setLastScore(localStorage.getItem("lastScore") ?? "0")
+    setHighScore(localStorage.getItem("highScore") ?? "0")
+    setLastTweet(localStorage.getItem("lastTweet") ?? "0")
+    }
+
+    window.addEventListener('storage', checkUserData)
     console.log(lastScore, highScore, lastTweet, "end of effect")
-  })
+
+    return () => {
+      window.removeEventListener('storage', checkUserData)
+    }
+  }, [])
 
   {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
 
