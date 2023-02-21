@@ -2,53 +2,53 @@
 import FakeTweet from "fake-tweet";
 import { useState, useEffect } from "react";
 
-var prompt =
+const prompt =
   "Generate a tweet that would fool a human into thinking it was written by a human, inspired by the following tweet in brackets: [";
 
 // const [loadingOAI, setLoadingOAI] = useState(false);
 
-// async function generateTweet(e: any) {
-//   // const [tweetAI, setTweetAI] = useState("");
-//   var tweetAI = "";
-//   e.preventDefault();
-//   // setTweetAI("");
-//   // setLoadingOAI(true);
-//   const response = await fetch("/api/openai/generate", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       prompt,
-//     }),
-//   });
-//   console.log("Edge function returned.");
+async function generateTweet(prompt: string) {
+  // const [tweetAI, setTweetAI] = useState("");
+  var tweetAI = "";
+  // e.preventDefault();
+  // setTweetAI("");
+  // setLoadingOAI(true);
+  const response = await fetch("/api/openai/generate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "prompt": prompt,
+    }),
+  });
+  console.log("Edge function returned.");
 
-//   if (!response.ok) {
-//     throw new Error(response.statusText);
-//   }
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
 
-//   // This data is a ReadableStream
-//   const stream = response.body;
-//   if (!stream) {
-//     return "";
-//   }
+  // This data is a ReadableStream
+  const stream = response.body;
+  if (!stream) {
+    return "";
+  }
 
-//   const reader = stream.getReader();
-//   const decoder = new TextDecoder();
-//   let done = false;
+  const reader = stream.getReader();
+  const decoder = new TextDecoder();
+  let done = false;
 
-//   while (!done) {
-//     const { value, done: doneReading } = await reader.read();
-//     done = doneReading;
-//     const chunkValue = decoder.decode(value);
-//     tweetAI = tweetAI + chunkValue;
-//     // setTweetAI((prev) => prev + chunkValue);
-//   }
+  while (!done) {
+    const { value, done: doneReading } = await reader.read();
+    done = doneReading;
+    const chunkValue = decoder.decode(value);
+    tweetAI = tweetAI + chunkValue;
+    // setTweetAI((prev) => prev + chunkValue);
+  }
 
-//   // setLoadingOAI(false);
-//   return tweetAI;
-// };
+  // setLoadingOAI(false);
+  return tweetAI;
+};
 
 var nickname = "Placeholder";
 var name = "Placeholder";
@@ -65,11 +65,7 @@ interface TweetTimeline {
   ans: string;
 }
 
-
-
-function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
-
-  const [tweetAI, setTweetAI] = useState("");
+async function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
 
   if (ans == "human") {
     nickname = data[tweetNumber]?.author.username!;
@@ -85,17 +81,64 @@ function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
     quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? -1;
     likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? -1;
   } else {
-    prompt = prompt + data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") + "]";
-    fetch(new Request('/api/openai/aiTweet', {body: prompt}))
-      .then((res) => res.json())
-      .then((data) => {
-        // localStorage.setItem("tweetData", JSON.stringify(data))
-        // console.log("stored in local storage")
-        // console.log("first data: ", data)
-        // console.log("end of effect")
-        setTweetAI(data);
-      }
-      )
+    const _prompt = prompt + data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") + "]"
+    // fetch("/api/openai/generate", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     "prompt": _prompt,
+    //   }),
+    // })
+    //   .then((response) => {
+    //     console.log("Edge function returned.");
+
+    //     if (!response.ok) {
+    //       throw new Error(response.statusText);
+    //     }
+
+    //     // This data is a ReadableStream
+    //     const stream = response.body;
+    //     if (!stream) {
+    //       console.log("No stream returned.")
+    //       return "";
+    //     }
+
+    //     const reader = stream.getReader();
+    //     const decoder = new TextDecoder();
+    //     let done = false;
+
+    //     while (!done) {
+    //       const { value, done: doneReading } = await reader.read();
+    //       done = doneReading;
+    //       const chunkValue = decoder.decode(value);
+    //       // tweetAI = tweetAI + chunkValue;
+    //       setTweetAI((prev) => prev + chunkValue);
+    //     }
+    //   })
+
+    const tweetAI = await generateTweet(_prompt);
+
+
+
+
+    // fetch(new Request('/api/openai/aiTweet', { body: prompt }))
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     // localStorage.setItem("tweetData", JSON.stringify(data))
+    //     // console.log("stored in local storage")
+    //     // console.log("first data: ", data)
+    //     // console.log("end of effect")
+    //     setTweetAI(data);
+    //   }
+    //   )
+
+
+
+
+
+
     nickname = data[tweetNumber]?.author.username!;
     name = data[tweetNumber]?.author.name!;
     avatar = data[tweetNumber]?.author.profile_image_url!;
@@ -116,6 +159,8 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
 
   const [data, setData] = useState([] as Array<any>);
   const [loading, setLoading] = useState(true);
+
+  
 
   useEffect(() => {
     const loadEffect = async () => {
