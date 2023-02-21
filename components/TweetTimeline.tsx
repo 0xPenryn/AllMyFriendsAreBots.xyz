@@ -7,9 +7,11 @@ const prompt =
 
 // const [loadingOAI, setLoadingOAI] = useState(false);
 
+
+var tweetAI = "";
+
 async function generateTweet(prompt: string) {
   // const [tweetAI, setTweetAI] = useState("");
-  var tweetAI = "";
   // e.preventDefault();
   // setTweetAI("");
   // setLoadingOAI(true);
@@ -194,7 +196,10 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
   if (!data) return <p>No tweets :/</p>
   if (tweetNumber > data.length - 1) return <p>Out of tweets! Pat yourself on the back. Now sign out and sign back in, and you can get the newest Tweets from your timeline!</p>
 
+
+useEffect(() => {
   setTweet(data, tweetNumber, ans);
+}, [tweetAI])
 
   return (
     <FakeTweet config={{
