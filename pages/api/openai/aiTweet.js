@@ -2,6 +2,8 @@ export default async (req, res) => {
 
     const { prompt } = req.body;
 
+    console.log(req.body)
+
     try {
         var tweetAI = "";
         const response = await fetch("https://" + process.env.VERCEL_URL + "/api/openai/generate", {
@@ -23,6 +25,7 @@ export default async (req, res) => {
         // This data is a ReadableStream
         const stream = response.body;
         if (!stream) {
+            console.log("No stream returned.")
             return "";
         }
 
@@ -40,6 +43,7 @@ export default async (req, res) => {
         return res.status(200).json(tweetAI);
 
     } catch (e) {
+        console.log(e)
         return res.status(400).json({
             status: e.message
         });
