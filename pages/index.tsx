@@ -7,6 +7,7 @@ function clearState() {
   localStorage.removeItem("highScore");
   localStorage.removeItem("lastTweet");
   localStorage.removeItem("tweetData");
+  localStorage.removeItem("lastTweetType");
 }
 
 const Home: NextPage = () => {

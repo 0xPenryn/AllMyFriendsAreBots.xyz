@@ -9,6 +9,7 @@ function clearState() {
   localStorage.removeItem("highScore");
   localStorage.removeItem("lastTweet");
   localStorage.removeItem("tweetData");
+  localStorage.removeItem("lastTweetType");
 }
 
 const Play: NextPage = () => {
@@ -45,6 +46,7 @@ const Play: NextPage = () => {
       }
       // store tweet that fooled them
       localStorage.setItem("lastTweet", tweetIndex.toString())
+      localStorage.setItem("lastTweetType", correctAns)
       setScore(0)
       alert("You lost!")
       location.href = '/endgame'

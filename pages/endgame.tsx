@@ -10,6 +10,7 @@ function clearState() {
   localStorage.removeItem("highScore");
   localStorage.removeItem("lastTweet");
   localStorage.removeItem("tweetData");
+  localStorage.removeItem("lastTweetType");
 }
 
 const Endgame: NextPage = () => {
@@ -18,12 +19,14 @@ const Endgame: NextPage = () => {
   const [lastScore, setLastScore] = useState("0");
   const [highScore, setHighScore] = useState("0");
   const [lastTweet, setLastTweet] = useState("0");
+  const [lastTweetType, setLastTweetType] = useState("human");
 
   useEffect(() => {
     function checkUserData() {
       setLastScore(localStorage.getItem("lastScore")!)
       setHighScore(localStorage.getItem("highScore")!)
       setLastTweet(localStorage.getItem("lastTweet")!)
+      setLastTweetType(localStorage.getItem("lastTweetType")!)
     }
 
     window.addEventListener('load', checkUserData)
@@ -62,7 +65,7 @@ const Endgame: NextPage = () => {
         <h3 className="mt-2 mx-10 text-base text-center">Your score: {lastScore ?? "unknown"}</h3>
         <h3 className="mt-2 mx-10 text-base text-center">Your high score: {highScore ?? "unknown"}</h3>
         <h3 className="mt-2 mx-10 text-base text-center">The tweet that fooled you:</h3>
-        <TweetTimeline tweetNumber={parseInt(lastTweet ?? "0")} ans={"human"} />
+        <TweetTimeline tweetNumber={parseInt(lastTweet)} ans={lastTweetType} />
         <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = '/play'}>Play Again</button>
       </div>
       <button className="grow-0 bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
