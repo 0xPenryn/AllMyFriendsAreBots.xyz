@@ -25,10 +25,16 @@ export default NextAuth({
   },
   
   providers: [
+    // for oauth2 (known working)
+    // TwitterProvider({
+    //   clientId: process.env.TWITTER_CLIENT_ID as string,
+    //   clientSecret: process.env.TWITTER_CLIENT_SECRET as string,
+    //   version: "2.0",
+    // })
+
     TwitterProvider({
-      clientId: process.env.TWITTER_CLIENT_ID as string,
-      clientSecret: process.env.TWITTER_CLIENT_SECRET as string,
-      version: "2.0",
+      clientId: process.env.TWITTER_API_KEY as string,
+      clientSecret: process.env.TWITTER_API_KEY_SECRET as string,
     })
   ]
 });
