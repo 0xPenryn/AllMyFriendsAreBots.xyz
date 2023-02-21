@@ -17,9 +17,12 @@ const Home: NextPage = () => {
       </Head>
       {session && <>
         <div className="self-stretch flex flex-nowrap flex-row m-5 items-center justify-center">
-          <div className="w-1/4"></div>
-          <div className="w-1/2 text-center">
-            Signed in as {session?.user?.name ?? "User"}
+          <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
+          <div className="w-1/2 text-center flex flex-row flex-nowrap items-center justify-center">
+            {session?.user?.image && <>
+            <img src={session.user.image} className="h-10" />
+            </>}
+            Signed in as @{session?.user?.name}
           </div>
           <div className="w-1/4 text-right"><button onClick={() => signOut({ callbackUrl: "/" })}>Sign out</button></div>
         </div>
