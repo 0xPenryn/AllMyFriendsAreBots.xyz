@@ -22,20 +22,27 @@ const Home: NextPage = () => {
           <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
           <div className="w-1/2 text-center flex flex-row flex-nowrap items-center justify-center">
             {session?.user?.image && <>
-            <img src={session.user.image} className="h-10 mr-2.5 rounded-full" />
+              <img src={session.user.image} className="h-10 mr-2.5 rounded-full" />
             </>}
             Signed in as {session?.user?.name}
           </div>
           <div className="w-1/4 text-right"><button onClick={() => signOut({ callbackUrl: "/" })}>Sign out</button></div>
         </div>
-      </>}
-      <div className="flex flex-col w-screen justify-center items-center">
-        <TweetTimeline tweetNumber={tweetIndex} />
-        <div className="flex flex-row content-center">
-          <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => setTweetIndex(tweetIndex + 1)}>Human</button>
-          <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => setTweetIndex(tweetIndex + 1)}>AI</button>
+        <div className="flex flex-col w-screen justify-center items-center">
+          <TweetTimeline tweetNumber={tweetIndex} />
+          <div className="flex flex-row content-center">
+            <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => setTweetIndex(tweetIndex + 1)}>Human</button>
+            <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => setTweetIndex(tweetIndex + 1)}>AI</button>
+          </div>
         </div>
-      </div>
+      </>}
+      {!session && <>
+        <div />
+        <div className="flex flex-col">
+          <p className="justify-self-center text-2xl">You must log in to play.</p>
+          <button className="text-center mt-2 bg-slate-400 text-white rounded-md px-1.5 py-1.5" onClick={() => signOut({ callbackUrl: "/" })}>Sign out and return Home</button>
+        </div>
+      </>}
       <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
     </div>
   );
