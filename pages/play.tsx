@@ -24,7 +24,7 @@ const Home: NextPage = () => {
             {session?.user?.image && <>
             <img src={session.user.image} className="h-10 mr-2.5 rounded-full" />
             </>}
-            Signed in as @{session?.user?.name}
+            Signed in as {session?.user?.name}
           </div>
           <div className="w-1/4 text-right"><button onClick={() => signOut({ callbackUrl: "/" })}>Sign out</button></div>
         </div>
