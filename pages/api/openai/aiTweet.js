@@ -1,6 +1,6 @@
 export default async (req, res) => {
 
-    const { prompt } = req.body;
+    const { prompt } = json.parse(req.body).body();
 
     console.log(req.body)
 
