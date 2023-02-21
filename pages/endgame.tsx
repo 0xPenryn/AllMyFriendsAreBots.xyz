@@ -64,8 +64,15 @@ const Endgame: NextPage = () => {
         <h1>You lost!<br /></h1>
         <h3 className="mt-2 mx-10 text-base text-center">Your score: {lastScore ?? "unknown"}</h3>
         <h3 className="mt-2 mx-10 text-base text-center">Your high score: {highScore ?? "unknown"}</h3>
-        <h3 className="mt-2 mx-10 text-base text-center">The tweet that fooled you:</h3>
+        <h3 className="mt-2 mx-10 text-base text-center">This is the Tweet you got wrong:</h3>
         <TweetTimeline tweetNumber={parseInt(lastTweet)} ans={lastTweetType} />
+        {(lastTweetType == "ai") && <>
+          <h3 className="mt-2 mx-10 text-base text-center">Here's the actual Tweet:</h3>
+          <TweetTimeline tweetNumber={parseInt(lastTweet)} ans={"real"} />
+        </>}
+        {(lastTweetType == "real") && <>
+          <h3 className="mt-2 mx-10 text-base text-center">That's a real human's Tweet!</h3>
+        </>}
         <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = '/play'}>Play Again</button>
       </div>
       <button className="grow-0 bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
