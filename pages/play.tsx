@@ -23,12 +23,12 @@ const Play: NextPage = () => {
       setTweetIndex(JSON.parse(localStorage.getItem("lastTweet")!) + 1) ;
     }
 
-    window.addEventListener('load', checkUserData)
+    checkUserData()
     console.log(tweetIndex, "end of effect")
-    return () => {
-      window.removeEventListener('load', checkUserData)
-      console.log(tweetIndex, "end of listener")
-    }
+    // return () => {
+    //   // window.removeEventListener('load', checkUserData)
+    //   console.log(tweetIndex, "end of listener")
+    // }
   }, [])
 
   function userGuess(userAns: string) {

@@ -2,14 +2,12 @@ import { TweetHomeTimelineV2Paginator, TweetV2, TwitterApi, TwitterV2IncludesHel
 import FakeTweet from "fake-tweet";
 import { useState, useEffect } from "react";
 
-// const [tweetReal, setTweetReal] = useState("");
-const [loadingOAI, setLoadingOAI] = useState(false);
-const [tweetAI, setTweetAI] = useState("");
-
 var prompt =
   "Generate a tweet that would fool a human into thinking it was written by a human, inspired by the following tweet in brackets: [";
 
 const generateTweet = async (e: any) => {
+  const [loadingOAI, setLoadingOAI] = useState<boolean>(false);
+  const [tweetAI, setTweetAI] = useState("");
   e.preventDefault();
   setTweetAI("");
   setLoadingOAI(true);
