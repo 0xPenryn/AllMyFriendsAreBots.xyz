@@ -107,7 +107,6 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
         setData(JSON.parse(localStorage.getItem("tweetData")!))
         console.log("first from local storage data: ", data)
         console.log("end of effect")
-        setTweet(data, tweetNumber, ans)
         setLoading(false)
       } else {
         fetch('/api/twitter/timeline')
@@ -118,7 +117,6 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
             console.log("stored in local storage")
             console.log("first data: ", data)
             console.log("end of effect")
-            setTweet(data, tweetNumber, ans)
             setLoading(false)
           }
         )
@@ -129,6 +127,8 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
 
   if (loading) return <p>Loading Tweet...</p>
   if (!data) return <p>No tweets :/</p>
+
+  setTweet(data, tweetNumber, ans);
 
   return (
     <FakeTweet config={{
