@@ -5,9 +5,9 @@ import { signOut, useSession } from 'next-auth/react';
 import TweetTimeline from "../components/TweetTimeline";
 
 function clearState() {
-  localStorage.setItem("lastScore", "0");
-  localStorage.setItem("highScore", "0");
-  localStorage.setItem("lastTweet", "0");
+  localStorage.removeItem("lastScore");
+  localStorage.removeItem("highScore");
+  localStorage.removeItem("lastTweet");
 }
 
 const Play: NextPage = () => {

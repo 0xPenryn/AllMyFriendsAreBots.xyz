@@ -6,9 +6,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 function clearState() {
-  localStorage.setItem("lastScore", "0");
-  localStorage.setItem("highScore", "0");
-  localStorage.setItem("lastTweet", "0");
+  localStorage.removeItem("lastScore");
+  localStorage.removeItem("highScore");
+  localStorage.removeItem("lastTweet");
 }
 
 const Endgame: NextPage = () => {
