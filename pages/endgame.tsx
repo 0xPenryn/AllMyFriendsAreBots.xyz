@@ -29,12 +29,13 @@ const Endgame: NextPage = () => {
       setLastTweetType(localStorage.getItem("lastTweetType")!)
     }
 
-    window.addEventListener('load', checkUserData)
+    // window.addEventListener('load', checkUserData)
+    checkUserData()
     console.log(lastScore, highScore, lastTweet, "end of effect")
-    return () => {
-      window.removeEventListener('load', checkUserData)
-      console.log(lastScore, highScore, lastTweet, "end of listener")
-    }
+    // return () => {
+    //   // window.removeEventListener('load', checkUserData)
+    //   console.log(lastScore, highScore, lastTweet, "end of listener")
+    // }
   }, [])
 
   {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
@@ -46,7 +47,7 @@ const Endgame: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {session && <>
-        <div className="grow-0 self-stretch flex flex-nowrap flex-row m-5 items-center justify-center">
+        <div className="grow-0 self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-center">
           <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
           <div className="w-1/2 text-center flex flex-row flex-nowrap items-center justify-center">
             {session?.user?.image && <>
