@@ -33,7 +33,7 @@ const Play: NextPage = () => {
 
   function userGuess(userAns: string) {
     if (userAns === correctAns) {
-      var nextAns = Math.random() > 0.5 ? "human" : "ai";
+      var nextAns = Math.random() > 0.1 ? "human" : "ai";
       setCorrectAns(nextAns);
       setTweetIndex(tweetIndex + 1)
       setScore(score + 1)
