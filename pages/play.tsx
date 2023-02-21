@@ -48,7 +48,7 @@ const Play: NextPage = () => {
       localStorage.setItem("lastTweet", tweetIndex.toString())
       localStorage.setItem("lastTweetType", correctAns)
       setScore(0)
-      alert("You lost!")
+      // alert("You lost!")
       location.href = '/endgame'
     }
   };
