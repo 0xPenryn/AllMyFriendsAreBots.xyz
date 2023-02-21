@@ -142,7 +142,6 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
           )
       }
     }
-
     loadEffect();
   }, [])
 
