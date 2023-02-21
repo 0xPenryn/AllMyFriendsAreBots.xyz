@@ -14,7 +14,7 @@ export default async (req, res) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                prompt,
+                "prompt": prompt,
             }),
         });
 
