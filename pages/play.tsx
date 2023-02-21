@@ -17,13 +17,18 @@ const Home: NextPage = () => {
         <title>PoP Game</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="self-stretch flex flex-nowrap flex-row m-5 items-center justify-center">
-          <div className="w-1/4"></div>
-          <div className="w-1/2 text-center">
-            Signed in as {session?.user?.name ?? "User"}
+      {session && <>
+        <div className="self-stretch flex flex-nowrap flex-row m-5 items-center justify-center">
+          <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
+          <div className="w-1/2 text-center flex flex-row flex-nowrap items-center justify-center">
+            {session?.user?.image && <>
+            <img src={session.user.image} className="h-10" />
+            </>}
+            Signed in as @{session?.user?.name}
           </div>
           <div className="w-1/4 text-right"><button onClick={() => signOut({ callbackUrl: "/" })}>Sign out</button></div>
-      </div>
+        </div>
+      </>}
       <div className="flex flex-col w-screen justify-center items-center">
         <TweetTimeline tweetNumber={tweetIndex} />
         <div className="flex flex-row content-center">
@@ -31,7 +36,7 @@ const Home: NextPage = () => {
           <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => setTweetIndex(tweetIndex + 1)}>AI</button>
         </div>
       </div>
-      <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://blog.worldcoin.org'}>Read more about Proof-of-Personhood</button>
+      <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
     </div>
   );
 };
