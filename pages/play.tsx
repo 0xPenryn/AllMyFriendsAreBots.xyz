@@ -4,6 +4,12 @@ import { useState, useEffect } from "react";
 import { signOut, useSession } from 'next-auth/react';
 import TweetTimeline from "../components/TweetTimeline";
 
+function clearState() {
+  localStorage.setItem("lastScore", "0");
+  localStorage.setItem("highScore", "0");
+  localStorage.setItem("lastTweet", "0");
+}
+
 const Play: NextPage = () => {
   const { data: session, status } = useSession();
   const [tweetIndex, setTweetIndex] = useState(0);
@@ -12,7 +18,7 @@ const Play: NextPage = () => {
 
   useEffect(() => {
     function checkUserData() {
-      setTweetIndex(JSON.parse(localStorage.getItem("lastTweet")!)) ;
+      setTweetIndex(JSON.parse(localStorage.getItem("lastTweet")!) + 1) ;
     }
 
     window.addEventListener('load', checkUserData)
@@ -61,7 +67,10 @@ const Play: NextPage = () => {
             </>}
             Signed in as {session?.user?.name}
           </div>
-          <div className="w-1/4 text-right"><button onClick={() => signOut({ callbackUrl: "/" })}>Sign out</button></div>
+          <div className="w-1/4 text-right"><button onClick={() => {
+            signOut({ callbackUrl: "/" });
+            clearState();
+          }}>Sign out</button></div>
         </div>
         <div className="flex flex-col w-screen justify-center items-center">
           <p>Your Score: {score}</p>

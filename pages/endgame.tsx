@@ -5,6 +5,12 @@ import TweetTimeline from "../components/TweetTimeline";
 import { useEffect } from "react";
 import { useState } from "react";
 
+function clearState() {
+  localStorage.setItem("lastScore", "0");
+  localStorage.setItem("highScore", "0");
+  localStorage.setItem("lastTweet", "0");
+}
+
 const Endgame: NextPage = () => {
   const { data: session, status } = useSession();
 
@@ -44,7 +50,10 @@ const Endgame: NextPage = () => {
             </>}
             Signed in as {session?.user?.name}
           </div>
-          <div className="w-1/4 text-right"><button onClick={() => signOut({ callbackUrl: "/" })}>Sign out</button></div>
+          <div className="w-1/4 text-right"><button onClick={() => {
+            signOut({ callbackUrl: "/" });
+            clearState();
+          }}>Sign out</button></div>
         </div>
       </>}
       <div className="grow flex flex-col w-screen justify-center items-center">
@@ -53,6 +62,7 @@ const Endgame: NextPage = () => {
         <h3 className="mt-2 mx-10 text-base text-center">Your high score: {highScore ?? "unknown"}</h3>
         <h3 className="mt-2 mx-10 text-base text-center">The tweet that fooled you:</h3>
         <TweetTimeline tweetNumber={parseInt(lastTweet ?? "0")} ans={"human"} />
+        <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = '/play'}>Play Again</button>
       </div>
       <button className="grow-0 bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
     </div>
