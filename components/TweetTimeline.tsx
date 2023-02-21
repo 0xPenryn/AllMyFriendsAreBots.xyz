@@ -120,7 +120,7 @@ async function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
     //     }
     //   })
 
-    const tweetAI = await generateTweet(_prompt);
+    const tweetText = await generateTweet(_prompt);
 
 
 
@@ -145,7 +145,7 @@ async function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
     name = data[tweetNumber]?.author.name!;
     avatar = data[tweetNumber]?.author.profile_image_url!;
     // text = data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") || ["Placeholder Tweet Number ", tweetNumber];
-    text = tweetAI;
+    text = tweetText;
     image = [];
     for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
       image.push(data[tweetNumber]?.media[i].url)
