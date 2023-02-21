@@ -16,7 +16,7 @@ async function generateTweet(_prompt: string) {
       "prompt": _prompt,
     }),
   });
-  console.log("Edge function returned.");
+  // console.log("Edge function returned.");
 
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -79,8 +79,10 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
 
   async function setTweetPost() {
     if (ans === "ai") {
+      console.log("ai tweet!")
       const _prompt = prompt + text + "]"
       const tweetText = await generateTweet(_prompt);
+      console.log("ai tweet done!")
       text = tweetText;
     }
   }
@@ -89,10 +91,10 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
     const loadEffect = async () => {
       setLoading(true)
       if (localStorage.getItem("tweetData") !== null || "") {
-        console.log("local storage")
+        // console.log("local storage")
         setData(JSON.parse(localStorage.getItem("tweetData")!))
-        console.log("first from local storage data: ", data)
-        console.log("end of effect")
+        // console.log("first from local storage data: ", data)
+        // console.log("end of effect")
         // setTweet(data, tweetNumber, ans);
         setLoading(false)
       } else {
@@ -101,9 +103,9 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
           .then((data) => {
             setData(data)
             localStorage.setItem("tweetData", JSON.stringify(data))
-            console.log("stored in local storage")
-            console.log("first data: ", data)
-            console.log("end of effect")
+            // console.log("stored in local storage")
+            // console.log("first data: ", data)
+            // console.log("end of effect")
             // setTweet(data, tweetNumber, ans);
             setLoading(false)
           }
