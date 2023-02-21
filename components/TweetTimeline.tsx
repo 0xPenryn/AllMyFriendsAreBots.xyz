@@ -1,16 +1,17 @@
-import { TweetHomeTimelineV2Paginator, TweetV2, TwitterApi, TwitterV2IncludesHelper } from 'twitter-api-v2';
+// import { TweetHomeTimelineV2Paginator, TweetV2, TwitterApi, TwitterV2IncludesHelper } from 'twitter-api-v2';
 import FakeTweet from "fake-tweet";
 import { useState, useEffect } from "react";
 
 var prompt =
   "Generate a tweet that would fool a human into thinking it was written by a human, inspired by the following tweet in brackets: [";
 
+// const [loadingOAI, setLoadingOAI] = useState(false);
+const [tweetAI, setTweetAI] = useState("");
+
 const generateTweet = async (e: any) => {
-  const [loadingOAI, setLoadingOAI] = useState<boolean>(false);
-  const [tweetAI, setTweetAI] = useState("");
   e.preventDefault();
   setTweetAI("");
-  setLoadingOAI(true);
+  // setLoadingOAI(true);
   const response = await fetch("/api/openai/generate", {
     method: "POST",
     headers: {
@@ -27,12 +28,12 @@ const generateTweet = async (e: any) => {
   }
 
   // This data is a ReadableStream
-  const data = response.body;
-  if (!data) {
+  const stream = response.body;
+  if (!stream) {
     return;
   }
 
-  const reader = data.getReader();
+  const reader = stream.getReader();
   const decoder = new TextDecoder();
   let done = false;
 
@@ -43,7 +44,7 @@ const generateTweet = async (e: any) => {
     setTweetAI((prev) => prev + chunkValue);
   }
 
-  setLoadingOAI(false);
+  // setLoadingOAI(false);
 };
 
 var nickname = "Placeholder";
@@ -109,7 +110,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
         setData(JSON.parse(localStorage.getItem("tweetData")!))
         console.log("first from local storage data: ", data)
         console.log("end of effect")
-        setTweet(data, tweetNumber, ans);
+        // setTweet(data, tweetNumber, ans);
         setLoading(false)
       } else {
         fetch('/api/twitter/timeline')
@@ -120,7 +121,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
             console.log("stored in local storage")
             console.log("first data: ", data)
             console.log("end of effect")
-            setTweet(data, tweetNumber, ans);
+            // setTweet(data, tweetNumber, ans);
             setLoading(false)
           }
         )
@@ -133,7 +134,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
   if (!data) return <p>No tweets :/</p>
   if (tweetNumber > data.length - 1) return <p>Out of tweets! Pat yourself on the back. Now sign out and sign back in, and you can get the newest Tweets from your timeline!</p>
 
-  // setTweet(data, tweetNumber, ans);
+  setTweet(data, tweetNumber, ans);
 
   return (
     <FakeTweet config={{
