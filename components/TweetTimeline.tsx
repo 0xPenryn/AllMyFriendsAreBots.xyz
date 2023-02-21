@@ -162,8 +162,6 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
   const [data, setData] = useState([] as Array<any>);
   const [loading, setLoading] = useState(true);
 
-  
-
   useEffect(() => {
     const loadEffect = async () => {
       setLoading(true)
@@ -198,8 +196,11 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
 
 
 useEffect(() => {
-  setTweet(data, tweetNumber, ans);
-}, [tweetAI])
+  const thing = async () => {
+    await setTweet(data, tweetNumber, ans);
+  }
+  thing();
+}, [])
 
   return (
     <FakeTweet config={{
