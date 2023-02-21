@@ -50,9 +50,9 @@ const Endgame: NextPage = () => {
       </>}
       <div className="grow flex flex-col w-screen justify-center items-center">
         <h1>You lost!<br /></h1>
-        <h3 className="mt-5 mx-10 text-base text-center">Your score: {lastScore ?? "unknown"}</h3>
-        <h3 className="mt-5 mx-10 text-base text-center">Your high score: {highScore ?? "unknown"}</h3>
-        <h3 className="mt-5 mx-10 text-base text-center">The tweet that fooled you:</h3>
+        <h3 className="mt-2 mx-10 text-base text-center">Your score: {lastScore ?? "unknown"}</h3>
+        <h3 className="mt-2 mx-10 text-base text-center">Your high score: {highScore ?? "unknown"}</h3>
+        <h3 className="mt-2 mx-10 text-base text-center">The tweet that fooled you:</h3>
         <TweetTimeline tweetNumber={parseInt(lastTweet ?? "0")} ans={"human"} />
       </div>
       <button className="grow-0 bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
