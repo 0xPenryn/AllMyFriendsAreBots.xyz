@@ -1,12 +1,14 @@
 export default async (req, res) => {
 
-    const { prompt } = json.parse(req.body).body();
+    const prompt = req.body;
 
     console.log(req.body)
 
     try {
         var tweetAI = "";
         const response = await fetch("https://" + process.env.VERCEL_URL + "/api/openai/generate", {
+        // const response = await fetch("http://localhost:3000" + "/api/openai/generate", {
+
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
