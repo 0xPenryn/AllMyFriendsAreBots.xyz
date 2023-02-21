@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {session && <>
-        <div className="self-stretch flex flex-nowrap flex-row m-5 items-center justify-center">
+        <div className="self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-center">
           <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
           <div className="w-1/2 text-center flex flex-row flex-nowrap items-center justify-center">
             {session?.user?.image && <>
