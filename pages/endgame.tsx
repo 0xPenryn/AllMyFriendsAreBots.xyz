@@ -7,14 +7,15 @@ import { useEffect } from "react";
 const Endgame: NextPage = () => {
   const { data: session, status } = useSession();
 
-  var lastScore: string | null = "0"
-  var highScore: string | null = "0"
-  var lastTweet: string | null = "0"
-  
+  var lastScore: string | null = null
+  var highScore: string | null = null
+  var lastTweet: string | null = null
+
   useEffect(() => {
     lastScore = localStorage.getItem("lastScore")
     highScore = localStorage.getItem("highScore")
     lastTweet = localStorage.getItem("lastTweet")
+    console.log(lastScore, highScore, lastTweet, "end of effect")
   })
 
   {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
