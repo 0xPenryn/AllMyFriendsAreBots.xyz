@@ -83,7 +83,6 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
 
   const [data, setData] = useState([] as Array<any>);
   const [loading, setLoading] = useState(true);
-  const [handoff, setHandoff] = useState(false);
 
   useEffect(() => {
     const loadEffect = async () => {
@@ -98,26 +97,6 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
           console.log("end of first effect")
         })
       setLoading(false)
-      // setHandoff(true)
-      return (
-        <FakeTweet config={{
-          user: {
-            nickname: nickname,
-            name: name,
-            avatar: avatar,
-            verified: false,
-            locked: false
-          },
-          display: "default",
-          text: text,
-          image: image,
-          date: new Date(date).toLocaleString('en-US'),
-          app: "Twitter for AI",
-          retweets: retweets,
-          quotedTweets: quotedTweets,
-          likes: likes
-        }} />
-      )
     }
 
     loadEffect();
