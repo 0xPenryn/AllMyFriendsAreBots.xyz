@@ -125,7 +125,6 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
     loadEffect();
   }, [])
 
-  // useEffect(() => {
   if (loading) return <p>Loading Tweet...</p>
   if (!data) return <p>No tweets :/</p>
 
