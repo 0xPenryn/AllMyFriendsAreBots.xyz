@@ -2,19 +2,7 @@ import { TweetHomeTimelineV2Paginator, TweetV2, TwitterApi, TwitterV2IncludesHel
 import FakeTweet from "fake-tweet";
 import { useState, useEffect } from "react";
 
-var nickname = "Placeholder";
-var name = "Placeholder";
-var avatar = "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-var text = "Placeholder";
-var image: Array<string> = [];
-var date: number = 0;
-var retweets = 1;
-var quotedTweets = 0;
-var likes = 5;
 
-interface TweetTimeline {
-  tweetNumber: number;
-}
 
 // const [tweetReal, setTweetReal] = useState("");
 // const [loadingOAI, setLoadingOAI] = useState(false);
@@ -62,6 +50,20 @@ interface TweetTimeline {
 //   setLoadingOAI(false);
 // };
 
+var nickname = "Placeholder";
+var name = "Placeholder";
+var avatar = "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+var text = "Placeholder";
+var image: Array<string> = [];
+var date: number = 0;
+var retweets = 1;
+var quotedTweets = 0;
+var likes = 5;
+
+interface TweetTimeline {
+  tweetNumber: number;
+}
+
 function setTweet(data: Array<any>, tweetNumber: number) {
   nickname = data[tweetNumber]?.author.username ?? ["Account", tweetNumber];
   name = data[tweetNumber]?.author.name ?? ["Account ", tweetNumber];
@@ -82,13 +84,8 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
   const [data, setData] = useState([] as Array<any>);
   const [loading, setLoading] = useState(true);
   const [handoff, setHandoff] = useState(false);
-  // const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
   useEffect(() => {
-    // if (!handoff) return () => {<p>what the hell is going on</p>}
-    // if (loading) return () => { <p>Loading Tweet...</p> }
-    // if (!data) return () => { <p>No Tweet :/</p> }
-    // console.log("second data: ", data)
     setTweet(data, tweetNumber)
     console.log("end of second effect")
   }, [tweetNumber, handoff, data])
@@ -98,16 +95,14 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
     fetch('/api/twitter/timeline')
       .then((res) => res.json())
       .then((data) => {
+        setTweet(data, tweetNumber)
         setData(data)
         console.log("first data: ", data)
         console.log("first tweetNumber: ", tweetNumber)
-        setTweet(data, tweetNumber)
-        // setLoading(false)
-        setLoading(false)
-        // setHandoff(true)
-        tweetNumber = tweetNumber + 1
         console.log("end of first effect")
       })
+      setLoading(false)
+      setHandoff(true)
   }, [])
 
   if (loading) return <p>Loading Tweet...</p>
