@@ -9,7 +9,6 @@ const Play: NextPage = () => {
   const [tweetIndex, setTweetIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAns, setCorrectAns] = useState("human");
-  localStorage.setItem("tweetData", "")
 
   function userGuess(userAns: string) {
     if (userAns === correctAns) {
