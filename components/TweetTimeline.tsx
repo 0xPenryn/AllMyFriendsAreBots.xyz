@@ -65,29 +65,29 @@ interface TweetTimeline {
 
 function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
   if (ans == "human") {
-    nickname = data[tweetNumber]?.author.username ?? ["Account", tweetNumber];
-    name = data[tweetNumber]?.author.name ?? ["Account ", tweetNumber];
-    avatar = data[tweetNumber]?.author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
-    text = data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") || ["Placeholder Tweet Number ", tweetNumber];
+    nickname = data[tweetNumber]?.author.username!;
+    name = data[tweetNumber]?.author.name!;
+    avatar = data[tweetNumber]?.author.profile_image_url!;
+    text = data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">") || ["Placeholder Tweet Number ", tweetNumber];
     image = [];
     for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
       image.push(data[tweetNumber]?.media[i].url)
     }
-    date = Date.parse(data[tweetNumber]?.tweet.created_at) ?? Date();
+    date = Date.parse(data[tweetNumber]?.tweet.created_at)!;
     retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? -1;
     quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? -1;
     likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? -1;
   } else {
-    nickname = data[tweetNumber]?.author.username ?? ["Account", tweetNumber];
-    name = data[tweetNumber]?.author.name ?? ["Account ", tweetNumber];
-    avatar = data[tweetNumber]?.author.profile_image_url ?? "https://pbs.twimg.com/profile_images/1488548719062654976/u6qfBBkF_400x400.jpg";
+    nickname = data[tweetNumber]?.author.username!;
+    name = data[tweetNumber]?.author.name!;
+    avatar = data[tweetNumber]?.author.profile_image_url!;
     // text = data[tweetNumber]?.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&") || ["Placeholder Tweet Number ", tweetNumber];
     text = "AI Generated Tweet";
     image = [];
     for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
       image.push(data[tweetNumber]?.media[i].url)
     }
-    date = Date.parse(data[tweetNumber]?.tweet.created_at) ?? Date();
+    date = Date.parse(data[tweetNumber]?.tweet.created_at)!;
     retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? -1;
     quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? -1;
     likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? -1;
@@ -127,6 +127,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
 
   if (loading) return <p>Loading Tweet...</p>
   if (!data) return <p>No tweets :/</p>
+  if (tweetNumber > data.length - 1) return <p>Out of tweets! Pat yourself on the back. Now sign out and sign back in, and you can get the newest Tweets from your timeline!</p>
 
   setTweet(data, tweetNumber, ans);
 

@@ -23,6 +23,11 @@ export default async (req, res) => {
       'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
       exclude: ['retweets', 'replies'],
     });
+    await homeTimeline.fetchNext();
+    await homeTimeline.fetchNext();
+    await homeTimeline.fetchNext();
+    await homeTimeline.fetchNext();
+    await homeTimeline.fetchNext();
     const includes = new TwitterV2IncludesHelper(homeTimeline);
     const body = [];
     for (const tweet of homeTimeline.tweets) {
