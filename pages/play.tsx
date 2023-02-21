@@ -4,7 +4,7 @@ import { useState } from "react";
 import { signOut, useSession } from 'next-auth/react';
 import TweetTimeline from "../components/TweetTimeline";
 
-const Home: NextPage = () => {
+const Play: NextPage = () => {
   const { data: session, status } = useSession();
   const [tweetIndex, setTweetIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -18,9 +18,14 @@ const Home: NextPage = () => {
       setScore(score + 1)
     } else {
       // store last score
+      localStorage.setItem("lastScore", score.toString())
       // store highest score, if needed
+      if (score > parseInt(localStorage.getItem("highScore") ?? "0")) {
+        localStorage.setItem("highScore", score.toString())
+      }
       // store tweet that fooled them
-      setScore(score + 1)
+      localStorage.setItem("lastTweet", tweetIndex.toString())
+      setScore(0)
       alert("You lost!")
       location.href = '/endgame'
     }
@@ -66,4 +71,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Play;
