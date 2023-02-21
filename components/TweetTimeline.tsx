@@ -154,23 +154,22 @@ export default function TweetTimeline({ tweetNumber }: TweetTimeline): JSX.Eleme
   if (!data) return <p>No tweets :/</p>
 
   return (
-    <p>Loading Tweet...</p>
-    // <FakeTweet config={{
-    //   user: {
-    //     nickname: nickname,
-    //     name: name,
-    //     avatar: avatar,
-    //     verified: false,
-    //     locked: false
-    //   },
-    //   display: "default",
-    //   text: text,
-    //   image: image,
-    //   date: new Date(date).toLocaleString('en-US'),
-    //   app: "Twitter for AI",
-    //   retweets: retweets,
-    //   quotedTweets: quotedTweets,
-    //   likes: likes
-    // }} />
+    <FakeTweet config={{
+      user: {
+        nickname: nickname,
+        name: name,
+        avatar: avatar,
+        verified: false,
+        locked: false
+      },
+      display: "default",
+      text: text,
+      image: image,
+      date: new Date(date).toLocaleString('en-US'),
+      app: "Twitter for AI",
+      retweets: retweets,
+      quotedTweets: quotedTweets,
+      likes: likes
+    }} />
   )
 }
