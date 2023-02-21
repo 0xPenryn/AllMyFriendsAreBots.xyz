@@ -30,7 +30,12 @@ export default NextAuth({
       clientId: process.env.TWITTER_CLIENT_ID as string,
       clientSecret: process.env.TWITTER_CLIENT_SECRET as string,
       version: "2.0",
-      checks: ["state"],
     })
+
+    // for oauth1 (needs elevated API access)
+    // TwitterProvider({
+    //   clientId: process.env.TWITTER_API_KEY as string,
+    //   clientSecret: process.env.TWITTER_API_KEY_SECRET as string,
+    // })
   ]
 });
