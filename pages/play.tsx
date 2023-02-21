@@ -29,9 +29,7 @@ const Home: NextPage = () => {
       <div className="flex flex-col h-screen justify-center items-center">
         {!session && <>
           <h1>Personhood is hard to prove. <br /></h1>
-          <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-10 text-xl" onClick={() => signIn("twitter", {
-            callbackUrl: `${window.location.origin}/play`,
-          })}>Sign in with Twitter</button>
+          <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-10 text-xl" onClick={() => signIn("twitter")}>Sign in with Twitter</button>
           <button className="bg-slate-400 text-slate-700 opacity-80 text-xs rounded-md px-5 py-1.5 mt-4">Play without Signing In</button>
         </>}
         <div className="">

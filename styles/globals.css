@@ -24,3 +24,7 @@ img {
   display: inline;
   vertical-align: top;
 }
+
+.tweet {
+  width: 100%;
+}
