@@ -60,6 +60,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
 
   const [data, setData] = useState([] as Array<any>);
   const [loading, setLoading] = useState(true);
+  const [changing, setChanging] = useState(0);
 
   async function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
     nickname = data[tweetNumber]?.author.username!;
@@ -74,15 +75,16 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
     retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? -1;
     quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? -1;
     likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? -1; data[tweetNumber]?.tweet.public_metrics.like_count ?? -1;
-    await setTweetPost();
+    await changeTweet();
+    setChanging(changing + 1);
   }
 
-  async function setTweetPost() {
+  async function changeTweet() {
     if (ans === "ai") {
       console.log("ai tweet!")
       const _prompt = prompt + text + "]"
       const tweetText = await generateTweet(_prompt);
-      console.log("ai tweet done!")
+      console.log("ai tweet done: ", tweetText)
       text = tweetText;
     }
   }
@@ -119,17 +121,18 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
   if (!data) return <p>No tweets :/</p>
   if (tweetNumber > data.length - 1) return <p>Out of tweets! Pat yourself on the back. Now sign out and sign back in, and you can get the newest Tweets from your timeline!</p>
 
-  // useEffect(() => {
-  //   const thing = async () => {
-  //     await setTweet(data, tweetNumber, ans);
-  //   }
-  //   thing();
-  // }, [tweetNumber])
-
+  useEffect(() => {
+    const thing = async () => {
+      await setTweet(data, tweetNumber, ans);
+    }
+    thing();
+  }, [tweetNumber])
 
   setTweet(data, tweetNumber, ans);
 
   return (
+    <div>
+    <p>{ans}</p>
     <FakeTweet config={{
       user: {
         nickname: nickname,
@@ -147,5 +150,6 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
       quotedTweets: quotedTweets,
       likes: likes
     }} />
+    </div>
   )
 }
