@@ -8,8 +8,10 @@ export const config = {
   runtime: "edge",
 };
 
-export default async function handler(req: NextApiRequest, res: Response) {
+export default (req: NextApiRequest) => {
   // const encoder = new TextEncoder();
+
+  console.log("timeline was called!")
 
   const token = await getToken({ req });
 
@@ -51,10 +53,12 @@ export default async function handler(req: NextApiRequest, res: Response) {
     start(controller) {
       for (const tweet of homeTimeline.tweets) {
         if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments) {
-          controller.enqueue(parseTweet({
+          const parsedTweet = parseTweet({
             tweet: tweet,
             author: includes.author(tweet) ?? null,
-          }));
+          })
+          console.log(parsedTweet);
+          controller.enqueue(parsedTweet);
         }
       }
     },
@@ -63,10 +67,12 @@ export default async function handler(req: NextApiRequest, res: Response) {
       timelinePage.then((timelinePage) => {
         for (const tweet of timelinePage.tweets) {
           if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments) {
-            controller.enqueue(parseTweet({
+            const parsedTweet = parseTweet({
               tweet: tweet,
               author: includes.author(tweet) ?? null,
-            }));
+            })
+            console.log(parsedTweet);
+            controller.enqueue(parsedTweet);
           }
         }
       })
