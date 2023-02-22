@@ -11,8 +11,8 @@ declare module "next-auth" {
     //   email
     //   image
     // } & DefaultSession["user"]
-    access_token
-    refresh_token
+    access_token: string
+    refresh_token: string
   }
   interface JWT {
     access_token: string

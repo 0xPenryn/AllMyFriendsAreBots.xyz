@@ -77,7 +77,7 @@ const Play: NextPage = () => {
         </div>
         <div className="flex flex-col w-screen justify-center items-center">
           <p>Your Score: {score}</p>
-          <TweetTimeline tweetNumber={tweetIndex} ans={correctAns} />
+          <TweetTimeline tweetNumber={tweetIndex} />
           <div className="flex flex-row content-center">
             <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess("human")}>Human</button>
             <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess("ai")}>AI</button>
