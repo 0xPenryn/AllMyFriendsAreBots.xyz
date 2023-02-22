@@ -113,7 +113,7 @@ export async function loadTweet(twIndex: number): Promise<TweetConfig> {
     //             })
     //         })
     // }
-    const tweetData = JSON.parse(localStorage.getItem("tweetData")!);
+    var tweetData = JSON.parse(localStorage.getItem("tweetData")!);
     console.log("tweetData: ", tweetData)
     if ((twIndex + 3) >= (tweetData?.length ?? 0)) {
         fetch('/api/twitter/timeline')
