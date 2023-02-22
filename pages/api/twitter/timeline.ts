@@ -8,7 +8,7 @@ export const config = {
   runtime: "edge",
 };
 
-export default (req: NextApiRequest) => {
+export default async (req: NextApiRequest) => {
   // const encoder = new TextEncoder();
 
   console.log("timeline was called!")
