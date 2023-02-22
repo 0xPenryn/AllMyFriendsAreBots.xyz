@@ -114,7 +114,6 @@ export function loadTweet(twIndex: number): TweetConfig {
     //         })
     // }
     const tweetData = JSON.parse(localStorage.getItem("tweetData")!);
-    if (!tweetData) { throw Error("No tweet data found") }
     if ((twIndex + 3) >= (tweetData?.length ?? 0)) {
         fetch('/api/twitter/timeline')
             .then((res) => {
@@ -128,5 +127,6 @@ export function loadTweet(twIndex: number): TweetConfig {
                 }
             })
     }
+    if (!tweetData) { throw Error("No tweet data found") }
     return tweetData[twIndex];
 }
