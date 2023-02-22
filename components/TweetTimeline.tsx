@@ -108,7 +108,7 @@ export default function TweetTimeline(tweetNumber: any): JSX.Element {
 
   useEffect(() => {
     const loadEffect = async () => {
-      setTweet(loadTweet(tweetNumber))
+      setTweet(await loadTweet(tweetNumber))
       setLoading(false)
     }
     loadEffect();

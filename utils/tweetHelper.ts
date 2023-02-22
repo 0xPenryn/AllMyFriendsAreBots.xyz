@@ -101,7 +101,7 @@ export async function changeTweet(tweet: TweetConfig) {
     return tweet;
 }
 
-export function loadTweet(twIndex: number): TweetConfig {
+export async function loadTweet(twIndex: number): Promise<TweetConfig> {
     // if (!localStorage.getItem("tweetData")) {
     //     fetch('/api/twitter/timeline')
     //         .then((res) => {
@@ -114,6 +114,7 @@ export function loadTweet(twIndex: number): TweetConfig {
     //         })
     // }
     const tweetData = JSON.parse(localStorage.getItem("tweetData")!);
+    console.log("tweetData: ", tweetData)
     if ((twIndex + 3) >= (tweetData?.length ?? 0)) {
         fetch('/api/twitter/timeline')
             .then((res) => {
@@ -121,6 +122,7 @@ export function loadTweet(twIndex: number): TweetConfig {
                 while (twIndex >= tweetData.length) {
                     reader.read().then((result) => {
                         const tweet = JSON.parse(result.value!.toString()!);
+                        console.log("tweet: ", tweet)
                         tweetData.push(tweet)
                         localStorage.setItem("tweetData", JSON.stringify(tweetData));
                     })
@@ -128,5 +130,10 @@ export function loadTweet(twIndex: number): TweetConfig {
             })
     }
     if (!tweetData) { throw Error("No tweet data found") }
+    var tweet = tweetData[twIndex];
+    // 25% chance to make it ai-generated
+    if (Math.random() < 0.25) {
+        tweet = changeTweet(tweet);
+    }
     return tweetData[twIndex];
 }
