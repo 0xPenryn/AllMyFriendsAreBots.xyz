@@ -62,6 +62,7 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
   const [loading, setLoading] = useState(true);
 
   async function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
+    console.log("called setTweet")
     nickname = data[tweetNumber]?.author.username!;
     name = data[tweetNumber]?.author.name!;
     avatar = data[tweetNumber]?.author.profile_image_url!;
@@ -74,7 +75,9 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
     retweets = data[tweetNumber]?.tweet.public_metrics.retweet_count ?? -1;
     quotedTweets = data[tweetNumber]?.tweet.public_metrics.quote_count ?? -1;
     likes = data[tweetNumber]?.tweet.public_metrics.like_count ?? -1; data[tweetNumber]?.tweet.public_metrics.like_count ?? -1;
+    console.log("calling changeTweet")
     await changeTweet();
+    console.log("called changeTweet")
     return (
       <div>
         <p>{ans}</p>
@@ -135,7 +138,9 @@ export default function TweetTimeline({ tweetNumber, ans }: TweetTimeline,): JSX
       }
     }
     loadEffect();
+    console.log("called loadEffect")
     setTweet(data, tweetNumber, ans);
+    console.log("calling setTweet from useEffect")
   }, [])
 
   if (loading) return <p>Loading Tweets...</p>
