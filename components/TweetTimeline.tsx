@@ -35,19 +35,17 @@ export default function TweetTimeline( props: { tweetNumber: number, AI: boolean
   // });
 
   useEffect(() => {
-    const newTweet = loadTweet(props.tweetNumber)
-    console.log("loadTweet returned: ", newTweet)
-    if (props.AI = true) {
-      makeAITweet(newTweet)
+    const loadEffect = async () => {
+      const newTweet = loadTweet(props.tweetNumber)
+      console.log("loadTweet returned: ", newTweet)
+      setTweet(newTweet)
+      if (props.AI = true) {
+        await makeAITweet(newTweet)
+        setTweet(newTweet)
+      }
+      setLoading(false);
     }
-    setTweet(newTweet)
-    setLoading(false);
-    // const loadEffect = async () => {
-    //   return (
-    //     <FakeTweet config={tweet} />
-    //   )
-    // }
-    // loadEffect();
+    loadEffect();
   }, [props.tweetNumber])
 
   if (loading) return <p>Loading Tweets...</p>
