@@ -26,26 +26,26 @@ export interface UnparsedTweet {
 
 export function parseTweet(unparsedTweet: UnparsedTweet) {
     var parsedTweet: TweetConfig = {
-        "user": {
-            "nickname": unparsedTweet.author?.username!,
-            "name": unparsedTweet.author?.name!,
-            "avatar": unparsedTweet.author?.profile_image_url!,
-            "verified": unparsedTweet.author?.verified!,
-            "locked": unparsedTweet.author?.protected!,
+        user: {
+            nickname: unparsedTweet.author?.username!,
+            name: unparsedTweet.author?.name!,
+            avatar: unparsedTweet.author?.profile_image_url!,
+            verified: unparsedTweet.author?.verified!,
+            locked: unparsedTweet.author?.protected!,
         },
-        "display": "default",
-        "text": unparsedTweet.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">") || "Placeholder Tweet",
-        "image": [],
+        display: "default",
+        text: unparsedTweet.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">") || "Placeholder Tweet",
+        image: [],
         // for tweets that include media
         // for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
         //   image.push(data[tweetNumber]?.media[i].url)
         // }
-        "date": Date.parse(unparsedTweet.tweet.created_at ?? Date()).toLocaleString('en-US')!,
-        "app": "Twitter for AI",
-        "retweets": unparsedTweet.tweet.public_metrics?.retweet_count ?? -1,
-        "quotedTweets": unparsedTweet.tweet.public_metrics?.quote_count ?? -1,
-        "likes": unparsedTweet.tweet.public_metrics?.like_count ?? -1,
-        "AI": false,
+        date: Date.parse(unparsedTweet.tweet.created_at ?? Date()).toLocaleString('en-US')!,
+        app: "Twitter for AI",
+        retweets: unparsedTweet.tweet.public_metrics?.retweet_count ?? -1,
+        quotedTweets: unparsedTweet.tweet.public_metrics?.quote_count ?? -1,
+        likes: unparsedTweet.tweet.public_metrics?.like_count ?? -1,
+        AI: false,
     }
     // console.log("parsed tweet: ", parsedTweet)
     return parsedTweet;
