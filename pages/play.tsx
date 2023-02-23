@@ -14,71 +14,48 @@ function clearState() {
   localStorage.removeItem("lastTweetType");
 }
 
-const [score, setScore] = useState(0);
-const [tweetData, setTweetData] = useState([] as Array<TweetConfig>);
-const [highScore, setHighScore] = useState(0);
-const [loading, setLoading] = useState(true);
-
-const { data: session, status } = useSession();
-// const [tweetIndex, setTweetIndex] = useState(0);
-const [tweet, setTweet] = useState({
-  user: {
-    nickname: "string",
-    name: "str",
-    avatar: "string",
-    verified: false,
-    locked: false,
-  },
-  display: "default",
-  text: "string",
-  image: [],
-  date: "string",
-  app: "Twitter for AI",
-  retweets: -1,
-  quotedTweets: -1,
-  likes: -1,
-  AI: false,
-} as TweetConfig);
-
-function userGuess(userAns: boolean, tweet: TweetConfig) {
-  if (userAns == tweet.AI) {
-    // var isNextAI = Math.random() > 0.1 ? false : true;
-    // setIsAI(isNextAI);
-    // setTweetIndex(tweetIndex + 1)
-    setScore(score + 1)
-  } else {
-    // store last score
-    localStorage.setItem("lastScore", score.toString())
-    // store highest score, if needed
-    if (score > parseInt(localStorage.getItem("highScore") ?? "0")) {
-      localStorage.setItem("highScore", score.toString())
-    }
-    // store tweet that fooled them
-    localStorage.setItem("lastTweet", JSON.stringify(tweet))
-    localStorage.setItem("lastTweetType", tweet.AI ? "ai" : "human")
-    setScore(0)
-    // alert("You lost!")
-    location.href = '/endgame'
-  }
-};
-
-if (typeof window !== 'undefined') {
-  setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"))
-  setTweetData(JSON.parse(localStorage.getItem("tweetData") ?? "[]"))
-
-  if (tweetData.length == 0) {
-    const tweets = loadTweets()
-    localStorage.setItem("tweetData", JSON.stringify([]))
-    setTweetData(tweets)
-  }
-}
-
-const streamReader = tweetStream(tweetData).getReader()
-
 const Play: NextPage = () => {
+  const { data: session, status } = useSession();
+  // const [tweetIndex, setTweetIndex] = useState(0);
+  const [tweet, setTweet] = useState({
+    user: {
+      nickname: "string",
+      name: "str",
+      avatar: "string",
+      verified: false,
+      locked: false,
+    },
+    display: "default",
+    text: "string",
+    image: [],
+    date: "string",
+    app: "Twitter for AI",
+    retweets: -1,
+    quotedTweets: -1,
+    likes: -1,
+    AI: false,
+  } as TweetConfig);
+
+  const [score, setScore] = useState(0);
+  const [tweetData, setTweetData] = useState([] as Array<TweetConfig>);
+  const [highScore, setHighScore] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  if (typeof window !== 'undefined') {
+    setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"))
+    setTweetData(JSON.parse(localStorage.getItem("tweetData") ?? "[]"))
+
+    if (tweetData.length == 0) {
+      const tweets = loadTweets()
+      localStorage.setItem("tweetData", JSON.stringify([]))
+      setTweetData(tweets)
+    }
+
+  }
+
+  const streamReader = tweetStream(tweetData).getReader()
 
   useEffect(() => {
-
     streamReader.read().then((result) => {
       if (result.value) {
         console.log("read Tweet: ", result.value)
@@ -87,6 +64,28 @@ const Play: NextPage = () => {
       setLoading(false);
     })
   }, [score])
+
+  function userGuess(userAns: boolean, tweet: TweetConfig) {
+    if (userAns == tweet.AI) {
+      // var isNextAI = Math.random() > 0.1 ? false : true;
+      // setIsAI(isNextAI);
+      // setTweetIndex(tweetIndex + 1)
+      setScore(score + 1)
+    } else {
+      // store last score
+      localStorage.setItem("lastScore", score.toString())
+      // store highest score, if needed
+      if (score > parseInt(localStorage.getItem("highScore") ?? "0")) {
+        localStorage.setItem("highScore", score.toString())
+      }
+      // store tweet that fooled them
+      localStorage.setItem("lastTweet", JSON.stringify(tweet))
+      localStorage.setItem("lastTweetType", tweet.AI ? "ai" : "human")
+      setScore(0)
+      // alert("You lost!")
+      location.href = '/endgame'
+    }
+  };
 
   {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
 
