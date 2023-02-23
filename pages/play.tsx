@@ -19,7 +19,9 @@ const Play: NextPage = () => {
   const [isAI, setIsAI] = useState(false);
   const [highScore, setHighScore] = useState(0);
 
-  setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"))
+  if (typeof window !== 'undefined') {
+    setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"))
+  }
 
   useEffect(() => {
     function checkUserData() {
