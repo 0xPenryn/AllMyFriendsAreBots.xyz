@@ -40,14 +40,14 @@ export default function TweetTimeline( props: { tweetNumber: number, AI: boolean
     const loadEffect = async () => {
       const newTweet = await loadTweet(props.tweetNumber)
       console.log("loadTweet returned: ", newTweet)
-      setTweet(newTweet)
       if (props.AI == true) {
         await makeAITweet(newTweet)
         setTweet(newTweet)
       }
+      setTweet(newTweet)
+      setLoading(false);
     }
     loadEffect();
-    setLoading(false);
   }, [props.tweetNumber, tweet.AI])
 
   if (loading) return <p>Loading Tweets...</p>
