@@ -19,16 +19,6 @@ export default async (req: NextApiRequest) => {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  const client = new TwitterApi(token.access_token as string);
-  const homeTimeline = await client.v2.homeTimeline({
-    'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
-    expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
-    'media.fields': ['url'],
-    'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
-    exclude: ['retweets', 'replies'],
-  });
-
-  const includes = new TwitterV2IncludesHelper(homeTimeline);
 
   // for (const tweet of homeTimeline.tweets) {
   //   // to avoid media in tweets
@@ -50,7 +40,17 @@ export default async (req: NextApiRequest) => {
   // }
 
   const customReadable = new ReadableStream({
-    start(controller) {
+    async start(controller) {
+      const client = new TwitterApi(token.access_token as string);
+      const homeTimeline = await client.v2.homeTimeline({
+        'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
+        expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
+        'media.fields': ['url'],
+        'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
+        exclude: ['retweets', 'replies'],
+      });
+
+      const includes = new TwitterV2IncludesHelper(homeTimeline);
       for (const tweet of homeTimeline.tweets) {
         if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments) {
           const parsedTweet = parseTweet({
