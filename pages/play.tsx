@@ -5,6 +5,7 @@ import { signOut, useSession } from 'next-auth/react';
 // import TweetTimeline from "../components/TweetTimeline";
 import { TweetConfig, loadTweets, tweetStream } from "../utils/tweetHelper";
 import FakeTweet from "fake-tweet";
+import TweetTimeline from "../components/TweetTimeline";
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -77,16 +78,18 @@ const Play: NextPage = () => {
       setTweetData(tweets)
     }
 
-    const streamReader = tweetStream(tweetData).getReader()
+    // const streamReader = tweetStream(tweetData).getReader()
+
+    setLoading(false)
 
     // useEffect(() => {
-      streamReader.read().then((result) => {
-        if (result.value) {
-          console.log("read Tweet: ", result.value)
-          setTweet(result.value)
-        }
-        setLoading(false);
-      })
+      // streamReader.read().then((result) => {
+      //   if (result.value) {
+      //     console.log("read Tweet: ", result.value)
+      //     setTweet(result.value)
+      //   }
+        // setLoading(false);
+      // })
     // }, [score])
   }
 
@@ -117,7 +120,8 @@ const Play: NextPage = () => {
           <p>Your Previous Best Score: {highScore}</p>
           {/* <TweetTimeline tweetNumber={tweetIndex} AI={isAI} /> */}
           {!loading && <>
-            <FakeTweet config={tweet} />
+            {/* <FakeTweet config={tweet} /> */}
+            <TweetTimeline streamReader={tweetStream(tweetData).getReader()} />
           </>}
           {loading && <>
             <p>Loading Tweet...</p>
