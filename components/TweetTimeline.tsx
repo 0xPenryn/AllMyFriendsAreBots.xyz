@@ -2,25 +2,25 @@ import FakeTweet from "fake-tweet";
 import { useState, useEffect } from "react";
 import { TweetConfig, loadTweet, makeAITweet } from "../utils/tweetHelper";
 
-export default function TweetTimeline( props: { tweetNumber: number, AI: boolean } ): JSX.Element {
+export default function TweetTimeline(props: { tweetNumber: number, AI: boolean }): JSX.Element {
 
   const [tweet, setTweet] = useState({
-      user: {
-          nickname: "string",
-          name: "str",
-          avatar: "string",
-          verified: false,
-          locked: false,
-      },
-      display: "default",
-      text: "string",
-      image: [],
-      date: "string",
-      app: "Twitter for AI",
-      retweets: -1,
-      quotedTweets: -1,
-      likes: -1,
-      AI: false,
+    user: {
+      nickname: "string",
+      name: "str",
+      avatar: "string",
+      verified: false,
+      locked: false,
+    },
+    display: "default",
+    text: "string",
+    image: [],
+    date: "string",
+    app: "Twitter for AI",
+    retweets: -1,
+    quotedTweets: -1,
+    likes: -1,
+    AI: false,
   } as TweetConfig);
 
   const [loading, setLoading] = useState(true);
@@ -37,17 +37,21 @@ export default function TweetTimeline( props: { tweetNumber: number, AI: boolean
 
   useEffect(() => {
     setLoading(true)
-    const loadEffect = async () => {
-      const newTweet = await loadTweet(props.tweetNumber)
+    // const loadEffect = async () => {
+    // const newTweet = await loadTweet(props.tweetNumber)
+    loadTweet(props.tweetNumber).then((newTweet) => {
       console.log("loadTweet returned: ", newTweet)
       if (props.AI == true) {
-        await makeAITweet(newTweet)
+        makeAITweet(newTweet).then((newTweet) => {
+          setTweet(newTweet)
+          setLoading(false);
+        })
+      } else {
         setTweet(newTweet)
+        setLoading(false);
       }
-      setTweet(newTweet)
-      setLoading(false);
-    }
-    loadEffect();
+    })
+    // loadEffect();
   }, [props.tweetNumber])
 
   if (loading) return <p>Loading Tweets...</p>
