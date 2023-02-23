@@ -1,10 +1,8 @@
 import { getToken } from 'next-auth/jwt';
 import { TwitterApi } from 'twitter-api-v2';
 import { TwitterV2IncludesHelper } from 'twitter-api-v2';
-import { NextApiRequest } from 'next';
 import { parseTweet } from '../../../utils/tweetHelper';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { json } from 'stream/consumers';
 
 // export const config = {
 //   runtime: "edge",

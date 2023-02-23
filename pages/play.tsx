@@ -17,7 +17,9 @@ const Play: NextPage = () => {
   const [tweetIndex, setTweetIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [isAI, setIsAI] = useState(false);
-  const [highScore, setHighScore] = useState(localStorage.getItem("highScore") ?? "0");
+  const [highScore, setHighScore] = useState(0);
+
+  setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"))
 
   useEffect(() => {
     function checkUserData() {
