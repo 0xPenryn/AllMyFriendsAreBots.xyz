@@ -77,9 +77,12 @@ export default async (req: NextApiRequest) => {
     //     }
     //   })
     // }
-  }, { highWaterMark: 3 });
+  },
+    // { highWaterMark: 3 }
+  );
 
-  return new Response(customReadable);
+  // return new Response(customReadable);
+  return customReadable;
 }
 
 // https://github.com/PLhery/node-twitter-api-v2/blob/master/doc/paginators.md for reference here
