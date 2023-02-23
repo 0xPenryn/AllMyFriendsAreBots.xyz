@@ -4,6 +4,7 @@ import { TwitterV2IncludesHelper } from 'twitter-api-v2';
 import { NextApiRequest } from 'next';
 import { parseTweet } from '../../../utils/tweetHelper';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { json } from 'stream/consumers';
 
 // export const config = {
 //   runtime: "edge",
@@ -19,7 +20,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const token = await getToken({ req });
 
-  if (!token) {
+  if (!token?.access_token) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
@@ -54,6 +55,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
 
       const includes = new TwitterV2IncludesHelper(homeTimeline);
+
       for (const tweet of homeTimeline.tweets) {
         if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments) {
           const parsedTweet = parseTweet({
@@ -64,6 +66,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           controller.enqueue(parsedTweet);
         }
       }
+      console.log("closing controller")
+      controller.close()
     },
     // pull(controller) {
     //   const timelinePage = homeTimeline.next();

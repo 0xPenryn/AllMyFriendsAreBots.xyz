@@ -47,7 +47,7 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
         "likes": unparsedTweet.tweet.public_metrics?.like_count ?? -1,
         "AI": false,
     }
-    console.log("parsed tweet: ", parsedTweet)
+    // console.log("parsed tweet: ", parsedTweet)
     return parsedTweet;
 }
 
@@ -112,8 +112,9 @@ export async function loadTweet(twIndex: number): Promise<TweetConfig> {
 
     if ((twIndex + 3) >= (tweetData.length ?? -1)) {
         fetch('/api/twitter/timeline')
-            .then((res) => {
-                const reader = res.body!.getReader();
+            .then((res) => res.body)
+            .then((body) => {
+                const reader = body?.getReader()!;
                 while ((twIndex + 3) >= tweetData.length) {
                     reader.read().then((result) => {
                         const tweet = JSON.parse(result.value!.toString()!);
@@ -135,6 +136,7 @@ export async function loadTweet(twIndex: number): Promise<TweetConfig> {
     //             localStorage.setItem("tweetData", JSON.stringify(tweetData));
     //         })
     // }
+    
     // if (!tweetData) { throw Error("No tweet data found") }
     var tweet = tweetData[twIndex];
     // 25% chance to make it ai-generated
