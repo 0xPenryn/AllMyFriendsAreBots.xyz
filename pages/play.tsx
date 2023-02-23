@@ -46,8 +46,9 @@ const Play: NextPage = () => {
     setTweetData(JSON.parse(localStorage.getItem("tweetData") ?? "[]"))
 
     if (tweetData.length == 0) {
-      setTweetData(loadTweets())
+      const tweets = loadTweets()
       localStorage.setItem("tweetData", JSON.stringify([]))
+      setTweetData(tweets)
     }
 
   }
