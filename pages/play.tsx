@@ -53,7 +53,7 @@ const Play: NextPage = () => {
         }
         setLoading(false);
       })
-    }, [])
+    }, [score])
   }
 
   function userGuess(userAns: boolean, tweet: TweetConfig) {
@@ -104,12 +104,7 @@ const Play: NextPage = () => {
           <p>Your Score: {score}</p>
           <p>Your Previous Best Score: {highScore}</p>
           {/* <TweetTimeline tweetNumber={tweetIndex} AI={isAI} /> */}
-          {!loading && <>
-            <FakeTweet config={tweet} />
-          </>}
-          {loading && <>
-            <p>Loading Tweet...</p>
-          </>}
+          <FakeTweet config={tweet} />
           <div className="flex flex-row content-center">
             <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(false, tweet)}>Human</button>
             <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(true, tweet)}>AI</button>
