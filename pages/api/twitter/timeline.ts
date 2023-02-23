@@ -79,7 +79,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const includes = new TwitterV2IncludesHelper(homeTimeline);
 
       for (const tweet of homeTimeline.tweets) {
-        if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments) {
+        if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments && !includes.author(tweet)?.protected) {
           const parsedTweet = parseTweet({
             tweet: tweet,
             author: includes.author(tweet) ?? null,
