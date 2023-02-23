@@ -105,7 +105,7 @@ export function tweetStream(tweetData: Array<TweetConfig>): ReadableStream<Tweet
     const customReadable = new ReadableStream<TweetConfig>({
         async start(controller) {
             for (const tweet of tweetData) {
-                if (Math.random() > 0.9) {
+                if (Math.random() > 0.1 ? false : true) {
                     const aiTweet = await makeAITweet(tweet)
                     controller.enqueue(aiTweet)
                 } else {controller.enqueue(tweet)}
