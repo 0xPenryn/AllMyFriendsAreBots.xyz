@@ -28,7 +28,7 @@ import { TweetConfig, loadTweets, makeAITweet } from "../utils/tweetHelper";
 //   }
 // };
 
-export default function TweetTimeline( props: { streamReader: ReadableStreamDefaultReader<TweetConfig> } ): JSX.Element {
+export default function TweetTimeline( props: { tweetNumber: number, AI: boolean } ): JSX.Element {
 
   const [tweet, setTweet] = useState({
       user: {
@@ -50,16 +50,6 @@ export default function TweetTimeline( props: { streamReader: ReadableStreamDefa
   } as TweetConfig);
 
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    props.streamReader.read().then((result) => {
-      if (result.value) {
-        console.log("read Tweet: ", result.value)
-        setTweet(result.value)
-      }
-      setLoading(false);
-    })
-  }, [])
 
   // loadTweet(props.tweetNumber).then((newTweet) => {
   //   console.log("loadTweet returned: ", newTweet)
