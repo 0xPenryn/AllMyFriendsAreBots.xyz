@@ -31,14 +31,14 @@ export default function TweetTimeline( props: { tweetNumber: number } ): JSX.Ele
     setLoading(false);
   });
 
-  useEffect(() => {
-    const loadEffect = async () => {
-      return (
-        <FakeTweet config={tweet} />
-      )
-    }
-    loadEffect();
-  }, [props.tweetNumber, loading])
+  // useEffect(() => {
+  //   const loadEffect = async () => {
+  //     return (
+  //       <FakeTweet config={tweet} />
+  //     )
+  //   }
+  //   loadEffect();
+  // }, [props.tweetNumber, loading])
 
   if (loading) return <p>Loading Tweets...</p>
   // if (!data) return <p>No tweets :/</p>
