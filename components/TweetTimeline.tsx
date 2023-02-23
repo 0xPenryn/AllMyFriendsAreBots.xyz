@@ -40,7 +40,7 @@ export default function TweetTimeline( props: { tweetNumber: number, AI: boolean
       const newTweet = await loadTweet(props.tweetNumber)
       console.log("loadTweet returned: ", newTweet)
       setTweet(newTweet)
-      if (props.AI = true) {
+      if (props.AI == true) {
         await makeAITweet(newTweet)
         setTweet(newTweet)
       }
