@@ -79,7 +79,7 @@ const Play: NextPage = () => {
 
     const streamReader = tweetStream(tweetData).getReader()
 
-    useEffect(() => {
+    // useEffect(() => {
       streamReader.read().then((result) => {
         if (result.value) {
           console.log("read Tweet: ", result.value)
@@ -87,7 +87,7 @@ const Play: NextPage = () => {
         }
         setLoading(false);
       })
-    }, [score])
+    // }, [score])
   }
 
   {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
