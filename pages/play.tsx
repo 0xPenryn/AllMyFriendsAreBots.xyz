@@ -2,7 +2,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import { signOut, useSession } from 'next-auth/react';
-import TweetTimeline from "../components/TweetTimeline";
+// import TweetTimeline from "../components/TweetTimeline";
+import { TweetConfig, loadTweets, tweetStream } from "../utils/tweetHelper";
+import FakeTweet from "fake-tweet";
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -14,33 +16,51 @@ function clearState() {
 
 const Play: NextPage = () => {
   const { data: session, status } = useSession();
-  const [tweetIndex, setTweetIndex] = useState(0);
+  // const [tweetIndex, setTweetIndex] = useState(0);
+  const [tweet, setTweet] = useState({
+    user: {
+        nickname: "string",
+        name: "str",
+        avatar: "string",
+        verified: false,
+        locked: false,
+    },
+    display: "default",
+    text: "string",
+    image: [],
+    date: "string",
+    app: "Twitter for AI",
+    retweets: -1,
+    quotedTweets: -1,
+    likes: -1,
+    AI: false,
+} as TweetConfig);
   const [score, setScore] = useState(0);
-  const [isAI, setIsAI] = useState(false);
+  // const [isAI, setIsAI] = useState(false);
   const [highScore, setHighScore] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   if (typeof window !== 'undefined') {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"))
   }
 
+  const streamReader = tweetStream(loadTweets()).getReader()
+
   useEffect(() => {
-    function checkUserData() {
-      setTweetIndex(1 + (JSON.parse(localStorage.getItem("lastTweet") ?? "0"))) ;
-    }
+    streamReader.read().then((result) => {
+      if (result.value) {
+        console.log("loadTweet returned: ", result.value)
+        setTweet(result.value)
+      }
+      setLoading(false);
+    })
+  }, [score])
 
-    checkUserData()
-    // console.log(tweetIndex, "end of effect")
-    // return () => {
-    //   // window.removeEventListener('load', checkUserData)
-    //   console.log(tweetIndex, "end of listener")
-    // }
-  }, [])
-
-  function userGuess(userAns: string) {
-    if ((userAns == "ai") == isAI) {
-      var isNextAI = Math.random() > 0.1 ? false : true;
-      setIsAI(isNextAI);
-      setTweetIndex(tweetIndex + 1)
+  function userGuess(userAns: boolean, tweet: TweetConfig) {
+    if (userAns == tweet.AI) {
+      // var isNextAI = Math.random() > 0.1 ? false : true;
+      // setIsAI(isNextAI);
+      // setTweetIndex(tweetIndex + 1)
       setScore(score + 1)
     } else {
       // store last score
@@ -50,8 +70,8 @@ const Play: NextPage = () => {
         localStorage.setItem("highScore", score.toString())
       }
       // store tweet that fooled them
-      localStorage.setItem("lastTweet", tweetIndex.toString())
-      localStorage.setItem("lastTweetType", isAI ? "ai" : "human")
+      localStorage.setItem("lastTweet", JSON.stringify(tweet))
+      localStorage.setItem("lastTweetType", tweet.AI ? "ai" : "human")
       setScore(0)
       // alert("You lost!")
       location.href = '/endgame'
@@ -83,10 +103,11 @@ const Play: NextPage = () => {
         <div className="flex flex-col w-screen justify-center items-center">
           <p>Your Score: {score}</p>
           <p>Your Previous Best Score: {highScore}</p>
-          <TweetTimeline tweetNumber={tweetIndex} AI={isAI} />
+          {/* <TweetTimeline tweetNumber={tweetIndex} AI={isAI} /> */}
+          <FakeTweet config={tweet} />
           <div className="flex flex-row content-center">
-            <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess("human")}>Human</button>
-            <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess("ai")}>AI</button>
+            <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(false, tweet)}>Human</button>
+            <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(true, tweet)}>AI</button>
           </div>
         </div>
       </>}

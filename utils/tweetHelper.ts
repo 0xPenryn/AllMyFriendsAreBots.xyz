@@ -101,34 +101,43 @@ export async function makeAITweet(tweet: TweetConfig) {
     return newTweet;
 }
 
-export async function loadTweet(twIndex: number): Promise<TweetConfig> {
+export function tweetStream(tweetData: Array<TweetConfig>): ReadableStream<TweetConfig>{
+    const customReadable = new ReadableStream<TweetConfig>({
+        async start(controller) {
+            for (const tweet of tweetData) {
+                if (Math.random() > 0.1 ? false : true) {
+                    const aiTweet = await makeAITweet(tweet)
+                    controller.enqueue(aiTweet)
+                } else {controller.enqueue(tweet)}
+            }
+        },
+        // pull(controller) {
+        //     const timelinePage = homeTimeline.next();
+        //     timelinePage.then((timelinePage) => {
+        //         for (const tweet of timelinePage.tweets) {
+        //             if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments) {
+        //                 const parsedTweet = parseTweet({
+        //                     tweet: tweet,
+        //                     author: includes.author(tweet) ?? null,
+        //                 })
+        //                 console.log(parsedTweet);
+        //                 controller.enqueue(parsedTweet);
+        //             }
+        //         }
+        //     })
+        // }
+    },
+        { highWaterMark: 3 }
+    );
+    return customReadable;
+}
+
+export function loadTweets(): Array<TweetConfig> {
     var tweetData: Array<TweetConfig> = [];
-    
+
     if (localStorage.getItem("tweetData")) {
         tweetData = JSON.parse(localStorage.getItem("tweetData")!);
-    }
-
-    // console.log("tweetData: ", tweetData)
-    // console.log("twIndex: ", twIndex)
-    // console.log("tweetData length: ", tweetData.length)
-
-    // if ((twIndex + 3) >= (tweetData.length ?? -1)) {
-    //     fetch('/api/twitter/timeline')
-    //         .then((res) => res.body)
-    //         .then((body) => {
-    //             const reader = body?.getReader()!;
-    //             while ((twIndex + 3) >= tweetData.length) {
-    //                 reader.read().then((result) => {
-    //                     const tweet = JSON.parse(result.value!.toString()!);
-    //                     console.log("tweet: ", tweet)
-    //                     tweetData.push(tweet)
-    //                     localStorage.setItem("tweetData", JSON.stringify(tweetData));
-    //                 })
-    //             }
-    //         })
-    // }
-
-    if ((twIndex + 3) >= (tweetData.length ?? -1)) {
+    } else {
         console.log("about to fetch timeline api endpoint")
         fetch('/api/twitter/timeline')
             .then((res) => res.json())
@@ -138,13 +147,56 @@ export async function loadTweet(twIndex: number): Promise<TweetConfig> {
                 localStorage.setItem("tweetData", JSON.stringify(tweetData));
             })
     }
-    
-    // if (!tweetData) { throw Error("No tweet data found") }
-    var tweet = tweetData[twIndex];
-    // 25% chance to make it ai-generated
-    // if (Math.random() < 0.25) {
-    //     tweet = await changeTweet(tweet);
-    // }
 
-    return tweet;
+    return tweetData;
 }
+
+// export async function loadTweet(twIndex: number): Promise<TweetConfig> {
+//     var tweetData: Array<TweetConfig> = [];
+    
+//     if (localStorage.getItem("tweetData")) {
+//         tweetData = JSON.parse(localStorage.getItem("tweetData")!);
+//     } else {
+//         console.log("about to fetch timeline api endpoint")
+//         fetch('/api/twitter/timeline')
+//             .then((res) => res.json())
+//             .then((data) => {
+//                 console.log("data, storing now")
+//                 tweetData = data;
+//                 localStorage.setItem("tweetData", JSON.stringify(tweetData));
+//             })
+//     }
+
+//     //  ((twIndex + 3) >= (tweetData.length ?? -1)) 
+
+//     // console.log("tweetData: ", tweetData)
+//     // console.log("twIndex: ", twIndex)
+//     // console.log("tweetData length: ", tweetData.length)
+
+//     // if ((twIndex + 3) >= (tweetData.length ?? -1)) {
+//     //     fetch('/api/twitter/timeline')
+//     //         .then((res) => res.body)
+//     //         .then((body) => {
+//     //             const reader = body?.getReader()!;
+//     //             while ((twIndex + 3) >= tweetData.length) {
+//     //                 reader.read().then((result) => {
+//     //                     const tweet = JSON.parse(result.value!.toString()!);
+//     //                     console.log("tweet: ", tweet)
+//     //                     tweetData.push(tweet)
+//     //                     localStorage.setItem("tweetData", JSON.stringify(tweetData));
+//     //                 })
+//     //             }
+//     //         })
+//     // }
+
+    
+    
+//     // if (!tweetData) { throw Error("No tweet data found") }
+//     var tweet = tweetData[twIndex];
+//     // 25% chance to make it ai-generated
+//     // if (Math.random() < 0.25) {
+//     //     tweet = await changeTweet(tweet);
+//     // }
+
+//     return tweet;
+// }
