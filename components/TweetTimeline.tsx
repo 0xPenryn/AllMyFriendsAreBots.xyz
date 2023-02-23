@@ -60,22 +60,22 @@ export default function TweetTimeline( props: { tweetNumber: number, AI: boolean
   //   setLoading(false);
   // });
 
-  // useEffect(() => {
-  //   setLoading(true)
-  //   const loadEffect = async () => {
-  //     const newTweet = await loadTweet(props.tweetNumber)
-  //     console.log("loadTweet returned: ", newTweet)
-  //     if (props.AI == true) {
-  //       await makeAITweet(newTweet)
-  //       setTweet(newTweet)
-  //       setLoading(false)
-  //     } else {
-  //       setTweet(newTweet)
-  //       setLoading(false)
-  //     }
-  //   }
-  //   loadEffect();
-  // }, [props.tweetNumber])
+  useEffect(() => {
+    setLoading(true)
+    const loadEffect = async () => {
+      const newTweet = await loadTweet(props.tweetNumber)
+      console.log("loadTweet returned: ", newTweet)
+      if (props.AI == true) {
+        await makeAITweet(newTweet)
+        setTweet(newTweet)
+        setLoading(false)
+      } else {
+        setTweet(newTweet)
+        setLoading(false)
+      }
+    }
+    loadEffect();
+  }, [props.tweetNumber])
 
   if (loading) return <p>Loading Tweets...</p>
   // if (!data) return <p>No tweets :/</p>
