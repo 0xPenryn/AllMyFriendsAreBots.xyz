@@ -111,7 +111,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   );
 
   // return new Response(customReadable);
-  return res.send(tweetList);
+  return res.status(200).send(tweetList);
 }
 
 // https://github.com/PLhery/node-twitter-api-v2/blob/master/doc/paginators.md for reference here
