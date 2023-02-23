@@ -42,19 +42,19 @@ const Play: NextPage = () => {
 
   if (typeof window !== 'undefined') {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"))
-
-    const streamReader = tweetStream(loadTweets()).getReader()
-
-    useEffect(() => {
-      streamReader.read().then((result) => {
-        if (result.value) {
-          console.log("loadTweet returned: ", result.value)
-          setTweet(result.value)
-        }
-        setLoading(false);
-      })
-    }, [score])
   }
+
+  const streamReader = tweetStream(loadTweets()).getReader()
+
+  useEffect(() => {
+    streamReader.read().then((result) => {
+      if (result.value) {
+        console.log("loadTweet returned: ", result.value)
+        setTweet(result.value)
+      }
+      setLoading(false);
+    })
+  }, [score])
 
   function userGuess(userAns: boolean, tweet: TweetConfig) {
     if (userAns == tweet.AI) {
