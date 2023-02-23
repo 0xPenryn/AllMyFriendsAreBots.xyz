@@ -27,7 +27,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
     exclude: ['retweets', 'replies'],
   });
-  homeTimeline.fetchNext(100);
+  homeTimeline.fetchNext(250);
   const includes = new TwitterV2IncludesHelper(homeTimeline);
 
   for (const tweet of homeTimeline.tweets) {
