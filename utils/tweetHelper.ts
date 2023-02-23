@@ -107,14 +107,9 @@ export function tweetStream(tweetData: Array<TweetConfig>): ReadableStream<Tweet
             for (const tweet of tweetData) {
                 if (Math.random() > 0.9) {
                     const aiTweet = await makeAITweet(tweet)
-                    console.log("queueing AI tweet: ", aiTweet)
                     controller.enqueue(aiTweet)
-                } else {
-                    controller.enqueue(tweet)
-                    console.log("queueing human tweet: ", tweet)
-                }
+                } else {controller.enqueue(tweet)}
             }
-            controller.close();
         },
         // pull(controller) {
         //     const timelinePage = homeTimeline.next();
@@ -140,15 +135,14 @@ export function tweetStream(tweetData: Array<TweetConfig>): ReadableStream<Tweet
 export function loadTweets(): Array<TweetConfig> {
     var tweetData: Array<TweetConfig> = [];
 
-    if (localStorage.getItem("tweetData") !== null) {
-        console.log("found tweet data in local storage")
+    if (localStorage.getItem("tweetData")) {
         tweetData = JSON.parse(localStorage.getItem("tweetData")!);
     } else {
         console.log("about to fetch timeline api endpoint")
         fetch('/api/twitter/timeline')
             .then((res) => res.json())
             .then((data) => {
-                console.log("data, storing now", data)
+                console.log("data, storing now")
                 tweetData = data;
                 localStorage.setItem("tweetData", JSON.stringify(tweetData));
             })
