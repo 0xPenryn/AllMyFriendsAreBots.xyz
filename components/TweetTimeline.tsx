@@ -1,32 +1,33 @@
 import FakeTweet from "fake-tweet";
 import { useState, useEffect } from "react";
-import { TweetConfig, loadTweets, makeAITweet } from "../utils/tweetHelper";
+import { TweetConfig, loadTweet, makeAITweet } from "../utils/tweetHelper";
 
-// const [tweetIndex, setTweetIndex] = useState(0);
-// const [score, setScore] = useState(0);
-// const [isAI, setIsAI] = useState(false);
 
-// function userGuess(userAns: string) {
-//   if ((userAns == "ai") == isAI) {
-//     var isNextAI = Math.random() > 0.1 ? false : true;
-//     setIsAI(isNextAI);
-//     setTweetIndex(tweetIndex + 1)
-//     setScore(score + 1)
-//   } else {
-//     // store last score
-//     localStorage.setItem("lastScore", score.toString())
-//     // store highest score, if needed
-//     if (score > parseInt(localStorage.getItem("highScore") ?? "0")) {
-//       localStorage.setItem("highScore", score.toString())
-//     }
-//     // store tweet that fooled them
-//     localStorage.setItem("lastTweet", tweetIndex.toString())
-//     localStorage.setItem("lastTweetType", isAI ? "ai" : "human")
-//     setScore(0)
-//     // alert("You lost!")
-//     location.href = '/endgame'
-//   }
-// };
+const [tweetIndex, setTweetIndex] = useState(0);
+const [score, setScore] = useState(0);
+const [isAI, setIsAI] = useState(false);
+
+function userGuess(userAns: string) {
+  if ((userAns == "ai") == isAI) {
+    var isNextAI = Math.random() > 0.1 ? false : true;
+    setIsAI(isNextAI);
+    setTweetIndex(tweetIndex + 1)
+    setScore(score + 1)
+  } else {
+    // store last score
+    localStorage.setItem("lastScore", score.toString())
+    // store highest score, if needed
+    if (score > parseInt(localStorage.getItem("highScore") ?? "0")) {
+      localStorage.setItem("highScore", score.toString())
+    }
+    // store tweet that fooled them
+    localStorage.setItem("lastTweet", tweetIndex.toString())
+    localStorage.setItem("lastTweetType", isAI ? "ai" : "human")
+    setScore(0)
+    // alert("You lost!")
+    location.href = '/endgame'
+  }
+};
 
 export default function TweetTimeline( props: { tweetNumber: number, AI: boolean } ): JSX.Element {
 
@@ -83,12 +84,6 @@ export default function TweetTimeline( props: { tweetNumber: number, AI: boolean
 
   // console.log("FakeTweet sees:", tweet)
   return (
-    // <div className="flex flex-col w-screen justify-center items-center">
-      <FakeTweet config={tweet} />
-    //   <div className="flex flex-row content-center">
-    //     <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess("human")}>Human</button>
-    //     <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess("ai")}>AI</button>
-    //   </div>
-    // </div>
+    <FakeTweet config={tweet} />
   )
 }
