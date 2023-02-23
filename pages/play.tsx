@@ -19,11 +19,11 @@ const Play: NextPage = () => {
   // const [tweetIndex, setTweetIndex] = useState(0);
   const [tweet, setTweet] = useState({
     user: {
-        nickname: "string",
-        name: "str",
-        avatar: "string",
-        verified: false,
-        locked: false,
+      nickname: "string",
+      name: "str",
+      avatar: "string",
+      verified: false,
+      locked: false,
     },
     display: "default",
     text: "string",
@@ -34,7 +34,8 @@ const Play: NextPage = () => {
     quotedTweets: -1,
     likes: -1,
     AI: false,
-} as TweetConfig);
+  } as TweetConfig);
+
   const [score, setScore] = useState(0);
   // const [isAI, setIsAI] = useState(false);
   const [highScore, setHighScore] = useState(0);
@@ -45,7 +46,7 @@ const Play: NextPage = () => {
 
     const streamReader = tweetStream(loadTweets()).getReader()
 
-    useEffect(() => {
+    // useEffect(() => {
       streamReader.read().then((result) => {
         if (result.value) {
           console.log("loadTweet returned: ", result.value)
@@ -53,7 +54,7 @@ const Play: NextPage = () => {
         }
         setLoading(false);
       })
-    }, [])
+    // }, [])
   }
 
   function userGuess(userAns: boolean, tweet: TweetConfig) {
