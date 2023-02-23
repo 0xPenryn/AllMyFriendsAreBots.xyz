@@ -19,10 +19,6 @@ export type TweetConfig = {
     AI: boolean;
 }
 
-// export interface TweetStream {
-//     tweets: Array<TweetConfig>;
-// }
-
 export interface UnparsedTweet {
     tweet: TweetV2;
     author: UserV2 | null;
@@ -51,6 +47,7 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
         "likes": unparsedTweet.tweet.public_metrics?.like_count ?? -1,
         "AI": false,
     }
+    console.log("parsed tweet: ", parsedTweet)
     return parsedTweet;
 }
 
@@ -95,24 +92,14 @@ export async function generateTweet(tweet: TweetConfig) {
   };
 
 export async function changeTweet(tweet: TweetConfig) {
+    var newTweet = tweet;
     const tweetText = await generateTweet(tweet);
     console.log("ai tweet done: ", tweetText)
-    tweet.text = tweetText;
-    return tweet;
+    newTweet.text = tweetText;
+    return newTweet;
 }
 
 export async function loadTweet(twIndex: number): Promise<TweetConfig> {
-    // if (!localStorage.getItem("tweetData")) {
-    //     fetch('/api/twitter/timeline')
-    //         .then((res) => {
-    //             const reader = res.body!.getReader();
-    //             reader.read().then((result) => {
-    //                 const tweet = JSON.parse(result.value!.toString()!);
-    //                 tweetData.push(tweet)
-    //                 localStorage.setItem("tweetData", JSON.stringify(tweetData));
-    //             })
-    //         })
-    // }
     var tweetData: Array<TweetConfig> = [];
     if (localStorage.getItem("tweetData")) {
         tweetData= JSON.parse(localStorage.getItem("tweetData")!);
@@ -133,7 +120,7 @@ export async function loadTweet(twIndex: number): Promise<TweetConfig> {
             })
     }
     // if (!tweetData) { throw Error("No tweet data found") }
-    var tweet = await tweetData[twIndex];
+    var tweet = tweetData[twIndex];
     // 25% chance to make it ai-generated
     if (Math.random() < 0.25) {
         tweet = await changeTweet(tweet);

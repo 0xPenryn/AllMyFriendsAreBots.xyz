@@ -52,7 +52,25 @@ import { TweetConfig, loadTweet } from "../utils/tweetHelper";
 
 export default function TweetTimeline(tweetNumber: any): JSX.Element {
 
-  const [tweet, setTweet] = useState({} as TweetConfig);
+  const [tweet, setTweet] = useState({
+      user: {
+          nickname: "string",
+          name: "str",
+          avatar: "string",
+          verified: false,
+          locked: false,
+      },
+      display: "default",
+      text: "string",
+      image: [],
+      date: "string",
+      app: "Twitter for AI",
+      retweets: -1,
+      quotedTweets: -1,
+      likes: -1,
+      AI: false,
+  } as TweetConfig);
+  
   const [loading, setLoading] = useState(true);
 
   // async function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
