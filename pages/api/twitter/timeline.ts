@@ -50,7 +50,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         exclude: ['retweets', 'replies'],
       });
       const includes = new TwitterV2IncludesHelper(homeTimeline);
-      
+
       for (const tweet of homeTimeline.tweets) {
         if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments) {
           const parsedTweet = parseTweet({

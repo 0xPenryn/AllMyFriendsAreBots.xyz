@@ -2,33 +2,6 @@ import FakeTweet from "fake-tweet";
 import { useState, useEffect } from "react";
 import { TweetConfig, loadTweet, makeAITweet } from "../utils/tweetHelper";
 
-
-const [tweetIndex, setTweetIndex] = useState(0);
-const [score, setScore] = useState(0);
-const [isAI, setIsAI] = useState(false);
-
-function userGuess(userAns: string) {
-  if ((userAns == "ai") == isAI) {
-    var isNextAI = Math.random() > 0.1 ? false : true;
-    setIsAI(isNextAI);
-    setTweetIndex(tweetIndex + 1)
-    setScore(score + 1)
-  } else {
-    // store last score
-    localStorage.setItem("lastScore", score.toString())
-    // store highest score, if needed
-    if (score > parseInt(localStorage.getItem("highScore") ?? "0")) {
-      localStorage.setItem("highScore", score.toString())
-    }
-    // store tweet that fooled them
-    localStorage.setItem("lastTweet", tweetIndex.toString())
-    localStorage.setItem("lastTweetType", isAI ? "ai" : "human")
-    setScore(0)
-    // alert("You lost!")
-    location.href = '/endgame'
-  }
-};
-
 export default function TweetTimeline( props: { tweetNumber: number, AI: boolean } ): JSX.Element {
 
   const [tweet, setTweet] = useState({
@@ -51,6 +24,7 @@ export default function TweetTimeline( props: { tweetNumber: number, AI: boolean
   } as TweetConfig);
 
   const [loading, setLoading] = useState(true);
+  const [nextTweet, setNextTweet] = useState({});
 
   // loadTweet(props.tweetNumber).then((newTweet) => {
   //   console.log("loadTweet returned: ", newTweet)
@@ -69,11 +43,9 @@ export default function TweetTimeline( props: { tweetNumber: number, AI: boolean
       if (props.AI == true) {
         await makeAITweet(newTweet)
         setTweet(newTweet)
-        setLoading(false)
-      } else {
-        setTweet(newTweet)
-        setLoading(false)
       }
+      setTweet(newTweet)
+      setLoading(false);
     }
     loadEffect();
   }, [props.tweetNumber])
