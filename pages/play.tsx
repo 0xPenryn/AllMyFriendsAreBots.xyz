@@ -70,13 +70,15 @@ const Play: NextPage = () => {
   if (typeof window !== 'undefined') {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"))
     setTweetData(JSON.parse(localStorage.getItem("tweetData") ?? "[]"))
-    const streamReader = tweetStream(tweetData).getReader()
 
     if (tweetData.length == 0) {
       const tweets = loadTweets()
       localStorage.setItem("tweetData", JSON.stringify([]))
       setTweetData(tweets)
     }
+
+    const streamReader = tweetStream(tweetData).getReader()
+
     useEffect(() => {
       streamReader.read().then((result) => {
         if (result.value) {
