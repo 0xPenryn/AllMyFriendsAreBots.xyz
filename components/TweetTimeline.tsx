@@ -50,7 +50,7 @@ import { TweetConfig, loadTweet } from "../utils/tweetHelper";
 // var quotedTweets = 0;
 // var likes = 5;
 
-export default function TweetTimeline(tweetNumber: any): JSX.Element {
+export default function TweetTimeline( props: { tweetNumber: number } ): JSX.Element {
 
   const [tweet, setTweet] = useState({
       user: {
@@ -124,13 +124,19 @@ export default function TweetTimeline(tweetNumber: any): JSX.Element {
   //   }
   // }
 
+  loadTweet(props.tweetNumber).then((newTweet) => {
+    setTweet(newTweet)
+    setLoading(false);
+  });
+
   useEffect(() => {
     const loadEffect = async () => {
-      setTweet(await loadTweet(tweetNumber))
-      setLoading(false)
+      return (
+        <FakeTweet config={tweet} />
+      )
     }
     loadEffect();
-  }, [tweetNumber])
+  }, [props.tweetNumber, loading])
 
   if (loading) return <p>Loading Tweets...</p>
   // if (!data) return <p>No tweets :/</p>

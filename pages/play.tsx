@@ -20,11 +20,11 @@ const Play: NextPage = () => {
 
   useEffect(() => {
     function checkUserData() {
-      setTweetIndex(JSON.parse(localStorage.getItem("lastTweet")!) + 1) ;
+      setTweetIndex(1 + (JSON.parse(localStorage.getItem("lastTweet") ?? "0"))) ;
     }
 
     checkUserData()
-    console.log(tweetIndex, "end of effect")
+    // console.log(tweetIndex, "end of effect")
     // return () => {
     //   // window.removeEventListener('load', checkUserData)
     //   console.log(tweetIndex, "end of listener")
@@ -33,8 +33,8 @@ const Play: NextPage = () => {
 
   function userGuess(userAns: string) {
     if (userAns === correctAns) {
-      var nextAns = Math.random() > 0.1 ? "human" : "ai";
-      setCorrectAns(nextAns);
+      // var nextAns = Math.random() > 0.1 ? "human" : "ai";
+      // setCorrectAns(nextAns);
       setTweetIndex(tweetIndex + 1)
       setScore(score + 1)
     } else {

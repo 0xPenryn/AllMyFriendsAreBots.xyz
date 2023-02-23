@@ -138,9 +138,9 @@ export async function loadTweet(twIndex: number): Promise<TweetConfig> {
     // if (!tweetData) { throw Error("No tweet data found") }
     var tweet = tweetData[twIndex];
     // 25% chance to make it ai-generated
-    if (Math.random() < 0.25) {
-        tweet = await changeTweet(tweet);
-    }
+    // if (Math.random() < 0.25) {
+    //     tweet = await changeTweet(tweet);
+    // }
 
     return tweet;
 }
