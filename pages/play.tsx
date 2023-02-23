@@ -37,25 +37,32 @@ const Play: NextPage = () => {
   } as TweetConfig);
 
   const [score, setScore] = useState(0);
-  // const [isAI, setIsAI] = useState(false);
+  const [tweetData, setTweetData] = useState([] as Array<TweetConfig>);
   const [highScore, setHighScore] = useState(0);
   const [loading, setLoading] = useState(true);
 
   if (typeof window !== 'undefined') {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"))
+    setTweetData(JSON.parse(localStorage.getItem("tweetData") ?? "[]"))
 
-    const streamReader = tweetStream(loadTweets()).getReader()
+    if (tweetData.length == 0) {
+      setTweetData(loadTweets())
+      localStorage.setItem("tweetData", JSON.stringify([]))
+    }
 
-    // useEffect(() => {
-      streamReader.read().then((result) => {
-        if (result.value) {
-          console.log("loadTweet returned: ", result.value)
-          setTweet(result.value)
-        }
-        setLoading(false);
-      })
-    // }, [])
   }
+
+  const streamReader = tweetStream(tweetData).getReader()
+
+  useEffect(() => {
+    streamReader.read().then((result) => {
+      if (result.value) {
+        console.log("read Tweet: ", result.value)
+        setTweet(result.value)
+      }
+      setLoading(false);
+    })
+  }, [score])
 
   function userGuess(userAns: boolean, tweet: TweetConfig) {
     if (userAns == tweet.AI) {
