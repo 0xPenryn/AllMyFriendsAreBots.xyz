@@ -6,9 +6,9 @@ import { parseTweet } from '../../../utils/tweetHelper';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { json } from 'stream/consumers';
 
-export const config = {
-  runtime: "edge",
-};
+// export const config = {
+//   runtime: "edge",
+// };
 
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
