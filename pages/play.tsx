@@ -18,18 +18,18 @@ const Play: NextPage = () => {
   const [score, setScore] = useState(0);
   const [isAI, setIsAI] = useState(false);
 
-  useEffect(() => {
-    function checkUserData() {
-      setTweetIndex(1 + (JSON.parse(localStorage.getItem("lastTweet") ?? "0"))) ;
-    }
+  // useEffect(() => {
+  //   function checkUserData() {
+  //     setTweetIndex(1 + (JSON.parse(localStorage.getItem("lastTweet") ?? "0"))) ;
+  //   }
 
-    checkUserData()
-    // console.log(tweetIndex, "end of effect")
-    // return () => {
-    //   // window.removeEventListener('load', checkUserData)
-    //   console.log(tweetIndex, "end of listener")
-    // }
-  }, [])
+  //   checkUserData()
+  //   // console.log(tweetIndex, "end of effect")
+  //   // return () => {
+  //   //   // window.removeEventListener('load', checkUserData)
+  //   //   console.log(tweetIndex, "end of listener")
+  //   // }
+  // }, [])
 
   function userGuess(userAns: string) {
     if ((userAns == "ai") == isAI) {
