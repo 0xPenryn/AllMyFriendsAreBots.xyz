@@ -91,7 +91,8 @@ export async function generateTweet(tweet: TweetConfig) {
     return aiTweet;
   };
 
-export async function changeTweet(tweet: TweetConfig) {
+export async function makeAITweet(tweet: TweetConfig) {
+    if (tweet.AI) { return tweet };
     var newTweet = tweet;
     const tweetText = await generateTweet(tweet);
     console.log("ai tweet done: ", tweetText)
@@ -106,9 +107,9 @@ export async function loadTweet(twIndex: number): Promise<TweetConfig> {
         tweetData = JSON.parse(localStorage.getItem("tweetData")!);
     }
 
-    console.log("tweetData: ", tweetData)
-    console.log("twIndex: ", twIndex)
-    console.log("tweetData length: ", tweetData.length)
+    // console.log("tweetData: ", tweetData)
+    // console.log("twIndex: ", twIndex)
+    // console.log("tweetData length: ", tweetData.length)
 
     // if ((twIndex + 3) >= (tweetData.length ?? -1)) {
     //     fetch('/api/twitter/timeline')
@@ -126,7 +127,7 @@ export async function loadTweet(twIndex: number): Promise<TweetConfig> {
     //         })
     // }
 
-    // if ((twIndex + 3) >= (tweetData.length ?? -1)) {
+    if ((twIndex + 3) >= (tweetData.length ?? -1)) {
         console.log("about to fetch timeline api endpoint")
         fetch('/api/twitter/timeline')
             .then((res) => res.json())
@@ -135,7 +136,7 @@ export async function loadTweet(twIndex: number): Promise<TweetConfig> {
                 tweetData = data;
                 localStorage.setItem("tweetData", JSON.stringify(tweetData));
             })
-    // }
+    }
     
     // if (!tweetData) { throw Error("No tweet data found") }
     var tweet = tweetData[twIndex];

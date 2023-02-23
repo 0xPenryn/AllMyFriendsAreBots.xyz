@@ -16,7 +16,7 @@ const Play: NextPage = () => {
   const { data: session, status } = useSession();
   const [tweetIndex, setTweetIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [correctAns, setCorrectAns] = useState("human");
+  const [isAI, setIsAI] = useState(false);
 
   useEffect(() => {
     function checkUserData() {
@@ -32,9 +32,9 @@ const Play: NextPage = () => {
   }, [])
 
   function userGuess(userAns: string) {
-    if (userAns === correctAns) {
-      // var nextAns = Math.random() > 0.1 ? "human" : "ai";
-      // setCorrectAns(nextAns);
+    if ((userAns == "ai") == isAI) {
+      var isNextAI = Math.random() > 0.1 ? false : true;
+      setIsAI(isNextAI);
       setTweetIndex(tweetIndex + 1)
       setScore(score + 1)
     } else {
@@ -46,7 +46,7 @@ const Play: NextPage = () => {
       }
       // store tweet that fooled them
       localStorage.setItem("lastTweet", tweetIndex.toString())
-      localStorage.setItem("lastTweetType", correctAns)
+      localStorage.setItem("lastTweetType", isAI ? "ai" : "human")
       setScore(0)
       // alert("You lost!")
       location.href = '/endgame'
@@ -77,7 +77,7 @@ const Play: NextPage = () => {
         </div>
         <div className="flex flex-col w-screen justify-center items-center">
           <p>Your Score: {score}</p>
-          <TweetTimeline tweetNumber={tweetIndex} />
+          <TweetTimeline tweetNumber={tweetIndex} AI={isAI} />
           <div className="flex flex-row content-center">
             <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess("human")}>Human</button>
             <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess("ai")}>AI</button>

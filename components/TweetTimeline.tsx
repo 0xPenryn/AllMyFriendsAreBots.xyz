@@ -1,8 +1,8 @@
 import FakeTweet from "fake-tweet";
 import { useState, useEffect } from "react";
-import { TweetConfig, loadTweet } from "../utils/tweetHelper";
+import { TweetConfig, loadTweet, makeAITweet } from "../utils/tweetHelper";
 
-export default function TweetTimeline( props: { tweetNumber: number } ): JSX.Element {
+export default function TweetTimeline( props: { tweetNumber: number, AI: boolean } ): JSX.Element {
 
   const [tweet, setTweet] = useState({
       user: {
@@ -27,6 +27,9 @@ export default function TweetTimeline( props: { tweetNumber: number } ): JSX.Ele
 
   loadTweet(props.tweetNumber).then((newTweet) => {
     console.log("loadTweet returned: ", newTweet)
+    if (props.AI = true) {
+      makeAITweet(newTweet)
+    }
     setTweet(newTweet)
     setLoading(false);
   });
