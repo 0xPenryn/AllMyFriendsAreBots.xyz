@@ -105,7 +105,9 @@ export async function loadTweet(twIndex: number): Promise<TweetConfig> {
     if (localStorage.getItem("tweetData")) {
         tweetData = JSON.parse(localStorage.getItem("tweetData")!);
     }
+
     console.log("tweetData: ", tweetData)
+
     // if ((twIndex + 3) >= (tweetData.length ?? -1)) {
     //     fetch('/api/twitter/timeline')
     //         .then((res) => {
@@ -120,10 +122,15 @@ export async function loadTweet(twIndex: number): Promise<TweetConfig> {
     //             }
     //         })
     // }
+
+    console.log("twIndex: ", twIndex)
+    console.log("tweetData length: ", tweetData.length)
     if ((twIndex + 3) >= (tweetData.length ?? -1)) {
+        console.log("about to fetch timeline api endpoint")
         fetch('/api/twitter/timeline')
             .then((res) => res.json())
             .then((data) => {
+                console.log("data, storing now")
                 tweetData = data;
                 localStorage.setItem("tweetData", JSON.stringify(tweetData));
             })
