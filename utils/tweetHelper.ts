@@ -97,6 +97,7 @@ export async function makeAITweet(tweet: TweetConfig) {
     const tweetText = await generateTweet(tweet);
     console.log("ai tweet done: ", tweetText)
     newTweet.text = tweetText;
+    newTweet.AI = true;
     return newTweet;
 }
 
