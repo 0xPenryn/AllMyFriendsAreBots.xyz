@@ -25,29 +25,36 @@ export default function TweetTimeline( props: { tweetNumber: number, AI: boolean
 
   const [loading, setLoading] = useState(true);
 
-  loadTweet(props.tweetNumber).then((newTweet) => {
+  // loadTweet(props.tweetNumber).then((newTweet) => {
+  //   console.log("loadTweet returned: ", newTweet)
+  //   if (props.AI = true) {
+  //     makeAITweet(newTweet)
+  //   }
+  //   setTweet(newTweet)
+  //   setLoading(false);
+  // });
+
+  useEffect(() => {
+    const newTweet = loadTweet(props.tweetNumber)
     console.log("loadTweet returned: ", newTweet)
     if (props.AI = true) {
       makeAITweet(newTweet)
     }
     setTweet(newTweet)
     setLoading(false);
-  });
-
-  // useEffect(() => {
-  //   const loadEffect = async () => {
-  //     return (
-  //       <FakeTweet config={tweet} />
-  //     )
-  //   }
-  //   loadEffect();
-  // }, [props.tweetNumber, loading])
+    // const loadEffect = async () => {
+    //   return (
+    //     <FakeTweet config={tweet} />
+    //   )
+    // }
+    // loadEffect();
+  }, [props.tweetNumber])
 
   if (loading) return <p>Loading Tweets...</p>
   // if (!data) return <p>No tweets :/</p>
   // if (tweetNumber > data.length - 1) return <p>Out of tweets! Pat yourself on the back. Now sign out and sign back in, and you can get the newest Tweets from your timeline!</p>
 
-  console.log("FakeTweet sees:", tweet)
+  // console.log("FakeTweet sees:", tweet)
   return (
     <FakeTweet config={tweet} />
   )
