@@ -101,6 +101,7 @@ export async function changeTweet(tweet: TweetConfig) {
 
 export async function loadTweet(twIndex: number): Promise<TweetConfig> {
     var tweetData: Array<TweetConfig> = [];
+    
     if (localStorage.getItem("tweetData")) {
         tweetData = JSON.parse(localStorage.getItem("tweetData")!);
     }

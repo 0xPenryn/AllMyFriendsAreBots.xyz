@@ -62,21 +62,21 @@ export default async (req: NextApiRequest) => {
         }
       }
     },
-    pull(controller) {
-      const timelinePage = homeTimeline.next();
-      timelinePage.then((timelinePage) => {
-        for (const tweet of timelinePage.tweets) {
-          if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments) {
-            const parsedTweet = parseTweet({
-              tweet: tweet,
-              author: includes.author(tweet) ?? null,
-            })
-            console.log(parsedTweet);
-            controller.enqueue(parsedTweet);
-          }
-        }
-      })
-    }
+    // pull(controller) {
+    //   const timelinePage = homeTimeline.next();
+    //   timelinePage.then((timelinePage) => {
+    //     for (const tweet of timelinePage.tweets) {
+    //       if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments) {
+    //         const parsedTweet = parseTweet({
+    //           tweet: tweet,
+    //           author: includes.author(tweet) ?? null,
+    //         })
+    //         console.log(parsedTweet);
+    //         controller.enqueue(parsedTweet);
+    //       }
+    //     }
+    //   })
+    // }
   }, { highWaterMark: 3 });
 
   return new Response(customReadable);
