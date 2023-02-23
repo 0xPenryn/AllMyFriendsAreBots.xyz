@@ -31,6 +31,7 @@
     "@types/node": "18.11.3",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
+    "@vercel/node": "^2.9.7",
     "autoprefixer": "^10.4.12",
     "next-auth": "^4.19.2",
     "postcss": "^8.4.18",

@@ -3,12 +3,16 @@ import { TwitterApi } from 'twitter-api-v2';
 import { TwitterV2IncludesHelper } from 'twitter-api-v2';
 import { NextApiRequest } from 'next';
 import { parseTweet } from '../../../utils/tweetHelper';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 // export const config = {
 //   runtime: "edge",
 // };
 
-export default async (req: NextApiRequest) => {
+// export default function handler(req, res) {
+
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   // const encoder = new TextEncoder();
 
   console.log("timeline was called!")
@@ -16,9 +20,8 @@ export default async (req: NextApiRequest) => {
   const token = await getToken({ req });
 
   if (!token) {
-    return new Response("Unauthorized", { status: 401 });
+    return res.status(401).json({ message: 'Unauthorized' });
   }
-
 
   // for (const tweet of homeTimeline.tweets) {
   //   // to avoid media in tweets
@@ -82,7 +85,7 @@ export default async (req: NextApiRequest) => {
   );
 
   // return new Response(customReadable);
-  return customReadable;
+  return res.send(customReadable);
 }
 
 // https://github.com/PLhery/node-twitter-api-v2/blob/master/doc/paginators.md for reference here
