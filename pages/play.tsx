@@ -71,9 +71,9 @@ const Play: NextPage = () => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"))
     setTweetData(JSON.parse(localStorage.getItem("tweetData") ?? "[]"))
 
-    if (tweetData.length == 0) {
+    if (!tweetData) {
       const tweets = loadTweets()
-      localStorage.setItem("tweetData", JSON.stringify([]))
+      // localStorage.setItem("tweetData", JSON.stringify([]))
       setTweetData(tweets)
     }
 
