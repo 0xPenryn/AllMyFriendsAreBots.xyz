@@ -17,6 +17,7 @@ const Play: NextPage = () => {
   const [tweetIndex, setTweetIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [isAI, setIsAI] = useState(false);
+  const [highScore, setHighScore] = useState(localStorage.getItem("highScore") ?? "0");
 
   useEffect(() => {
     function checkUserData() {
@@ -77,6 +78,7 @@ const Play: NextPage = () => {
         </div>
         <div className="flex flex-col w-screen justify-center items-center">
           <p>Your Score: {score}</p>
+          <p>Your Previous Best Score: {highScore}</p>
           <TweetTimeline tweetNumber={tweetIndex} AI={isAI} />
           <div className="flex flex-row content-center">
             <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess("human")}>Human</button>

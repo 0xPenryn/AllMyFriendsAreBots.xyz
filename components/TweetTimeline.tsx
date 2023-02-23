@@ -48,7 +48,7 @@ export default function TweetTimeline( props: { tweetNumber: number, AI: boolean
       setLoading(false);
     }
     loadEffect();
-  }, [props.tweetNumber, tweet.AI])
+  }, [props.tweetNumber])
 
   if (loading) return <p>Loading Tweets...</p>
   // if (!data) return <p>No tweets :/</p>
