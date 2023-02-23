@@ -107,34 +107,34 @@ export async function loadTweet(twIndex: number): Promise<TweetConfig> {
     }
 
     console.log("tweetData: ", tweetData)
-
-    // if ((twIndex + 3) >= (tweetData.length ?? -1)) {
-    //     fetch('/api/twitter/timeline')
-    //         .then((res) => {
-    //             const reader = res.body!.getReader();
-    //             while ((twIndex + 3) >= tweetData.length) {
-    //                 reader.read().then((result) => {
-    //                     const tweet = JSON.parse(result.value!.toString()!);
-    //                     console.log("tweet: ", tweet)
-    //                     tweetData.push(tweet)
-    //                     localStorage.setItem("tweetData", JSON.stringify(tweetData));
-    //                 })
-    //             }
-    //         })
-    // }
-
     console.log("twIndex: ", twIndex)
     console.log("tweetData length: ", tweetData.length)
+
     if ((twIndex + 3) >= (tweetData.length ?? -1)) {
-        console.log("about to fetch timeline api endpoint")
         fetch('/api/twitter/timeline')
-            .then((res) => res.json())
-            .then((data) => {
-                console.log("data, storing now")
-                tweetData = data;
-                localStorage.setItem("tweetData", JSON.stringify(tweetData));
+            .then((res) => {
+                const reader = res.body!.getReader();
+                while ((twIndex + 3) >= tweetData.length) {
+                    reader.read().then((result) => {
+                        const tweet = JSON.parse(result.value!.toString()!);
+                        console.log("tweet: ", tweet)
+                        tweetData.push(tweet)
+                        localStorage.setItem("tweetData", JSON.stringify(tweetData));
+                    })
+                }
             })
     }
+
+    // if ((twIndex + 3) >= (tweetData.length ?? -1)) {
+    //     console.log("about to fetch timeline api endpoint")
+    //     fetch('/api/twitter/timeline')
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             console.log("data, storing now")
+    //             tweetData = data;
+    //             localStorage.setItem("tweetData", JSON.stringify(tweetData));
+    //         })
+    // }
     // if (!tweetData) { throw Error("No tweet data found") }
     var tweet = tweetData[twIndex];
     // 25% chance to make it ai-generated
