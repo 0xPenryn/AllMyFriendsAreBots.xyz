@@ -57,7 +57,7 @@ export default async (req: NextApiRequest) => {
             tweet: tweet,
             author: includes.author(tweet) ?? null,
           })
-          console.log(parsedTweet);
+          console.log("queueing:", parsedTweet);
           controller.enqueue(parsedTweet);
         }
       }

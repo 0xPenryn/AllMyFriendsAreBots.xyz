@@ -70,7 +70,7 @@ export default function TweetTimeline(tweetNumber: any): JSX.Element {
       likes: -1,
       AI: false,
   } as TweetConfig);
-  
+
   const [loading, setLoading] = useState(true);
 
   // async function setTweet(data: Array<any>, tweetNumber: number, ans: string) {
@@ -144,7 +144,7 @@ export default function TweetTimeline(tweetNumber: any): JSX.Element {
   // }, [tweetNumber])
 
   // setTweet(data, tweetNumber, ans);
-
+  console.log("FakeTweet sees:", tweet)
   return (
     <FakeTweet config={tweet} />
   )
