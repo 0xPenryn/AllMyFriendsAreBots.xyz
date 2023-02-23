@@ -4,9 +4,9 @@ import { TwitterV2IncludesHelper } from 'twitter-api-v2';
 import { NextApiRequest } from 'next';
 import { parseTweet } from '../../../utils/tweetHelper';
 
-export const config = {
-  runtime: "edge",
-};
+// export const config = {
+//   runtime: "edge",
+// };
 
 export default async (req: NextApiRequest) => {
   // const encoder = new TextEncoder();
