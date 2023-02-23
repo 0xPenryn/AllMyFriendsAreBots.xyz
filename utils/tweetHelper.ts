@@ -101,7 +101,7 @@ export async function makeAITweet(tweet: TweetConfig) {
     return newTweet;
 }
 
-export function loadTweet(twIndex: number): TweetConfig {
+export async function loadTweet(twIndex: number): Promise<TweetConfig> {
     var tweetData: Array<TweetConfig> = [];
     
     if (localStorage.getItem("tweetData")) {

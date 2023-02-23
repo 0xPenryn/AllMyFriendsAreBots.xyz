@@ -36,7 +36,7 @@ export default function TweetTimeline( props: { tweetNumber: number, AI: boolean
 
   useEffect(() => {
     const loadEffect = async () => {
-      const newTweet = loadTweet(props.tweetNumber)
+      const newTweet = await loadTweet(props.tweetNumber)
       console.log("loadTweet returned: ", newTweet)
       setTweet(newTweet)
       if (props.AI = true) {
