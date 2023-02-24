@@ -20,17 +20,18 @@ const Play: NextPage = () => {
   const [highScore, setHighScore] = useState(0);
   const [tweets, setTweets] = useState<TweetConfig[]>([]);
 
+  setTweetId(1 + (JSON.parse(localStorage.getItem("lastTweet") ?? "0")));
+  setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
+  setTweets(loadTweets());
+
   useEffect(() => {
     async function doAi() {
       if (Math.random() > 0.75) {
         tweets.unshift(await makeAITweet(tweets.shift()!))
       }
     }
-    setTweetId(1 + (JSON.parse(localStorage.getItem("lastTweet") ?? "0")));
-    setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
-    setTweets(loadTweets());
     doAi();
-  }, [])
+  }, [tweetId])
 
   var tweet = tweets.shift()!;
 
