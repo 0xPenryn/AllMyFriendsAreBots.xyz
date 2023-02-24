@@ -46,25 +46,7 @@ const Play: NextPage = () => {
     }
   }, [tweetId])
 
-  var tweet: TweetConfig = {
-    user: {
-        nickname: "string",
-        name: "str",
-        avatar: "string",
-        verified: false,
-        locked: false,
-    },
-    display: "default",
-    text: "string",
-    image: [],
-    date: "string",
-    app: "Twitter for AI",
-    retweets: -1,
-    quotedTweets: -1,
-    likes: -1,
-    AI: false,
-    id: '0',
-}
+  var tweet: TweetConfig | undefined = tweets.shift()!;
 
   function userGuess(tweet: TweetConfig, userAns: string) {
     localStorage.setItem("tweetData", JSON.stringify(tweets))
