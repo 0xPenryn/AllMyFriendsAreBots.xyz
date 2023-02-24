@@ -19,12 +19,10 @@ const Play: NextPage = () => {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [tweets, setTweets] = useState<TweetConfig[]>([]);
-  var tweet: TweetConfig = undefined!;
 
   useEffect(() => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
     setTweets(loadTweets());
-    tweet = tweets.shift()!;
   }, [])
 
   useEffect(() => {
@@ -35,6 +33,8 @@ const Play: NextPage = () => {
     }
     doAi();
   }, [tweetId])
+
+  var tweet = tweets.shift()!;
 
   function userGuess(tweet: TweetConfig, userAns: string) {
     localStorage.setItem("tweetData", JSON.stringify(tweets))
@@ -82,7 +82,7 @@ const Play: NextPage = () => {
         <div className="flex flex-col w-screen justify-center items-center">
           <p>Your Score: {score}</p>
           <p>Your Previous Best Score: {highScore}</p>
-          {tweets && <><TweetTimeline tweet={tweet} /></>}
+          {tweet && <><TweetTimeline tweet={tweet} /></>}
           <div className="flex flex-row content-center">
             <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "human")}>Human</button>
             <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "ai")}>AI</button>
