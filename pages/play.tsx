@@ -36,6 +36,7 @@ const Play: NextPage = () => {
   var tweet = tweets.shift()!;
 
   function userGuess(tweet: TweetConfig, userAns: string) {
+    localStorage.setItem("tweetData", JSON.stringify(tweets))
     if ((userAns == "ai") == tweet?.AI) {
       setTweetId(tweet.id)
       setScore(score + 1)
