@@ -49,6 +49,7 @@ const Play: NextPage = () => {
   var tweet = tweets.shift()!;
 
   function userGuess(tweet: TweetConfig, userAns: string) {
+    setLoading(true);
     localStorage.setItem("tweetData", JSON.stringify(tweets))
     if ((userAns == "ai") == tweet?.AI) {
       setTweetId(tweet.id)
@@ -67,6 +68,7 @@ const Play: NextPage = () => {
       // alert("You lost!")
       location.href = '/endgame'
     }
+    setLoading(false);
   };
 
   {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
