@@ -43,7 +43,7 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
     // for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
     //   image.push(data[tweetNumber]?.media[i].url)
     // }
-    date: Date.parse(unparsedTweet.tweet.created_at!).toLocaleString(),
+    date: new Date(Date.parse(unparsedTweet.tweet.created_at!)).toLocaleString(),
     app: "Twitter for AI",
     retweets: unparsedTweet.tweet.public_metrics?.retweet_count ?? -1,
     quotedTweets: unparsedTweet.tweet.public_metrics?.quote_count ?? -1,
@@ -51,7 +51,6 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
     AI: false,
     id: unparsedTweet.tweet.id ?? "0",
   }
-  // console.log("parsed tweet: ", parsedTweet)
   return parsedTweet;
 }
 
@@ -102,15 +101,6 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   tweetsText = "[" + tweets.join(", \n") + "]";
   newTweet.text = await generateTweet(tweetsText)
   newTweet.AI = true;
-  // .then((aiTweet) => {
-  //   console.log("ai tweet done: ", aiTweet)
-  //   newTweet.text = aiTweet;
-  //   newTweet.AI = true;
-  // })
-  // setTimeout(() => {
-  //   console.log("new AI tweet: ", newTweet)
-  //   return newTweet;
-  // }, 2000)
   return newTweet;
 }
 
