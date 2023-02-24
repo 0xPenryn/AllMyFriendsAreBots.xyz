@@ -100,13 +100,15 @@ export async function makeAITweet(tweet: TweetConfig) {
 
   const tweets = await loadTweetsFromUser(tweet.user.id)
   tweetsText = "[" + tweets.join(", \n") + "]";
-  generateTweet(tweetsText).then((aiTweet) => {
+  await generateTweet(tweetsText).then((aiTweet) => {
     console.log("ai tweet done: ", aiTweet)
     newTweet.text = aiTweet;
     newTweet.AI = true;
   })
-  console.log("new AI tweet: ", newTweet)
-  return newTweet;
+  setTimeout(() => {
+    console.log("new AI tweet: ", newTweet)
+    return newTweet;
+  }, 2000)
 }
 
 export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> {
