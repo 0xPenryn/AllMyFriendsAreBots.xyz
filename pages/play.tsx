@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useState, useEffect } from "react";
 import { signOut, useSession } from 'next-auth/react';
 import TweetTimeline from "../components/TweetTimeline";
+import { loadTweets, makeAITweet, TweetConfig } from "../utils/tweetHelper";
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -14,33 +15,28 @@ function clearState() {
 
 const Play: NextPage = () => {
   const { data: session, status } = useSession();
-  const [tweetIndex, setTweetIndex] = useState(0);
+  const [tweetId, setTweetId] = useState("0");
   const [score, setScore] = useState(0);
-  const [isAI, setIsAI] = useState(false);
   const [highScore, setHighScore] = useState(0);
-
-  if (typeof window !== 'undefined') {
-    setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"))
-  }
+  const [tweets, setTweets] = useState<TweetConfig[]>([]);
 
   useEffect(() => {
-    function checkUserData() {
-      setTweetIndex(1 + (JSON.parse(localStorage.getItem("lastTweet") ?? "0"))) ;
+    async function doAi() {
+      if (Math.random() > 0.75) {
+        tweets.unshift(await makeAITweet(tweets.shift()!))
+      }
     }
-
-    checkUserData()
-    // console.log(tweetIndex, "end of effect")
-    // return () => {
-    //   // window.removeEventListener('load', checkUserData)
-    //   console.log(tweetIndex, "end of listener")
-    // }
+    setTweetId(1 + (JSON.parse(localStorage.getItem("lastTweet") ?? "0")));
+    setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
+    setTweets(loadTweets());
+    doAi();
   }, [])
 
-  function userGuess(userAns: string) {
-    if ((userAns == "ai") == isAI) {
-      var isNextAI = Math.random() > 0.1 ? false : true;
-      setIsAI(isNextAI);
-      setTweetIndex(tweetIndex + 1)
+  var tweet = tweets.shift()!;
+
+  function userGuess(tweet: TweetConfig, userAns: string) {
+    if ((userAns == "ai") == tweet?.AI) {
+      setTweetId(tweet.id)
       setScore(score + 1)
     } else {
       // store last score
@@ -50,8 +46,8 @@ const Play: NextPage = () => {
         localStorage.setItem("highScore", score.toString())
       }
       // store tweet that fooled them
-      localStorage.setItem("lastTweet", tweetIndex.toString())
-      localStorage.setItem("lastTweetType", isAI ? "ai" : "human")
+      localStorage.setItem("lastTweet", tweetId)
+      localStorage.setItem("lastTweetType", (userAns == "ai")  ? "human" : "ai") // if userAns is "ai", then the tweet was human bc they're only here if they were wrong
       setScore(0)
       // alert("You lost!")
       location.href = '/endgame'
@@ -83,10 +79,10 @@ const Play: NextPage = () => {
         <div className="flex flex-col w-screen justify-center items-center">
           <p>Your Score: {score}</p>
           <p>Your Previous Best Score: {highScore}</p>
-          <TweetTimeline tweetNumber={tweetIndex} AI={isAI} />
+          {tweet && <><TweetTimeline tweet={tweet} /></>}
           <div className="flex flex-row content-center">
-            <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess("human")}>Human</button>
-            <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess("ai")}>AI</button>
+            <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "human")}>Human</button>
+            <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "ai")}>AI</button>
           </div>
         </div>
       </>}
