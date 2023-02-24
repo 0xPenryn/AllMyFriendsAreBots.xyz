@@ -93,22 +93,25 @@ export async function generateTweet(tweets: string) {
   return aiTweet;
 };
 
-export async function makeAITweet(tweet: TweetConfig) {
+export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   if (tweet.AI) { return tweet };
   var newTweet = tweet;
   var tweetsText = "";
 
   const tweets = await loadTweetsFromUser(tweet.user.id)
   tweetsText = "[" + tweets.join(", \n") + "]";
-  await generateTweet(tweetsText).then((aiTweet) => {
-    console.log("ai tweet done: ", aiTweet)
-    newTweet.text = aiTweet;
-    newTweet.AI = true;
-  })
-  setTimeout(() => {
-    console.log("new AI tweet: ", newTweet)
-    return newTweet;
-  }, 2000)
+  newTweet.text = await generateTweet(tweetsText)
+  newTweet.AI = true;
+  // .then((aiTweet) => {
+  //   console.log("ai tweet done: ", aiTweet)
+  //   newTweet.text = aiTweet;
+  //   newTweet.AI = true;
+  // })
+  // setTimeout(() => {
+  //   console.log("new AI tweet: ", newTweet)
+  //   return newTweet;
+  // }, 2000)
+  return newTweet;
 }
 
 export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> {
