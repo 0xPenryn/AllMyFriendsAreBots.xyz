@@ -31,7 +31,7 @@ const Play: NextPage = () => {
 
   useEffect(() => {
     async function doAi() {
-      if (Math.random() > 0.75) {
+      if (Math.random() >= 0.5) {
         tweets.unshift(await makeAITweet(tweets.shift()!))
       }
     }
