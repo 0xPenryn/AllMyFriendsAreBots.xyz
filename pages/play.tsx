@@ -46,7 +46,7 @@ const Play: NextPage = () => {
         localStorage.setItem("highScore", score.toString())
       }
       // store tweet that fooled them
-      localStorage.setItem("lastTweet", tweetId)
+      localStorage.setItem("lastTweet", JSON.stringify(tweet))
       localStorage.setItem("lastTweetType", (userAns == "ai")  ? "human" : "ai") // if userAns is "ai", then the tweet was human bc they're only here if they were wrong
       setScore(0)
       // alert("You lost!")
