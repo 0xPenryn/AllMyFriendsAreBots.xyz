@@ -32,6 +32,9 @@ const Play: NextPage = () => {
       }
     }
     doAi();
+    if (tweets.length == 2) {
+      setTweets(loadTweets(tweets[0].id));
+    }
   }, [tweetId])
 
   var tweet = tweets.shift()!;
