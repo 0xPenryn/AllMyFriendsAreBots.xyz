@@ -56,7 +56,7 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
 }
 
 export async function generateTweet(tweets: string) {
-  const prompt = "Generate a single tweet that would fool a human into thinking it was written by a human, inspired by the following array of tweets: ";
+  const prompt = "Generate a single tweet without hashtags or quotes that would fool a human into thinking it was written by a human, inspired by the following array of tweets: ";
 
   var aiTweet = "";
 
@@ -90,7 +90,7 @@ export async function generateTweet(tweets: string) {
     const chunkValue = decoder.decode(value);
     aiTweet = aiTweet + chunkValue;
   }
-  return aiTweet;
+  return aiTweet.replaceAll("^\"|\"$", "");
 };
 
 export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
