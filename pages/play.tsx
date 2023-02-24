@@ -41,7 +41,7 @@ const Play: NextPage = () => {
         })
     }
     doAi();
-    if (tweets.length == 2) {
+    if (tweets.length == 2 && !loading) {
       loadMoreTweets();
     }
   }, [tweetId])
