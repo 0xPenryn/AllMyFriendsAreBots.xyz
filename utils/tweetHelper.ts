@@ -121,7 +121,7 @@ export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> 
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({'tweetID': tweetID}),
+      body: JSON.stringify({'until_id': tweetID}),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -141,5 +141,25 @@ export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> 
         return tweetData;
       })
   }
+  return tweetData;
+}
+
+export async function loadTweetsFromUser(userID: string): Promise<Array<TweetConfig>> {
+  var tweetData: Array<TweetConfig> = [];
+
+    console.log("about to fetch tweetsByUser api endpoint")
+    fetch('/api/twitter/timeline', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({'user_id': userID}),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("got user's tweets!")
+        tweetData = data;
+        return tweetData;
+      })
   return tweetData;
 }
