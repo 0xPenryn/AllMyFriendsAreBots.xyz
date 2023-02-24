@@ -45,8 +45,9 @@ const PreGame: NextPage = () => {
           }}>Sign out</button></div>
         </div>
         <div className="flex flex-col w-screen justify-center items-center">
-          <p>Here are some rules and explanations of the game.</p>
-          <p>Here's some more explanation for you.</p>
+          <p>Think you know what's AI and what's not? Try it on your own Twitter feed.</p>
+          <p>You'll see one Tweet at a time -- guess if it's real or AI-generated!</p>
+          <p>See how many you can get correct in a row.</p>
           {loading && <p>Hold on, loading Tweets...</p>}
           {!loading && <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => location.href = '/play' }>Let's Play!</button>}
           {/* {!loading && <><TweetTimeline tweet={tweet} /></>} */}
