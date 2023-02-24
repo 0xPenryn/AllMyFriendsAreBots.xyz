@@ -55,12 +55,10 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
   return parsedTweet;
 }
 
-export async function generateTweet(tweet: TweetConfig) {
+export async function generateTweet(tweets: string) {
   const prompt = "Generate a single tweet that would fool a human into thinking it was written by a human, inspired by the following array of tweets: ";
 
   var aiTweet = "";
-
-  const tweetText = (await loadTweetsFromUser(tweet.user.id)).toString();
 
   const response = await fetch("/api/openai/generate", {
     method: "POST",
@@ -68,7 +66,7 @@ export async function generateTweet(tweet: TweetConfig) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "prompt": prompt + tweetText,
+      "prompt": prompt + tweets,
     }),
   });
 
@@ -98,7 +96,11 @@ export async function generateTweet(tweet: TweetConfig) {
 export async function makeAITweet(tweet: TweetConfig) {
   if (tweet.AI) { return tweet };
   var newTweet = tweet;
-  const tweetText = await generateTweet(tweet);
+  var tweetsText = "";
+
+  tweetsText = (await loadTweetsFromUser(tweet.user.id)).toString();
+
+  const tweetText = await generateTweet(tweetsText);
   console.log("ai tweet done: ", tweetText)
   newTweet.text = tweetText;
   newTweet.AI = true;
@@ -146,11 +148,11 @@ export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> 
   return tweetData;
 }
 
-export async function loadTweetsFromUser(userID: string): Promise<Array<TweetConfig>> {
-  var tweetData: Array<TweetConfig> = [];
+export async function loadTweetsFromUser(userID: string): Promise<Array<String>> {
+  var tweetData: Array<String> = [];
 
     console.log("about to fetch tweetsByUser api endpoint")
-    fetch('/api/twitter/timeline', {
+    fetch('/api/twitter/tweetsByUser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
