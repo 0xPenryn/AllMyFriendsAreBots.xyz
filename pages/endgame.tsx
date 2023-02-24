@@ -76,7 +76,7 @@ const Endgame: NextPage = () => {
         {(lastTweetType == "human") && <>
           <h3 className="mt-2 mx-10 text-base text-center">That's a real person's Tweet!</h3>
         </>}
-        <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = '/play'}>Play Again</button>
+        <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = '/pregame'}>Play Again</button>
       </div>
       <button className="grow-0 bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
     </div>
