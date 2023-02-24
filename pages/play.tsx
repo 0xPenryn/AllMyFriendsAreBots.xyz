@@ -21,11 +21,32 @@ const Play: NextPage = () => {
   const [tweets, setTweets] = useState<TweetConfig[]>([]);
   const [loading, setLoading] = useState(true);
 
+  var tweet: TweetConfig = {
+    user: {
+      nickname: "string",
+      name: "str",
+      avatar: "string",
+      verified: false,
+      locked: false,
+    },
+    display: "default",
+    text: "string",
+    image: [],
+    date: "string",
+    app: "Twitter for AI",
+    retweets: -1,
+    quotedTweets: -1,
+    likes: -1,
+    AI: false,
+    id: '0',
+  }
+
   useEffect(() => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
     loadTweets().then((tweets) => {
       setTweets(tweets);
       setLoading(false);
+      tweet = tweets.shift()!;
     })
   }, [])
 
@@ -44,27 +65,10 @@ const Play: NextPage = () => {
     if (tweets.length == 2 && !loading) {
       loadMoreTweets();
     }
-  }, [tweetId])
+    tweet = tweets.shift()!;
+  }, [tweetId, tweet])
 
-  var tweet: TweetConfig = {
-    user: {
-        nickname: "string",
-        name: "str",
-        avatar: "string",
-        verified: false,
-        locked: false,
-    },
-    display: "default",
-    text: "string",
-    image: [],
-    date: "string",
-    app: "Twitter for AI",
-    retweets: -1,
-    quotedTweets: -1,
-    likes: -1,
-    AI: false,
-    id: '0',
-}
+  
 
   function userGuess(tweet: TweetConfig, userAns: string) {
     localStorage.setItem("tweetData", JSON.stringify(tweets))
