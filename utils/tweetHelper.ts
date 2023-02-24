@@ -121,7 +121,7 @@ export function loadTweets(tweetID?: string): Array<TweetConfig> {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: tweetID,
+      body: JSON.stringify({'tweetID': tweetID}),
     })
       .then((res) => res.json())
       .then((data) => {
