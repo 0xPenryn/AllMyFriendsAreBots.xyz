@@ -99,7 +99,7 @@ export async function makeAITweet(tweet: TweetConfig) {
   var tweetsText = "";
 
   const tweets = await loadTweetsFromUser(tweet.user.id)
-  tweetsText = tweets.toString();
+  tweetsText = "[" + tweets.join(", \n") + "]";
   generateTweet(tweetsText).then((aiTweet) => {
     console.log("ai tweet done: ", aiTweet)
     newTweet.text = aiTweet;
