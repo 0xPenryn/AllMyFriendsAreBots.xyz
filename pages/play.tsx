@@ -32,7 +32,9 @@ const Play: NextPage = () => {
   useEffect(() => {
     async function doAi() {
       if (Math.random() >= 0.5) {
-        tweets.unshift(await makeAITweet(tweets.shift()!))
+        await makeAITweet(tweets.shift()!).then((tweet) => {
+          tweets.unshift(tweet);
+        })
       }
     }
     async function loadMoreTweets() {
