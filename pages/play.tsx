@@ -19,10 +19,14 @@ const Play: NextPage = () => {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [tweets, setTweets] = useState<TweetConfig[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
-    setTweets(loadTweets());
+    loadTweets().then((tweets) => {
+      setTweets(tweets);
+      setLoading(false);
+    })
   }, [])
 
   useEffect(() => {
@@ -31,9 +35,14 @@ const Play: NextPage = () => {
         tweets.unshift(await makeAITweet(tweets.shift()!))
       }
     }
+    async function loadMoreTweets() {
+        loadTweets(tweets[0].id).then((tweets) => {
+          setTweets(tweets);
+        })
+    }
     doAi();
     if (tweets.length == 2) {
-      setTweets(loadTweets(tweets[0].id));
+      loadMoreTweets();
     }
   }, [tweetId])
 
@@ -53,7 +62,7 @@ const Play: NextPage = () => {
       }
       // store tweet that fooled them
       localStorage.setItem("lastTweet", JSON.stringify(tweet))
-      localStorage.setItem("lastTweetType", (userAns == "ai")  ? "human" : "ai") // if userAns is "ai", then the tweet was human bc they're only here if they were wrong
+      localStorage.setItem("lastTweetType", (userAns == "ai") ? "human" : "ai") // if userAns is "ai", then the tweet was human bc they're only here if they were wrong
       setScore(0)
       // alert("You lost!")
       location.href = '/endgame'
@@ -85,7 +94,8 @@ const Play: NextPage = () => {
         <div className="flex flex-col w-screen justify-center items-center">
           <p>Your Score: {score}</p>
           <p>Your Previous Best Score: {highScore}</p>
-          {tweet && <><TweetTimeline tweet={tweet} /></>}
+          {loading && <p>Loading Tweet...</p>}
+          {!loading && <><TweetTimeline tweet={tweet} /></>}
           <div className="flex flex-row content-center">
             <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "human")}>Human</button>
             <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "ai")}>AI</button>
