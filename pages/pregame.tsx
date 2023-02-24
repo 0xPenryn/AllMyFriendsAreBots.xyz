@@ -15,7 +15,6 @@ function clearState() {
 const PreGame: NextPage = () => {
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(true);
-  const [lastTweet, setLastTweet] = useState<TweetConfig>();
 
   useEffect(() => {
     loadTweets(JSON.parse(localStorage.getItem("lastTweet")!)?.id).then(() => {

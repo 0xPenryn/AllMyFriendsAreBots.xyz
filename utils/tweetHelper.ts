@@ -56,11 +56,13 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
 }
 
 export async function generateTweet(tweet: TweetConfig) {
-  const prompt = "Generate a tweet that would fool a human into thinking it was written by a human, inspired by the following array of tweets: ";
+  const prompt = "Generate a single tweet that would fool a human into thinking it was written by a human, inspired by the following array of tweets: ";
 
   var aiTweet = "";
 
   const tweetText = (await loadTweetsFromUser(tweet.user.id)).toString();
+
+  console.log(prompt + tweetText)
 
   const response = await fetch("/api/openai/generate", {
     method: "POST",
