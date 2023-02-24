@@ -60,7 +60,7 @@ const Play: NextPage = () => {
       // store last score
       localStorage.setItem("lastScore", score.toString())
       // store highest score, if needed
-      if (score > parseInt(localStorage.getItem("highScore") ?? "0")) {
+      if (score >= parseInt(localStorage.getItem("highScore") ?? "0")) {
         localStorage.setItem("highScore", score.toString())
       }
       // store tweet that fooled them
@@ -109,8 +109,9 @@ const Play: NextPage = () => {
       {!session && <>
         <div />
         <div className="flex flex-col">
-          <p className="justify-self-center text-2xl">You must log in to play.</p>
-          <button className="text-center mt-2 bg-slate-400 text-white rounded-md px-1.5 py-1.5" onClick={() => signOut({ callbackUrl: "/" })}>Sign out and return Home</button>
+          <p className="justify-self-center text-2xl">Loading your session...</p>
+          <p className="justify-self-center text-md">If you're stuck here, press the button below.</p>
+          <button className="text-center mt-2 bg-slate-400 text-white text-xs rounded-md px-1.5 py-1.5" onClick={() => signOut({ callbackUrl: "/" })}>Return Home</button>
         </div>
       </>}
       <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
