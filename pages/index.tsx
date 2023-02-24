@@ -45,7 +45,7 @@ const Home: NextPage = () => {
         {!session && <>
           <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => {
             signIn("twitter", {
-              callbackUrl: `${window.location.origin}/play`,
+              callbackUrl: `${window.location.origin}/pregame`,
             });
             clearState();
           }}>Sign in with Twitter</button>
