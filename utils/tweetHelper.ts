@@ -97,16 +97,15 @@ export async function makeAITweet(tweet: TweetConfig) {
   if (tweet.AI) { return tweet };
   var newTweet = tweet;
   var tweetsText = "";
-  
-  loadTweetsFromUser(tweet.user.id).then((tweets) => {
-    tweetsText = tweets.toString();
-    generateTweet(tweetsText).then((aiTweet) => {
-      console.log("ai tweet done: ", aiTweet)
-      newTweet.text = aiTweet;
-      newTweet.AI = true;
-    })
-  })
 
+  const tweets = await loadTweetsFromUser(tweet.user.id)
+  tweetsText = tweets.toString();
+  generateTweet(tweetsText).then((aiTweet) => {
+    console.log("ai tweet done: ", aiTweet)
+    newTweet.text = aiTweet;
+    newTweet.AI = true;
+  })
+  console.log("new AI tweet: ", newTweet)
   return newTweet;
 }
 
@@ -128,7 +127,7 @@ export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> 
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({'until_id': tweetID}),
+      body: JSON.stringify({ 'until_id': tweetID }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -153,20 +152,27 @@ export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> 
 
 export async function loadTweetsFromUser(userID: string): Promise<Array<String>> {
   var tweetData: Array<String> = [];
-
-    console.log("about to fetch tweetsByUser api endpoint")
-    fetch('/api/twitter/tweetsByUser', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({'user_id': userID}),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("got user's tweets!")
-        tweetData = data;
-        return tweetData;
-      })
+  console.log("about to fetch tweetsByUser api endpoint")
+  // fetch('/api/twitter/tweetsByUser', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({'user_id': userID}),
+  // })
+  //   .then((res) => res.json())
+  //   .then((data) => {
+  //     console.log("got user's tweets:", data)
+  //     tweetData = data;
+  //     return tweetData;
+  //   })
+  const response = await fetch('/api/twitter/tweetsByUser', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ 'user_id': userID }),
+  });
+  tweetData = await response.json();
   return tweetData;
 }
