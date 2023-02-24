@@ -117,7 +117,7 @@ export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> 
   if (tweetID) {
     console.log("about to fetch timeline api endpoint")
     fetch('/api/twitter/timeline', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
