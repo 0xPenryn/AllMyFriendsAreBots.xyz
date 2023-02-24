@@ -41,7 +41,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const parsedTweet = parseTweet({
         tweet: tweet,
         author: includes.author(tweet)!,
-      })
+      }).text
       console.log("adding to list:", parsedTweet);
       tweetList.push(parsedTweet);
     }

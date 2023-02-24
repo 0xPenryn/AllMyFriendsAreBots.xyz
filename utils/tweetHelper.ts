@@ -7,6 +7,7 @@ export type TweetConfig = {
     avatar: string;
     verified: boolean;
     locked: boolean;
+    id: string;
   };
   display: string;
   text: string;
@@ -33,6 +34,7 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
       avatar: unparsedTweet.author?.profile_image_url!,
       verified: unparsedTweet.author?.verified!,
       locked: unparsedTweet.author?.protected!,
+      id: unparsedTweet.author?.id!,
     },
     display: "default",
     text: unparsedTweet.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">") || "Placeholder Tweet",
@@ -54,11 +56,11 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
 }
 
 export async function generateTweet(tweet: TweetConfig) {
-  const prompt = "Generate a tweet that would fool a human into thinking it was written by a human, inspired by the following tweet in brackets: [";
+  const prompt = "Generate a tweet that would fool a human into thinking it was written by a human, inspired by the following array of tweets: ";
 
   var aiTweet = "";
 
-  const tweetText = tweet.text;
+  const tweetText = (await loadTweetsFromUser(tweet.user.id)).toString();
 
   const response = await fetch("/api/openai/generate", {
     method: "POST",
@@ -66,7 +68,7 @@ export async function generateTweet(tweet: TweetConfig) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "prompt": prompt + tweetText + "]",
+      "prompt": prompt + tweetText,
     }),
   });
 
