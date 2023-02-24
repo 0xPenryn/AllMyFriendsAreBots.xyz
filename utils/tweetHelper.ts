@@ -62,8 +62,6 @@ export async function generateTweet(tweet: TweetConfig) {
 
   const tweetText = (await loadTweetsFromUser(tweet.user.id)).toString();
 
-  console.log(prompt + tweetText)
-
   const response = await fetch("/api/openai/generate", {
     method: "POST",
     headers: {
