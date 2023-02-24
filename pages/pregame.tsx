@@ -2,8 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import { signOut, useSession } from 'next-auth/react';
-import TweetTimeline from "../components/TweetTimeline";
-import { loadTweets, makeAITweet, TweetConfig } from "../utils/tweetHelper";
+import { loadTweets, TweetConfig } from "../utils/tweetHelper";
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -16,9 +15,11 @@ function clearState() {
 const PreGame: NextPage = () => {
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(true);
+  const [lastTweet, setLastTweet] = useState<TweetConfig>();
 
   useEffect(() => {
-    loadTweets().then((tweets) => {
+    setLastTweet(JSON.parse(localStorage.getItem("lastTweet")!))
+    loadTweets(lastTweet!.id).then((tweets) => {
       setLoading(false);
     })
   }, [])
