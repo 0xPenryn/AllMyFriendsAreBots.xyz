@@ -43,7 +43,7 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
     // for (let i = 0; i < data[tweetNumber]?.tweet?.attachments?.media_keys.length ?? 0; i++) {
     //   image.push(data[tweetNumber]?.media[i].url)
     // }
-    date: Date.parse(unparsedTweet.tweet.created_at ?? Date()).toLocaleString('en-US')!,
+    date: Date.parse(unparsedTweet.tweet.created_at!).toLocaleString(),
     app: "Twitter for AI",
     retweets: unparsedTweet.tweet.public_metrics?.retweet_count ?? -1,
     quotedTweets: unparsedTweet.tweet.public_metrics?.quote_count ?? -1,
