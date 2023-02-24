@@ -18,8 +18,7 @@ const PreGame: NextPage = () => {
   const [lastTweet, setLastTweet] = useState<TweetConfig>();
 
   useEffect(() => {
-    setLastTweet(JSON.parse(localStorage.getItem("lastTweet")!))
-    loadTweets(lastTweet!.id).then((tweets) => {
+    loadTweets(JSON.parse(localStorage.getItem("lastTweet")!)?.id).then(() => {
       setLoading(false);
     })
   }, [])
