@@ -107,7 +107,6 @@ export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> 
   var tweetData: Array<TweetConfig> = [];
 
   if (localStorage.getItem("tweetData")) {
-    console.log("grabbing tweets from local storage")
     tweetData = JSON.parse(localStorage.getItem("tweetData")!);
     console.log("tweetData: ", tweetData)
     const neededTweet = tweetData.findIndex(tweet => tweet.id === tweetID || -1);
@@ -116,7 +115,7 @@ export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> 
     }
   }
   if (tweetID) {
-    console.log("grabbing more tweets")
+    console.log("about to fetch timeline api endpoint")
     fetch('/api/twitter/timeline', {
       method: 'POST',
       headers: {
@@ -126,16 +125,17 @@ export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> 
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("storing more tweets")
+        console.log("data, storing now")
         tweetData = data;
         localStorage.setItem("tweetData", JSON.stringify(tweetData));
         return tweetData;
       })
   } else {
+    console.log("about to fetch timeline api endpoint")
     fetch('/api/twitter/timeline')
       .then((res) => res.json())
       .then((data) => {
-        console.log("storing tweets now")
+        console.log("data, storing now")
         tweetData = data;
         localStorage.setItem("tweetData", JSON.stringify(tweetData));
         return tweetData;

@@ -46,7 +46,7 @@ const Play: NextPage = () => {
     }
   }, [tweetId])
 
-  var tweet: TweetConfig | undefined = tweets.shift()!;
+  var tweet = tweets.shift()!;
 
   function userGuess(tweet: TweetConfig, userAns: string) {
     localStorage.setItem("tweetData", JSON.stringify(tweets))
@@ -95,10 +95,10 @@ const Play: NextPage = () => {
           <p>Your Score: {score}</p>
           <p>Your Previous Best Score: {highScore}</p>
           {loading && <p>Loading Tweet...</p>}
-          {(!loading && (typeof tweet !== undefined)) && <><TweetTimeline tweet={tweet} /></>}
+          {!loading && <><TweetTimeline tweet={tweet} /></>}
           <div className="flex flex-row content-center">
-            <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet!, "human")}>Human</button>
-            <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet!, "ai")}>AI</button>
+            <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "human")}>Human</button>
+            <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "ai")}>AI</button>
           </div>
         </div>
       </>}
