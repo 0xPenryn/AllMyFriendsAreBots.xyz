@@ -108,7 +108,7 @@ const Play: NextPage = () => {
       </>}
       {!session && <>
         <div />
-        <div className="flex flex-col">
+        <div className="flex flex-col content-center text-center">
           <p className="justify-self-center text-2xl">Loading your session...</p>
           <p className="justify-self-center text-md">If you're stuck here, press the button below.</p>
           <button className="text-center mt-2 bg-slate-400 text-white text-xs rounded-md px-1.5 py-1.5" onClick={() => signOut({ callbackUrl: "/" })}>Return Home</button>
