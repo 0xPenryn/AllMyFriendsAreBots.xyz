@@ -93,7 +93,7 @@ export async function generateTweet(prompt: Array<Object>) {
     const chunkValue = decoder.decode(value);
     aiTweet = aiTweet + chunkValue;
   }
-  return aiTweet.replaceAll("^\"|\"$", "");
+  return aiTweet.replaceAll("^\"|\"$\"|\"Tweet: ", "");
 };
 
 export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
