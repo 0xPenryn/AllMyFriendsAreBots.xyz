@@ -17,9 +17,9 @@ const PreGame: NextPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // loadTweets(JSON.parse(localStorage.getItem("lastTweet")!)?.id).then(() => {
-      // setLoading(false);
-    // })
+    loadTweets(JSON.parse(localStorage.getItem("lastTweet")!)?.id).then(() => {
+      setLoading(false);
+    })
   }, [])
 
   {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
@@ -34,12 +34,12 @@ const PreGame: NextPage = () => {
         <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
         <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
           <h3>All My Friends Are Bots</h3>
-          <div className="text-center flex flex-row flex-nowrap items-center justify-center">
+          {/* <div className="text-center flex flex-row flex-nowrap items-center justify-center">
             {session && session.user?.image && <>
             <img src={session.user.image} className="h-10 mr-2.5 rounded-full" />
               Signed in as {session?.user?.name}
             </>}
-          </div>
+          </div> */}
         </div>
         <div className="w-1/4 text-right">
           {session && <>
