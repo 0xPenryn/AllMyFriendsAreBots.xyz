@@ -57,8 +57,9 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
   return parsedTweet;
 }
 
-export async function generateTweet(tweets: string) {
-  const prompt = "Generate a single tweet without hashtags or quotes that would fool a human into thinking it was written by a human, inspired by the following array of tweets: ";
+export async function generateTweet(prompt: Array<Object>) {
+  
+  // const prompt = "Generate a single tweet without hashtags or quotes that would fool a human into thinking it was written by a human, inspired by the following array of tweets: ";
 
   var aiTweet = "";
 
@@ -68,7 +69,7 @@ export async function generateTweet(tweets: string) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "prompt": prompt + tweets,
+      "prompt": prompt,
     }),
   });
 
@@ -98,11 +99,18 @@ export async function generateTweet(tweets: string) {
 export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   if (tweet.AI) { return tweet };
   var newTweet = tweet;
-  var tweetsText = "";
+  var gptPrompt : Array<Object> = [
+    { "role": "system", "content": "You are person whose job is to generate Tweets for an individual." },
+    { "role": "user", "content": 'You will be given up to 20 Tweets, each in a single message beginning with "Tweet: ", and asked to generate a Tweet based on the content and style of those Tweets. Do not include "Tweet: " in your response.' },
+    { "role": "user", "content": "Pay particular attention to how those Tweets utilize punctuation, capitalization, and tone. Style is just as, if not slightly more, important than the content of the Tweet." },
+  ];
 
   const tweets = await loadTweetsFromUser(tweet.user.id)
-  tweetsText = "[" + tweets.join(", \n") + "]";
-  newTweet.text = await generateTweet(tweetsText)
+  tweets.forEach(item => {
+    gptPrompt.push({ "role": "user", "content": "Tweet: " + item })
+  })
+  // gptPrompt.push({ "role": "user", "content": "Generate a Tweet." })
+  newTweet.text = await generateTweet(gptPrompt)
   newTweet.AI = true;
   return newTweet;
 }

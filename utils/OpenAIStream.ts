@@ -6,7 +6,7 @@ import {
 
 export interface OpenAIStreamPayload {
   model: string;
-  prompt: string;
+  messages: Array<Object>;
   temperature: number;
   top_p: number;
   frequency_penalty: number;
@@ -22,7 +22,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
 
   let counter = 0;
 
-  const res = await fetch("https://api.openai.com/v1/completions", {
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.OPENAI_API_KEY ?? ""}`,
