@@ -14,12 +14,12 @@ function clearState() {
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
 
-  {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
+  {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME MIGUEL*/ }
 
   return (
     <div className="flex flex-col h-screen justify-center items-center">
       <Head>
-        <title>PoP Game</title>
+        <title>AMFAB</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {session && <>

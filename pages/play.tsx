@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { signOut, useSession } from 'next-auth/react';
 import TweetTimeline from "../components/TweetTimeline";
 import { loadTweets, makeAITweet, TweetConfig } from "../utils/tweetHelper";
+import toast, { Toaster } from 'react-hot-toast';
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -50,10 +51,13 @@ const Play: NextPage = () => {
 
   var tweet = tweets.shift()!;
 
+  const notifyCorrect = () => toast('That was correct!');
+
   function userGuess(tweet: TweetConfig, userAns: string) {
     setLoading(true);
     localStorage.setItem("tweetData", JSON.stringify(tweets))
     if ((userAns == "ai") == tweet?.AI) {
+      notifyCorrect();
       setTweetId(tweet.id)
       setScore(score + 1)
     } else {
@@ -78,7 +82,7 @@ const Play: NextPage = () => {
   return (
     <div className="flex flex-col h-screen justify-between items-center">
       <Head>
-        <title>PoP Game</title>
+        <title>AMFAB</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {session && <>

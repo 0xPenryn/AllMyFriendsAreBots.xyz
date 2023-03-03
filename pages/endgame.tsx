@@ -46,7 +46,7 @@ const Endgame: NextPage = () => {
   return (
     <div className="flex flex-col min-h-screen justify-center items-center">
       <Head>
-        <title>You lost!</title>
+        <title>AMFAB</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {session && <>

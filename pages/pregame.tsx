@@ -27,7 +27,7 @@ const PreGame: NextPage = () => {
   return (
     <div className="flex flex-col h-screen justify-between items-center">
       <Head>
-        <title>PoP Game</title>
+        <title>AMFAB</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {session && <>

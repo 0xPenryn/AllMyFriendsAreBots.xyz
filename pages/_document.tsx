@@ -10,25 +10,25 @@ class MyDocument extends Document {
             name="description"
             content="Can you guess which Tweets are real and which are AI-generated?"
           />
-          <meta property="og:site_name" content="wld-test.vercel.app" />
+          <meta property="og:site_name" content="AllMyFriendsAreBots.xyz" />
           <meta
             property="og:description"
             content="Can you guess which Tweets are real and which are AI-generated?"
           />
-          <meta property="og:title" content="Proof-of-Personhood Game" />
+          <meta property="og:title" content="All My Friends Are Bots" />
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="Proof-of-Personhood Game" />
+          <meta name="twitter:title" content="All My Friends Are Bots" />
           <meta
             name="twitter:description"
             content="Can you guess which Tweets are real and which are AI-generated?"
           />
           <meta
             property="og:image"
-            content="https://wld-test.vercel.app/wld.jpg"
+            content="https://AllMyFriendsAreBots.xyz/amfabtwt.jpg"
           />
           <meta
             name="twitter:image"
-            content="https://wld-test.vercel.app/wld.jpg"
+            content="https://AllMyFriendsAreBots.xyz/amfabtwt.jpg"
           />
         </Head>
         <body>
