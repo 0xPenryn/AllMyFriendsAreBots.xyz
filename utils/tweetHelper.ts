@@ -93,7 +93,8 @@ export async function generateTweet(prompt: Array<Object>) {
     const chunkValue = decoder.decode(value);
     aiTweet = aiTweet + chunkValue;
   }
-  return aiTweet.replaceAll("^\"|\"$\"|\"Tweet: ", "");
+  var cleanedTweet = aiTweet.replaceAll("Tweet: ", "");
+  return cleanedTweet.replaceAll("^\"|\"$", "");
 };
 
 export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
@@ -104,7 +105,7 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
     { "role": "user", "content": 'You will be given Tweets in messages beginning with "Tweet: " and asked to generate a single Tweet based on the content and style of Tweets you are given.' },
     { "role": "user", "content": 'Pay particular attention to how these Tweets utilize punctuation, capitalization, and tone. Style is just as important as the content of the Tweet.' },
     { "role": "user", "content": "Focus much more on the Tweets given to you than on your existing knowledge of what a Tweet should be." },
-    { "role": "user", "content": 'Do not include "Tweet: " or surrouding quotes in your response, only reply with the text of the generated Tweet.' },
+    { "role": "user", "content": 'Do NOT include "Tweet: " or surrouding quotes in your response, only reply with the text of the generated Tweet.' },
   ];
 
   const tweets = await loadTweetsFromUser(tweet.user.id)
