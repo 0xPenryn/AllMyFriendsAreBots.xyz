@@ -47,7 +47,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
           try {
             const json = JSON.parse(data);
             console.log("trying to parse:", json)
-            const text = json.choices[0].message.content;
+            const text = json.choices[0].delta.content;
             if (counter < 2 && (text.match(/\n/) || []).length) {
               // this is a prefix character (i.e., "\n\n"), do nothing
               return;
@@ -67,6 +67,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
       const parser = createParser(onParse);
       // https://web.dev/streams/#asynchronous-iteration
       for await (const chunk of res.body as any) {
+        console.log("chunk:", chunk)
         parser.feed(decoder.decode(chunk));
       }
     },
