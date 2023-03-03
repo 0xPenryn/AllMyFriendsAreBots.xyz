@@ -37,16 +37,16 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
       function onParse(event: ParsedEvent | ReconnectInterval) {
         if (event.type === "event") {
           const data = event.data;
-          console.log("data chunk:", data)
+          // console.log("data chunk:", data)
           // https://beta.openai.com/docs/api-reference/completions/create#completions/create-stream
           if (data === "[DONE]") {
             controller.close();
-            console.log("received from oai:", data)
+            // console.log("received from oai:", data)
             return;
           }
           try {
             const json = JSON.parse(data);
-            console.log("trying to parse:", json)
+            // console.log("trying to parse:", json)
             const text = json.choices[0].delta.content;
             if (counter < 2 && (text?.match(/\n/) || []).length) {
               // this is a prefix character (i.e., "\n\n"), do nothing
@@ -67,7 +67,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
       const parser = createParser(onParse);
       // https://web.dev/streams/#asynchronous-iteration
       for await (const chunk of res.body as any) {
-        console.log("chunk:", chunk)
+        // console.log("chunk:", chunk)
         parser.feed(decoder.decode(chunk));
       }
     },

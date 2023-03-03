@@ -101,8 +101,10 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   var newTweet = tweet;
   var gptPrompt : Array<Object> = [
     { "role": "system", "content": "You are person whose job is to generate Tweets for an individual." },
-    { "role": "user", "content": 'You will be given up to 20 Tweets, each in a single message beginning with "Tweet: ", and asked to generate a Tweet based on the content and style of those Tweets. Do not include "Tweet: " in your response.' },
-    { "role": "user", "content": "Pay particular attention to how those Tweets utilize punctuation, capitalization, and tone. Style is just as, if not slightly more, important than the content of the Tweet." },
+    { "role": "user", "content": 'You will be given Tweets in messages beginning with "Tweet: " and asked to generate a single Tweet based on the content and style of Tweets you are given.' },
+    { "role": "user", "content": 'Pay particular attention to how these Tweets utilize punctuation, capitalization, and tone. Style is just as important as the content of the Tweet.' },
+    { "role": "user", "content": "Focus much more on the Tweets given to you than on your existing knowledge of what a Tweet should be." },
+    { "role": "user", "content": 'Do not include "Tweet: " or surrouding quotes in your response, only reply with the text of the generated Tweet.' },
   ];
 
   const tweets = await loadTweetsFromUser(tweet.user.id)
