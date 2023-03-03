@@ -40,6 +40,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
           // https://beta.openai.com/docs/api-reference/completions/create#completions/create-stream
           if (data === "[DONE]") {
             controller.close();
+            console.log("received from oai:", data)
             return;
           }
           try {
