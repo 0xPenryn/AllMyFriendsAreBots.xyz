@@ -32,7 +32,7 @@ const Play: NextPage = () => {
 
   useEffect(() => {
     async function doAi() {
-      if (Math.random() >= 0.5) {
+      if (Math.random() >= 0.5 && session) {
         await makeAITweet(tweets.shift()!).then((tweet) => {
           tweets.unshift(tweet);
         })
@@ -87,20 +87,26 @@ const Play: NextPage = () => {
         <title>AMFAB</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {session && <>
-        <div className="self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-center">
-          <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
-          <div className="w-1/2 text-center flex flex-row flex-nowrap items-center justify-center">
-            {session?.user?.image && <>
-              <img src={session.user.image} className="h-10 mr-2.5 rounded-full" />
+      <div className="self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-start">
+        <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
+        <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
+          <h3>All My Friends Are Bots</h3>
+          <div className="text-center flex flex-row flex-nowrap items-center justify-center">
+            {session && session.user?.image && <>
+            <img src={session.user.image} className="h-10 mr-2.5 rounded-full" />
+              Signed in as {session?.user?.name}
             </>}
-            Signed in as {session?.user?.name}
           </div>
-          <div className="w-1/4 text-right"><button onClick={() => {
-            signOut({ callbackUrl: "/" });
-            clearState();
-          }}>Sign out</button></div>
         </div>
+        <div className="w-1/4 text-right">
+          {session && <>
+            <button onClick={() => {
+              signOut({ callbackUrl: "/" });
+              clearState();
+            }}>Sign out</button>
+          </>}</div>
+      </div>
+      {session && <>
         <div className="flex flex-col w-screen justify-center items-center">
           <p>Your Score: {score}</p>
           <p>Your Previous Best Score: {highScore}</p>
@@ -120,7 +126,7 @@ const Play: NextPage = () => {
           <button className="text-center mt-2 bg-slate-400 text-white text-xs rounded-md px-1.5 py-1.5" onClick={() => signOut({ callbackUrl: "/" })}>Return Home</button>
         </div>
       </>}
-      <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
+      <button className="bg-violet-400 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
       <Toaster />
     </div>
   );

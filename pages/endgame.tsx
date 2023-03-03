@@ -49,21 +49,25 @@ const Endgame: NextPage = () => {
         <title>AMFAB</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {session && <>
-        <div className="grow-0 self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-center">
-          <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
-          <div className="w-1/2 text-center flex flex-row flex-nowrap items-center justify-center">
-            {session?.user?.image && <>
-              <img src={session.user.image} className="h-10 mr-2.5 rounded-full" />
+      <div className="self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-start">
+        <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
+        <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
+          <h3>All My Friends Are Bots</h3>
+          <div className="text-center flex flex-row flex-nowrap items-center justify-center">
+            {session && session.user?.image && <>
+            <img src={session.user.image} className="h-10 mr-2.5 rounded-full" />
+              Signed in as {session?.user?.name}
             </>}
-            Signed in as {session?.user?.name}
           </div>
-          <div className="w-1/4 text-right"><button onClick={() => {
-            signOut({ callbackUrl: "/" });
-            clearState();
-          }}>Sign out</button></div>
         </div>
-      </>}
+        <div className="w-1/4 text-right">
+          {session && <>
+            <button onClick={() => {
+              signOut({ callbackUrl: "/" });
+              clearState();
+            }}>Sign out</button>
+          </>}</div>
+      </div>
       <div className="grow flex flex-col w-screen justify-center items-center">
         <h1>You lost!<br /></h1>
         <h3 className="mt-2 mx-10 text-base text-center">Your score: {lastScore ?? "unknown"}</h3>
@@ -84,7 +88,7 @@ const Endgame: NextPage = () => {
           <button className="bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 m-5" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}`+ ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
         </div>
       </div>
-      <button className="grow-0 bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
+      <button className="grow-0 bg-violet-400 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
     </div>
   );
 };
