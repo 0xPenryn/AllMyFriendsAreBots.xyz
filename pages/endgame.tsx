@@ -38,8 +38,8 @@ const Endgame: NextPage = () => {
     // }
   }, [])
 
-  const tweetText = 'I was only able to guess ' + lastScore + ' Tweets correctly as real or AI-generated. How many can you guess?'
-  const tweetLink = 'https://wld-test.vercel.app/'
+  const tweetText = 'I was only able to guess ' + lastScore + ' Tweets correctly as real or AI-generated. How many can you get?'
+  const tweetLink = 'https://AllMyFriendsAreBots.xyz'
 
   {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
 
