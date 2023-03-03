@@ -119,6 +119,7 @@ const Play: NextPage = () => {
         </div>
       </>}
       <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
+      <Toaster />
     </div>
   );
 };
