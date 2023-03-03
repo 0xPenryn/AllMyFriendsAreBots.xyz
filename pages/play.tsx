@@ -51,7 +51,9 @@ const Play: NextPage = () => {
 
   var tweet = tweets.shift()!;
 
-  const notifyCorrect = () => toast('That was correct!');
+  const notifyCorrect = () => toast('That was correct!',{
+    "duration": 1000,
+  });
 
   function userGuess(tweet: TweetConfig, userAns: string) {
     setLoading(true);
