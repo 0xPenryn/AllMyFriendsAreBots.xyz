@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from 'next-auth/react';
+import Footer from "../components/Footer";
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -42,8 +43,12 @@ const Home: NextPage = () => {
           </>}</div>
       </div>
       <div className="grow flex flex-col w-screen justify-center items-center">
-        <h1>Personhood is hard to prove.<br /></h1>
-        <h3 className="mt-2 mx-10 text-base text-center">Can you tell which Tweets are real or AI-generated?</h3>
+        <h1 className="text-3xl">AI is getting <i>really</i> good.<br /></h1>
+        <p className="mt-2 text-center">
+          It's impossible to argue that it isn't changing everything -- it's harder than ever to tell when it's being used.<br />
+          We owe it to ourselves to be able to know we're working with a human.
+        </p>
+        <h3 className="mt-2 mx-10 text-lg text-center">Can you tell which Tweets are real or AI-generated?</h3>
         {session && <>
           <button className="bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => location.href = '/pregame'}>You're signed in -- play now!</button>
         </>}
@@ -53,13 +58,13 @@ const Home: NextPage = () => {
               callbackUrl: `${window.location.origin}/pregame`,
             });
             clearState();
-          }}>Sign in with Twitter</button>
+          }}>Sign in with Twitter to Play</button>
           <p className="w-2/3 max-w-sm text-slate-500 text-center text-xs mt-3 mx-5">We personalize the game to your feed. We only use public Tweets, and we won't post or act on your behalf.</p>
           <button className="bg-slate-400 text-white opacity-80 text-xs rounded-md px-5 py-1.5 mt-4" onClick={() => location.href = '/pregame'}>Play without Signing In</button>
         </>}
       </div>
-      <button className="grow-0 bg-violet-400 text-white text-lg rounded-md px-5 py-1.5 m-10 mb-5" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
-      <p className='mb-5 text-sm'> Built by <Link className='text-black' href="https://twitter.com/0xPenryn">0xPenryn</Link> and <Link className='text-black' href="https://hyperflu.id">Hyperfluid</Link>.</p> 
+      <Footer />
+      <p className='mb-5 text-sm'> Built by <Link className='text-black' href="https://twitter.com/0xPenryn">0xPenryn</Link> and <Link className='text-black' href="https://hyperflu.id">Hyperfluid</Link>.</p>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useState, useEffect } from "react";
 import { signOut, useSession } from 'next-auth/react';
 import { loadTweets, TweetConfig } from "../utils/tweetHelper";
+import Footer from "../components/Footer";
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -69,7 +70,7 @@ const PreGame: NextPage = () => {
           <button className="text-center mt-2 bg-slate-400 text-white text-xs rounded-md px-1.5 py-1.5" onClick={() => signOut({ callbackUrl: "/" })}>Return Home</button>
         </div>
       </>} */}
-      <button className="bg-violet-400 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
+      <Footer />
     </div>
   );
 };

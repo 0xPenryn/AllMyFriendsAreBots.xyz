@@ -5,6 +5,7 @@ import { signOut, useSession } from 'next-auth/react';
 import TweetTimeline from "../components/TweetTimeline";
 import { loadTweets, makeAITweet, TweetConfig } from "../utils/tweetHelper";
 import toast, { Toaster } from 'react-hot-toast';
+import Footer from "../components/Footer";
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -126,7 +127,8 @@ const Play: NextPage = () => {
           <button className="text-center mt-2 bg-slate-400 text-white text-xs rounded-md px-1.5 py-1.5" onClick={() => signOut({ callbackUrl: "/" })}>Return Home</button>
         </div>
       </>}
-      <button className="bg-violet-400 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
+      {/* <button className="bg-violet-400 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button> */}
+      <Footer />
       <Toaster />
     </div>
   );

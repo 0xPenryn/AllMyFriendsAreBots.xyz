@@ -4,6 +4,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import TweetTimeline from "../components/TweetTimeline";
 import { useState, useEffect } from "react";
 import { loadTweets, makeAITweet, TweetConfig } from "../utils/tweetHelper";
+import Footer from "../components/Footer";
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -88,7 +89,7 @@ const Endgame: NextPage = () => {
           <button className="bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 m-5" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}`+ ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
         </div>
       </div>
-      <button className="grow-0 bg-violet-400 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button>
+      <Footer />
     </div>
   );
 };
