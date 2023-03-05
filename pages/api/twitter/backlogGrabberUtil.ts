@@ -164,19 +164,6 @@ export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> 
 export async function loadTweetsFromUser(userID: string): Promise<Array<String>> {
   var tweetData: Array<String> = [];
   console.log("about to fetch tweetsByUser api endpoint")
-  // fetch('/api/twitter/tweetsByUser', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({'user_id': userID}),
-  // })
-  //   .then((res) => res.json())
-  //   .then((data) => {
-  //     console.log("got user's tweets:", data)
-  //     tweetData = data;
-  //     return tweetData;
-  //   })
   const response = await fetch('https://allmyfriendsarebots.xyz/api/twitter/tweetsByUser', {
     method: 'POST',
     headers: {
@@ -211,15 +198,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
       'media.fields': ['url'],
       'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
+      'sort_order': 'relevancy',
     })
 
-    tweetSearch.fetchNext()
-    tweetSearch.fetchNext()
-    tweetSearch.fetchNext()
-    tweetSearch.fetchNext()
-    tweetSearch.fetchNext()
-    tweetSearch.fetchNext()
-    tweetSearch.fetchNext()
     tweetSearch.fetchNext()
     tweetSearch.fetchNext()
     tweetSearch.fetchNext()
@@ -240,17 +221,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   }
 
-  var aiTweetList = [];
+  // var aiTweetList = [];
 
-  for (const tweet of tweetList) {
-    if (Math.random() > 0.5) {
-      const aiTweet = makeAITweet(tweet)
-      console.log("adding to list:", aiTweet);
-      aiTweetList.push(aiTweet);
-    } else {
-      aiTweetList.push(tweet);
-    }
-  }
+  // for (const tweet of tweetList) {
+  //   if (Math.random() > 0.5) {
+  //     const aiTweet = makeAITweet(tweet)
+  //     console.log("adding to list:", aiTweet);
+  //     aiTweetList.push(aiTweet);
+  //   } else {
+  //     aiTweetList.push(tweet);
+  //   }
+  // }
 
   return res.status(200).send(tweetList);
 }
