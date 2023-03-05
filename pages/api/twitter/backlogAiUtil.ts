@@ -2,9 +2,9 @@ import { getToken } from 'next-auth/jwt';
 import { TwitterApi, TweetV2, UserV2, TwitterV2IncludesHelper } from 'twitter-api-v2';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-// export const config = {
-//   runtime: "edge",
-// };
+export const config = {
+  runtime: "edge",
+};
 
 export type TweetConfig = {
   user: {
@@ -140,14 +140,6 @@ export async function loadTweetsFromUser(userID: string): Promise<Array<String>>
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
 
-  console.log("backlog was called!")
-
-  const token = await getToken({ req });
-
-  if (!token?.access_token) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
   async function doAi(tweet: TweetConfig) {
     if (Math.random() >= 0.5) {
       await makeAITweet(tweet).then((tweetAi) => {
@@ -158,34 +150,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   var tweetList: Array<TweetConfig> = [];
 
-  const client = new TwitterApi(token.access_token as string);
-
-  var tweetSearch = await client.v2.search('ai is:verified lang:en -is:retweet -is:reply', {
-    'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
-    expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
-    'media.fields': ['url'],
-    'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
-    'max_results': 100,
-  })
-
-  for (var i = 0; i < 1000; i++) {
-    tweetSearch.fetchNext()
-  }
-
-  const includes = new TwitterV2IncludesHelper(tweetSearch);
-
-  for (const tweet of tweetSearch.tweets) {
-    // ignores tweets with polls, quotes, media, and by protected users
-    if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments && !includes.author(tweet)?.protected) {
-      const parsedTweet = parseTweet({
-        tweet: tweet,
-        author: includes.author(tweet)!,
-      })
-      console.log("adding to list:", parsedTweet);
-      // doAi(parsedTweet);
-      tweetList.push(parsedTweet);
-    }
-  }
+  fetch("https://allmyfriendsarebots.xyz/api/twitter/backlogGrabberUtil").then((res) => res.json()).then((data) => {
+    var tweetList = data.map((tweet: TweetConfig) => {doAi(tweet)})
+    return tweetList;
+  });
 
   return res.status(200).send(tweetList);
 }
