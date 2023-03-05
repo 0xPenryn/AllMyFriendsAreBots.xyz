@@ -241,7 +241,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   for (const tweet of tweetList) {
     if (Math.random() > 0.5) {
-      const aiTweet = makeAITweet(tweet)
+      const aiTweet = await makeAITweet(tweet)
       console.log("adding to list:", aiTweet);
       aiTweetList.push(aiTweet);
     } else {
@@ -249,5 +249,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   }
 
-  return res.status(200).send(tweetList);
+  return res.status(200).send(aiTweetList);
 }
