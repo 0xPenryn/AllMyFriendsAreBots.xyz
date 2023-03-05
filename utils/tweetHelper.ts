@@ -1,4 +1,5 @@
 import { TweetV2, UserV2 } from 'twitter-api-v2';
+import { useSession } from 'next-auth/react';
 
 export type TweetConfig = {
   user: {
@@ -118,18 +119,36 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   return newTweet;
 }
 
-export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> {
+export async function loadTweets(signedIn?: boolean, tweetID?: string): Promise<Array<TweetConfig>> {
   var tweetData: Array<TweetConfig> = [];
+  // const { data: session, status } = useSession();
+
+  function shuffle(a: Array<any>) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      x = a[i];
+      a[i] = a[j];
+      a[j] = x;
+    }
+    return a;
+  }
 
   if (localStorage.getItem("tweetData")) {
     tweetData = JSON.parse(localStorage.getItem("tweetData")!);
     console.log("tweetData: ", tweetData)
-    const neededTweet = tweetData.findIndex(tweet => tweet.id === tweetID || -1);
+    const neededTweet = tweetData?.findIndex(tweet => tweet.id === tweetID) || -1;
     if (neededTweet !== -1 && tweetData.slice(neededTweet).length > 20) {
       return tweetData.slice(neededTweet);
     }
   }
-  if (tweetID) {
+  if (!signedIn) {
+    fetch("/noSignInTweets.json").then((res) => res.json()).then((data) => {
+      tweetData = data
+      localStorage.setItem("tweetData", JSON.stringify(tweetData));
+      return tweetData;
+    });
+  } else if (tweetID) {
     console.log("about to fetch timeline api endpoint")
     fetch('/api/twitter/timeline', {
       method: 'POST',

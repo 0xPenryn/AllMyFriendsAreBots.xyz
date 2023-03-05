@@ -15,17 +15,6 @@ function clearState() {
   localStorage.removeItem("lastTweetType");
 }
 
-function shuffle(a: Array<any>) {
-  var j, x, i;
-  for (i = a.length - 1; i > 0; i--) {
-      j = Math.floor(Math.random() * (i + 1));
-      x = a[i];
-      a[i] = a[j];
-      a[j] = x;
-  }
-  return a;
-}
-
 const Play: NextPage = () => {
   const { data: session, status } = useSession();
   const [tweetId, setTweetId] = useState("0");
@@ -37,15 +26,15 @@ const Play: NextPage = () => {
   useEffect(() => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
     if (session) {
-      loadTweets().then((tweets) => {
+      loadTweets(true).then((tweets) => {
         setTweets(tweets);
         setLoading(false);
       })
     } else {
-      fetch("/noSignInTweets.json").then((res) => res.json()).then((tweets) => {
-        setTweets(shuffle(tweets));
+      loadTweets(false).then((tweets) => {
+        setTweets(tweets);
         setLoading(false);
-      });
+      })
     }
 
   }, [])
@@ -59,7 +48,7 @@ const Play: NextPage = () => {
       }
     }
     async function loadMoreTweets() {
-        loadTweets(tweets[0].id).then((tweets) => {
+        loadTweets(true, tweets[0].id).then((tweets) => {
           setTweets(tweets);
         })
     }
