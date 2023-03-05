@@ -21,7 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   var tweetSearch;
 
-    tweetSearch = await client.v2.search("", {
+    tweetSearch = await client.v2.search('entity: "AI"', {
       'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
       expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
       'media.fields': ['url'],
@@ -66,6 +66,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       aiTweetList.push(tweet);
     }
   }
-  
+
   return res.status(200).send(tweetList);
 }
