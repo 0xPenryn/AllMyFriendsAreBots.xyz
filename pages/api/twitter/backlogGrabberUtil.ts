@@ -189,7 +189,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const client = new TwitterApi(token.access_token as string);
 
-  var tweetSearch = await client.v2.search('ai is:verified lang:en', {
+  var tweetSearch = await client.v2.search('ai is:verified lang:en -is:retweet -is:reply', {
     'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
     expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
     'media.fields': ['url'],
@@ -237,17 +237,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   }
 
-  // var aiTweetList = [];
+  var aiTweetList = [];
 
-  // for (const tweet of tweetList) {
-  //   if (Math.random() > 0.5) {
-  //     const aiTweet = makeAITweet(tweet)
-  //     console.log("adding to list:", aiTweet);
-  //     aiTweetList.push(aiTweet);
-  //   } else {
-  //     aiTweetList.push(tweet);
-  //   }
-  // }
+  for (const tweet of tweetList) {
+    if (Math.random() > 0.5) {
+      const aiTweet = makeAITweet(tweet)
+      console.log("adding to list:", aiTweet);
+      aiTweetList.push(aiTweet);
+    } else {
+      aiTweetList.push(tweet);
+    }
+  }
 
   return res.status(200).send(tweetList);
 }
