@@ -15,6 +15,17 @@ function clearState() {
   localStorage.removeItem("lastTweetType");
 }
 
+function shuffle(a: Array<any>) {
+  var j, x, i;
+  for (i = a.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      x = a[i];
+      a[i] = a[j];
+      a[j] = x;
+  }
+  return a;
+}
+
 const Play: NextPage = () => {
   const { data: session, status } = useSession();
   const [tweetId, setTweetId] = useState("0");
@@ -25,10 +36,18 @@ const Play: NextPage = () => {
 
   useEffect(() => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
-    loadTweets().then((tweets) => {
-      setTweets(tweets);
-      setLoading(false);
-    })
+    if (session) {
+      loadTweets().then((tweets) => {
+        setTweets(tweets);
+        setLoading(false);
+      })
+    } else {
+      fetch("/noSignInTweets.json").then((res) => res.json()).then((tweets) => {
+        setTweets(shuffle(tweets));
+        setLoading(false);
+      });
+    }
+
   }, [])
 
   useEffect(() => {
@@ -45,7 +64,7 @@ const Play: NextPage = () => {
         })
     }
     doAi();
-    if (tweets.length == 2) {
+    if (tweets.length == 2 && session) {
       loadMoreTweets();
     }
   }, [tweetId])
@@ -107,7 +126,7 @@ const Play: NextPage = () => {
             }}>Sign out</button>
           </>}</div>
       </div>
-      {session && <>
+      {/* {session && <> */}
         <div className="flex flex-col w-screen justify-center items-center">
           <p>Your Score: {score}</p>
           <p>Your Previous Best Score: {highScore}</p>
@@ -118,15 +137,15 @@ const Play: NextPage = () => {
             <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "ai")}>AI</button>
           </div>
         </div>
-      </>}
-      {!session && <>
+      {/* </>} */}
+      {/* {!session && <>
         <div />
         <div className="flex flex-col content-center text-center">
           <p className="justify-self-center text-2xl">Loading your session...</p>
           <p className="justify-self-center text-md">If you're stuck here, press the button below.</p>
           <button className="text-center mt-2 bg-slate-400 text-white text-xs rounded-md px-1.5 py-1.5" onClick={() => signOut({ callbackUrl: "/" })}>Return Home</button>
         </div>
-      </>}
+      </>} */}
       {/* <button className="bg-violet-400 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button> */}
       <Footer />
       <Toaster />
