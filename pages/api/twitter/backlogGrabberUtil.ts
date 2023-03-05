@@ -2,6 +2,10 @@ import { getToken } from 'next-auth/jwt';
 import { TwitterApi, TweetV2, UserV2, TwitterV2IncludesHelper } from 'twitter-api-v2';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
+export const config = {
+  runtime: "edge",
+};
+
 export type TweetConfig = {
   user: {
     nickname: string;
@@ -120,47 +124,6 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   return newTweet;
 }
 
-export async function loadTweets(tweetID?: string): Promise<Array<TweetConfig>> {
-  var tweetData: Array<TweetConfig> = [];
-
-  if (localStorage.getItem("tweetData")) {
-    tweetData = JSON.parse(localStorage.getItem("tweetData")!);
-    console.log("tweetData: ", tweetData)
-    const neededTweet = tweetData.findIndex(tweet => tweet.id === tweetID || -1);
-    if (neededTweet !== -1 && tweetData.slice(neededTweet).length > 20) {
-      return tweetData.slice(neededTweet);
-    }
-  }
-  if (tweetID) {
-    console.log("about to fetch timeline api endpoint")
-    fetch('https://allmyfriendsarebots.xyz/api/twitter/timeline', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 'until_id': tweetID }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("data, storing now")
-        tweetData = data;
-        localStorage.setItem("tweetData", JSON.stringify(tweetData));
-        return tweetData;
-      })
-  } else {
-    console.log("about to fetch timeline api endpoint")
-    fetch('https://allmyfriendsarebots.xyz/api/twitter/timeline')
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("data, storing now")
-        tweetData = data;
-        localStorage.setItem("tweetData", JSON.stringify(tweetData));
-        return tweetData;
-      })
-  }
-  return tweetData;
-}
-
 export async function loadTweetsFromUser(userID: string): Promise<Array<String>> {
   var tweetData: Array<String> = [];
   console.log("about to fetch tweetsByUser api endpoint")
@@ -185,7 +148,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  var tweetList = [];
+  async function doAi(tweet: TweetConfig) {
+    if (Math.random() >= 0.5) {
+      await makeAITweet(tweet).then((tweetAi) => {
+        return tweetAi;
+      })
+    }
+  }
+
+  var tweetList: Array<TweetConfig> = [];
 
   const client = new TwitterApi(token.access_token as string);
 
@@ -211,6 +182,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         author: includes.author(tweet)!,
       })
       console.log("adding to list:", parsedTweet);
+      doAi(parsedTweet);
       tweetList.push(parsedTweet);
     }
   }
