@@ -189,7 +189,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const client = new TwitterApi(token.access_token as string);
 
-  var tweetSearch = await client.v2.search('ai is:verified', {
+  var tweetSearch = await client.v2.search('ai is:verified lang:en', {
     'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
     expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
     'media.fields': ['url'],
