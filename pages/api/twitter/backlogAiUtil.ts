@@ -150,10 +150,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   var tweetList: Array<TweetConfig> = [];
 
   // fetch("https://allmyfriendsarebots.xyz/api/twitter/backlogGrabberUtil").then((res) => res.json()).then((data) => {
-  fetch("https://allmyfriendsarebots.xyz/noSignInTweets.json").then((res) => res.json()).then((data) => {
-    tweetList = data.map((tweet: TweetConfig) => {doAi(tweet)})
-    // return tweetList;
-  });
+  // fetch("https://allmyfriendsarebots.xyz/noSignInTweets.json").then((res) => res.json()).then((data) => {
+  //   tweetList = data.map((tweet: TweetConfig) => {doAi(tweet)})
+  //   // return tweetList;
+  // });
+  
+  const data = await fetch("https://allmyfriendsarebots.xyz/noSignInTweets.json")
+  const json = await data.json()
+  tweetList = await json.map((tweet: TweetConfig) => {doAi(tweet)})
 
   return new Response(JSON.stringify(tweetList));
 }
