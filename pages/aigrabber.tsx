@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useState, useEffect } from "react";
 import { signOut, useSession } from 'next-auth/react';
 import TweetTimeline from "../components/TweetTimeline";
-import { loadTweets, makeAITweet, TweetConfig } from "../utils/tweetHelper";
+import { makeAITweet, TweetConfig } from "../utils/tweetHelper";
 import toast, { Toaster } from 'react-hot-toast';
 import Footer from "../components/Footer";
 
@@ -13,6 +13,59 @@ function clearState() {
   localStorage.removeItem("lastTweet");
   localStorage.removeItem("tweetData");
   localStorage.removeItem("lastTweetType");
+}
+
+export async function loadTweets(signedIn?: boolean, tweetID?: string): Promise<Array<TweetConfig>> {
+  var tweetData: Array<TweetConfig> = [];
+  // const { data: session, status } = useSession();
+
+  function shuffle(a: Array<any>) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      x = a[i];
+      a[i] = a[j];
+      a[j] = x;
+    }
+    return a;
+  }
+
+  if (localStorage.getItem("tweetData")) {
+    tweetData = JSON.parse(localStorage.getItem("tweetData")!);
+    console.log("tweetData: ", tweetData)
+    const neededTweet = tweetData?.findIndex(tweet => tweet.id === tweetID) || -1;
+    if (neededTweet !== -1 && tweetData.slice(neededTweet).length > 20) {
+      return tweetData.slice(neededTweet);
+    }
+  }
+  if (tweetID) {
+    console.log("about to fetch backlog api endpoint")
+    fetch('/api/twitter/backlogGrabberUtil', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 'until_id': tweetID }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data, storing now")
+        tweetData = data;
+        localStorage.setItem("tweetData", JSON.stringify(tweetData));
+        return tweetData;
+      })
+  } else {
+    console.log("about to fetch backlog api endpoint")
+    fetch('/api/twitter/backlogGrabberUtil')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data, storing now")
+        tweetData = data;
+        localStorage.setItem("tweetData", JSON.stringify(tweetData));
+        return tweetData;
+      })
+  }
+  return tweetData;
 }
 
 const Play: NextPage = () => {
@@ -26,7 +79,8 @@ const Play: NextPage = () => {
   useEffect(() => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
     if (session) {
-      loadTweets(true).then((tweets) => {
+      //CHANGE THIS BACK TO TRUE BEFORE LAUNCHING
+      loadTweets(false).then((tweets) => {
         setTweets(tweets);
         setLoading(false);
       })
@@ -63,6 +117,8 @@ const Play: NextPage = () => {
 
   var tweet = tweets.shift()!;
 
+  var AITWEETSTUFF: Array<TweetConfig> = JSON.parse(localStorage.getItem("AITWEETSTUFF")!) ?? [];
+
   const notifyCorrect = () => toast('That was correct!',{
     "duration": 1000,
   });
@@ -70,6 +126,8 @@ const Play: NextPage = () => {
   function userGuess(tweet: TweetConfig, userAns: string) {
     setLoading(true);
     localStorage.setItem("tweetData", JSON.stringify(tweets))
+    AITWEETSTUFF.push(tweet);
+    localStorage.setItem("AITWEETSTUFF", JSON.stringify(AITWEETSTUFF));
     if ((userAns == "ai") == tweet?.AI) {
       notifyCorrect();
       setTweetId(tweet.id)

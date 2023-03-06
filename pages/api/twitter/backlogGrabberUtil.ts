@@ -2,11 +2,7 @@ import { getToken } from 'next-auth/jwt';
 import { TwitterApi, TweetV2, UserV2, TwitterV2IncludesHelper } from 'twitter-api-v2';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-// export const config = {
-//   runtime: "edge",
-// };
-
-export type TweetConfig = {
+type TweetConfig = {
   user: {
     nickname: string;
     name: string;
@@ -27,12 +23,12 @@ export type TweetConfig = {
   id: string;
 }
 
-export interface UnparsedTweet {
+interface UnparsedTweet {
   tweet: TweetV2;
   author: UserV2 | null;
 }
 
-export function parseTweet(unparsedTweet: UnparsedTweet) {
+function parseTweet(unparsedTweet: UnparsedTweet) {
   var parsedTweet: TweetConfig = {
     user: {
       nickname: unparsedTweet.author?.username!,
@@ -63,81 +59,6 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
   return parsedTweet;
 }
 
-export async function generateTweet(prompt: Array<Object>) {
-  
-  // const prompt = "Generate a single tweet without hashtags or quotes that would fool a human into thinking it was written by a human, inspired by the following array of tweets: ";
-
-  var aiTweet = "";
-
-  const response = await fetch("https://allmyfriendsarebots.xyz/api/openai/generate", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      "prompt": prompt,
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-
-  // This data is a ReadableStream
-  const stream = response.body;
-  if (!stream) {
-    return "";
-  }
-
-  const reader = stream.getReader();
-  const decoder = new TextDecoder();
-  let done = false;
-
-  while (!done) {
-    const { value, done: doneReading } = await reader.read();
-    done = doneReading;
-    const chunkValue = decoder.decode(value);
-    aiTweet = aiTweet + chunkValue;
-  }
-  var cleanedTweet = aiTweet.replaceAll("Tweet: ", "");
-  return cleanedTweet.replaceAll("^\"|\"$", "");
-};
-
-export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
-  if (tweet.AI) { return tweet };
-  var newTweet = tweet;
-  var gptPrompt : Array<Object> = [
-    { "role": "system", "content": "You are person whose job is to generate Tweets for an individual." },
-    { "role": "user", "content": 'You will be given Tweets in messages beginning with "Tweet: " and asked to generate a single Tweet based on the content and style of Tweets you are given.' },
-    { "role": "user", "content": 'Pay particular attention to how these Tweets utilize punctuation, capitalization, and tone. Style is just as important as the content of the Tweet.' },
-    { "role": "user", "content": "Focus much more on the Tweets given to you than on your existing knowledge of what a Tweet should be." },
-    { "role": "user", "content": 'Do NOT include "Tweet: " or surrouding quotes in your response, only reply with the text of the generated Tweet.' },
-  ];
-
-  const tweets = await loadTweetsFromUser(tweet.user.id)
-  tweets.forEach(item => {
-    gptPrompt.push({ "role": "user", "content": "Tweet: " + item })
-  })
-  // gptPrompt.push({ "role": "user", "content": "Generate a Tweet." })
-  newTweet.text = await generateTweet(gptPrompt)
-  newTweet.AI = true;
-  return newTweet;
-}
-
-export async function loadTweetsFromUser(userID: string): Promise<Array<String>> {
-  var tweetData: Array<String> = [];
-  console.log("about to fetch tweetsByUser api endpoint")
-  const response = await fetch('https://allmyfriendsarebots.xyz/api/twitter/tweetsByUser', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ 'user_id': userID }),
-  });
-  tweetData = await response.json();
-  return tweetData;
-}
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   console.log("backlog was called!")
@@ -146,14 +67,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (!token?.access_token) {
     return res.status(401).json({ message: 'Unauthorized' });
-  }
-
-  async function doAi(tweet: TweetConfig) {
-    if (Math.random() >= 0.5) {
-      await makeAITweet(tweet).then((tweetAi) => {
-        return tweetAi;
-      })
-    }
   }
 
   var tweetList: Array<TweetConfig> = [];
@@ -167,10 +80,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
     'max_results': 100,
   })
-
-  for (var i = 0; i < 1000; i++) {
-    tweetSearch.fetchNext()
-  }
 
   const includes = new TwitterV2IncludesHelper(tweetSearch);
 
