@@ -66,7 +66,7 @@ const PreGame: NextPage = () => {
               clearState();
               signOut({ callbackUrl: "/" });
             }}>Sign out</button>
-            <img src={session.user.image!} className="h-10 mx-2.5 rounded-full" />
+            <img src={session.user.image!} className="h-10 ml-2.5 rounded-full" />
           </>}</div>
       </div>
       <div className="flex flex-col w-screen justify-center items-center text-center">
