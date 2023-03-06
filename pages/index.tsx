@@ -24,7 +24,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-start">
-        <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
+        <div className="w-1/4 text-left"><button className="hover:underline" onClick={() => location.href = '/'}>Home</button></div>
         <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
           <h3>All My Friends Are Bots</h3>
           {/* <div className="text-center flex flex-row flex-nowrap items-center justify-center">
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
         </div>
         <div className="w-1/4 text-right">
           {session && <>
-            <button onClick={() => {
+            <button className="hover:underline" onClick={() => {
               clearState();
               signOut({ callbackUrl: "/" });
             }}>Sign out</button>
@@ -50,21 +50,20 @@ const Home: NextPage = () => {
         </p>
         <h3 className="mt-2 mx-10 text-lg text-center">Can you tell which Tweets are real or AI-generated?</h3>
         {session && <>
-          <button className="bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => location.href = '/pregame'}>You're signed in -- play now!</button>
+          <button className="bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300" onClick={() => location.href = '/pregame'}>You're signed in -- play now!</button>
         </>}
         {!session && <>
-          <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => {
+          <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-sky-500 active:bg-sky-700 focus:outline-none focus:ring focus:ring-sky-300" onClick={() => {
             clearState();
             signIn("twitter", {
               callbackUrl: `${window.location.origin}/pregame`,
             });
           }}>Sign in with Twitter to Play</button>
+          <Link className="text-slate-500 text-sm mt-3 hover:text-slate-700" href = '/pregame'>Play without Signing In</Link>
           <p className="w-2/3 max-w-sm text-slate-500 text-center text-xs mt-3 mx-5">We personalize the game to your feed. We only use public Tweets, and we won't post or act on your behalf.</p>
-          <button className="bg-slate-400 text-white opacity-80 text-xs rounded-md px-5 py-1.5 mt-4" onClick={() => location.href = '/pregame'}>Play without Signing In</button>
         </>}
       </div>
       <Footer />
-      <p className='mb-5 text-sm'> Built by <Link className='text-black' href="https://twitter.com/0xPenryn">0xPenryn</Link> and <Link className='text-black' href="https://hyperflu.id">Hyperfluid</Link>.</p>
     </div>
   );
 };

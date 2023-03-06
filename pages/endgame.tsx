@@ -5,6 +5,7 @@ import TweetTimeline from "../components/TweetTimeline";
 import { useState, useEffect } from "react";
 import { loadTweets, makeAITweet, TweetConfig } from "../utils/tweetHelper";
 import Footer from "../components/Footer";
+import FakeTweet from "fake-tweet";
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -51,7 +52,7 @@ const Endgame: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-start">
-        <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
+        <div className="w-1/4 text-left"><button className="hover:underline" onClick={() => location.href = '/'}>Home</button></div>
         <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
           <h3>All My Friends Are Bots</h3>
           {/* <div className="text-center flex flex-row flex-nowrap items-center justify-center">
@@ -63,7 +64,7 @@ const Endgame: NextPage = () => {
         </div>
         <div className="w-1/4 text-right">
           {session && <>
-            <button onClick={() => {
+            <button className="hover:underline" onClick={() => {
               clearState();
               signOut({ callbackUrl: "/" });
             }}>Sign out</button>
@@ -75,7 +76,7 @@ const Endgame: NextPage = () => {
         <h3 className="mt-2 mx-10 text-base text-center">Your high score: {highScore ?? "unknown"}</h3>
         <h3 className="mt-2 mx-10 text-base text-center">This is the Tweet you got wrong:</h3>
         {lastTweet && <>
-        <TweetTimeline tweet={lastTweet}/>
+        <FakeTweet config={lastTweet}/>
         </>}
         
         {(lastTweetType == "ai") && <>
@@ -84,21 +85,21 @@ const Endgame: NextPage = () => {
         {(lastTweetType == "human") && <>
           <h3 className="mt-2 mx-10 text-base text-center">That's a real person's Tweet!</h3>
         </>}
-        {!session && <h3 className="mt-2 mx-10 text-base text-center">We can only show you so many Tweets unless you sign in -- see how you do with Tweets from people you follow!</h3>}
+        {!session && <h3 className="mt-2 mx-10 text-base text-center">We can only show you so many Tweets unless you sign in. <br /> See how you do with Tweets from people you follow!</h3>}
         {!session && <div className="flex flex-col md:flex-row content-center mt-3">
-          <button className="bg-green-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2" onClick={() => {
+          <button className="bg-slate-400 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-slate-500 active:bg-slate-700 focus:outline-none focus:ring focus:ring-slate-300" onClick={() => location.href = '/pregame'}>Play Again</button>
+          <button className="bg-green-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300" onClick={() => {
             localStorage.removeItem("tweetData");
             clearState();
             signIn("twitter", {
               callbackUrl: `${window.location.origin}/pregame`,
             });
           }}>Sign In and Play Again</button>
-          <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2" onClick={() => location.href = '/pregame'}>Play Again</button>
-          <button className="bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}` + ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
+          <button className="bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 focus:outline-none focus:ring focus:ring-sky-300" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}` + ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
         </div>}
         {session && <div className="flex flex-row content-center mt-3">
-          <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2" onClick={() => location.href = '/pregame'}>Play Again</button>
-          <button className="bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}` + ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
+          <button className="bg-slate-400 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-slate-500 active:bg-slate-700 focus:outline-none focus:ring focus:ring-slate-300" onClick={() => location.href = '/pregame'}>Play Again</button>
+          <button className="bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 focus:outline-none focus:ring focus:ring-sky-300" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}` + ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
         </div>}
       </div>
       <Footer />

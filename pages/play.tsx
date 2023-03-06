@@ -2,11 +2,11 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import { signOut, useSession } from 'next-auth/react';
-import TweetTimeline from "../components/TweetTimeline";
 import { loadTweets, makeAITweet, TweetConfig } from "../utils/tweetHelper";
 import toast, { Toaster } from 'react-hot-toast';
 import Footer from "../components/Footer";
-import { redirect } from "next/dist/server/api-utils";
+import FakeTweet from "fake-tweet";
+
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -116,7 +116,7 @@ const Play: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-start">
-        <div className="w-1/4 text-left"><button onClick={() => location.href = '/'}>Home</button></div>
+        <div className="w-1/4 text-left"><button className="hover:underline" onClick={() => location.href = '/'}>Home</button></div>
         <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
           <h3>All My Friends Are Bots</h3>
           {/* <div className="text-center flex flex-row flex-nowrap items-center justify-center">
@@ -128,7 +128,7 @@ const Play: NextPage = () => {
         </div>
         <div className="w-1/4 text-right">
           {session && <>
-            <button onClick={() => {
+            <button className="hover:underline" onClick={() => {
               clearState();
               signOut({ callbackUrl: "/" });
             }}>Sign out</button>
@@ -141,12 +141,12 @@ const Play: NextPage = () => {
           {loading && <p>Loading Tweet...</p>}
           {!loading && <>
           {/* <div className="flex justify-center w-screen"> */}
-            <TweetTimeline tweet={tweet} />
+            <FakeTweet config={tweet} />
           {/* </div> */}
           </>}
           <div className="flex flex-row content-center">
-            <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "human")}>Human</button>
-            <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "ai")}>AI</button>
+            <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300" onClick={() => userGuess(tweet, "human")}>Human</button>
+            <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300" onClick={() => userGuess(tweet, "ai")}>AI</button>
           </div>
         </div>
       {/* </>} */}
