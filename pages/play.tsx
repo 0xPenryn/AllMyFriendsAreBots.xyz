@@ -37,7 +37,7 @@ const Play: NextPage = () => {
         setLoading(false);
       })
     }
-  }, [])
+  }, [status])
 
   useEffect(() => {
 
