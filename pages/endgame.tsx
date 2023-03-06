@@ -84,10 +84,22 @@ const Endgame: NextPage = () => {
         {(lastTweetType == "human") && <>
           <h3 className="mt-2 mx-10 text-base text-center">That's a real person's Tweet!</h3>
         </>}
-        <div className="flex flex-row content-center">
-          <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-5" onClick={() => location.href = '/pregame'}>Play Again</button>
-          <button className="bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 m-5" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}`+ ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
-        </div>
+        {!session && <h3 className="mt-2 mx-10 text-base text-center">We can only show you so many Tweets unless you sign in -- see how you do with Tweets from people you follow!</h3>}
+        {!session && <div className="flex flex-col md:flex-row content-center mt-3">
+          <button className="bg-green-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2" onClick={() => {
+            localStorage.removeItem("tweetData");
+            clearState();
+            signIn("twitter", {
+              callbackUrl: `${window.location.origin}/pregame`,
+            });
+          }}>Sign In and Play Again</button>
+          <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2" onClick={() => location.href = '/pregame'}>Play Again</button>
+          <button className="bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}` + ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
+        </div>}
+        {session && <div className="flex flex-row content-center mt-3">
+          <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2" onClick={() => location.href = '/pregame'}>Play Again</button>
+          <button className="bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}` + ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
+        </div>}
       </div>
       <Footer />
     </div>
