@@ -76,6 +76,7 @@ const Endgame: NextPage = () => {
         <h3 className="mt-2 mx-10 text-base text-center">See if you're this good on Tweets from accounts you follow...</h3>
         <div className="flex flex-row content-center">
           <button className="bg-slate-500 text-white text-lg rounded-md px-5 py-1.5 m-5" onClick={() => {
+            localStorage.removeItem("tweetData");
             clearState();
             signIn("twitter", {
               callbackUrl: `${window.location.origin}/pregame`,

@@ -19,6 +19,7 @@ const PreGame: NextPage = () => {
 
   useEffect(() => {
     if (status !== "loading") {
+      console.log("loading in initial useEffect")
       loadTweets(session ? true : false, JSON.parse(localStorage.getItem("lastTweet")!)?.id).then(() => {
         setLoading(false);
       })
