@@ -62,7 +62,7 @@ const Endgame: NextPage = () => {
         <h1 className='text-4xl'>Game over!</h1>
         <div className='flex flex-col justify-center text-center mt-5 items-center'>
           <div className="mx-5 bg-green-500 text-white rounded-md w-36 px-1 py-2 text-l md:text-xl">Your Score: {lastScore}</div>
-          <div className="mx-5 bg-slate-500 text-white rounded-md w-28 mt-2 px-3 py-1.5 text-xs md:text-sm">High Score: {highScore}</div>
+          <div className="mx-5 bg-slate-500 text-white rounded-md w-30 mt-2 px-3 py-1.5 text-xs md:text-sm">High Score: {highScore}</div>
         </div>
         {(lastTweetType == "ai") && <>
           <h3 className="my-2 mx-10 w-2/3 md:w-1/3 text-base md:text-lg text-center">
