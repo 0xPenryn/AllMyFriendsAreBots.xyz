@@ -55,7 +55,7 @@ const Home: NextPage = () => {
             });
           }}>Sign in with Twitter to Play</button>
           <Link className="transition text-slate-500 text-sm mt-3 hover:text-slate-700" href = '/pregame'>Play without Signing In</Link>
-          <p className="w-2/3 max-w-sm text-slate-500 text-center text-xs mt-3 mx-5">We personalize the game to your feed. We only use public Tweets, and we won't post or act on your behalf.</p>
+          <p className="w-2/3 max-w-sm text-slate-500 text-center text-xs mt-3 mx-5">We personalize the game to your feed. We only use public Tweets, and we won't post on your behalf.</p>
         </>}
       </div>
       <Footer />
