@@ -26,7 +26,8 @@ const Play: NextPage = () => {
   useEffect(() => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
     if (session) {
-      loadTweets(true).then((tweets) => {
+      //CHANGE THIS BACK TO TRUE BEFORE LAUNCHING
+      loadTweets(false).then((tweets) => {
         setTweets(tweets);
         setLoading(false);
       })
@@ -46,12 +47,16 @@ const Play: NextPage = () => {
           tweets.unshift(tweet);
         })
       }
+      AITWEETSTUFF.push(tweets[0])
+      localStorage.setItem("AITWEETSTUFF", JSON.stringify(AITWEETSTUFF))
     }
     async function loadMoreTweets() {
         loadTweets(true, tweets[0].id).then((tweets) => {
           setTweets(tweets);
         })
     }
+
+    var AITWEETSTUFF: Array<TweetConfig> = []
     doAi();
     if (tweets.length == 2 && session) {
       loadMoreTweets();
