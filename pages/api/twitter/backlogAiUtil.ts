@@ -113,9 +113,11 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
     { "role": "user", "content": 'Do NOT include "Tweet: " or surrouding quotes in your response, only reply with the text of the generated Tweet.' },
   ];
 
-  const tweets = await loadTweetsFromUser(tweet.user.id);
-  tweets?.forEach(item => {
-    gptPrompt.push({ "role": "user", "content": "Tweet: " + item })
+  await loadTweetsFromUser(tweet.user.id).then((tweets) => {
+    console.log(tweets);
+    tweets.forEach(item => {
+      gptPrompt.push({ "role": "user", "content": "Tweet: " + item })
+    })
   });
   gptPrompt.push({ "role": "user", "content": "Generate a Tweet." })
   newTweet.text = await generateTweet(gptPrompt);
