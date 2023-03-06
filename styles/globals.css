@@ -25,9 +25,10 @@ img {
   vertical-align: top;
 }
 
-.tweet {
-  width: 100%;
-}
+.tweet-content {
+  width : 100% !important; 
+  font-size: min(2vmax, 1.5rem) !important;
+} 
 
 @supports (-webkit-touch-callout: none) {
   .h-screen {

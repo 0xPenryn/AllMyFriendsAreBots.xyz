@@ -120,7 +120,11 @@ const Play: NextPage = () => {
           <p>Your Score: {score}</p>
           <p>Your Previous Best Score: {highScore}</p>
           {loading && <p>Loading Tweet...</p>}
-          {!loading && <><TweetTimeline tweet={tweet} /></>}
+          {!loading && <>
+          {/* <div className="flex justify-center w-screen"> */}
+            <TweetTimeline tweet={tweet} />
+          {/* </div> */}
+          </>}
           <div className="flex flex-row content-center">
             <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "human")}>Human</button>
             <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => userGuess(tweet, "ai")}>AI</button>

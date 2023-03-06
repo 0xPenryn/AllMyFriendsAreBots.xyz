@@ -50,10 +50,10 @@ const PreGame: NextPage = () => {
             }}>Sign out</button>
           </>}</div>
       </div>
-      <div className="flex flex-col w-screen justify-center items-center">
-        <p>Think you know what's AI and what's not? Let's find out!</p>
-        <p>You'll see one Tweet at a time -- guess if it's real or AI-generated!</p>
-        <p>See how many you can get correct in a row.</p>
+      <div className="flex flex-col w-screen justify-center items-center text-center">
+        <p className="mx-5">Think you know what's AI and what's not? Let's find out! <br /> 
+        You'll see one Tweet at a time -- guess if it's real or AI-generated. <br /> 
+        See how many you can guess correct in a row!</p>
           {loading && <button className="mx-5 bg-slate-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl">Hold on, loading Tweets...</button>}
           {!loading && <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => location.href = '/play'}>Let's Play!</button>}
           {/* {!loading && <><TweetTimeline tweet={tweet} /></>} */}
