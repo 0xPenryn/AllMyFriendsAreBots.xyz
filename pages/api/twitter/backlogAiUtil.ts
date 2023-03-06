@@ -115,7 +115,7 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
 
   await loadTweetsFromUser(tweet.user.id).then((tweets) => {
     console.log(tweets);
-    tweets.forEach(item => {
+    tweets.forEach((item) => {
       gptPrompt.push({ "role": "user", "content": "Tweet: " + item })
     })
   });
