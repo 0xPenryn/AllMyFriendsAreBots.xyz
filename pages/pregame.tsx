@@ -62,11 +62,11 @@ const PreGame: NextPage = () => {
         </div>
         <div className="w-1/4 flex flex-row justify-end">
           {session?.user && <>
-            <img src={session.user.image!} className="h-10 mx-2.5 rounded-full" />
             <button className="hover:underline" onClick={() => {
               clearState();
               signOut({ callbackUrl: "/" });
             }}>Sign out</button>
+            <img src={session.user.image!} className="h-10 mx-2.5 rounded-full" />
           </>}</div>
       </div>
       <div className="flex flex-col w-screen justify-center items-center text-center">
