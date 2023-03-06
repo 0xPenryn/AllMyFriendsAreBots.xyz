@@ -26,7 +26,23 @@ const Play: NextPage = () => {
 
   useEffect(() => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
+    console.log("first load status:", status)
     if (session) {
+      loadTweets(true).then((tweets) => {
+        setTweets(tweets);
+        setLoading(false);
+      })
+    } else {
+      loadTweets(false).then((tweets) => {
+        setTweets(tweets);
+        setLoading(false);
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log("status effect status:", status)
+    if (status == "authenticated") {
       loadTweets(true).then((tweets) => {
         setTweets(tweets);
         setLoading(false);
