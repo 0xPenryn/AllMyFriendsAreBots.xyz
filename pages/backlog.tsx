@@ -15,6 +15,24 @@ function clearState() {
   localStorage.removeItem("lastTweetType");
 }
 
+
+async function doAi(tweet: TweetConfig) {
+  if (Math.random() >= 0.5) {
+    const tweetAi = await makeAITweet(tweet)
+    return tweetAi;
+  } else {
+    return tweet;
+  }
+}
+
+async function Aify() {
+  const data = await fetch("https://allmyfriendsarebots.xyz/noSignInTweets.json")
+  const json: Array<TweetConfig> = await data.json()
+  var tweetList = await Promise.all(json.map(async (tweet: TweetConfig) => await doAi(tweet)))
+  localStorage.setItem("AITWEETSTUFF", JSON.stringify(tweetList))
+  return tweetList;
+}
+
 const Play: NextPage = () => {
   const { data: session, status } = useSession();
   const [tweetId, setTweetId] = useState("0");
@@ -39,22 +57,6 @@ const Play: NextPage = () => {
 
   }, [])
 
-  async function doAi(tweet: TweetConfig) {
-    if (Math.random() >= 0.5) {
-      const tweetAi = await makeAITweet(tweet)
-      return tweetAi;
-    } else {
-      return tweet;
-    }
-  }
-
-  async function Aify(tweet: TweetConfig) {
-    const data = await fetch("https://allmyfriendsarebots.xyz/noSignInTweets.json")
-    const json: Array<TweetConfig> = await data.json()
-    var tweetList = await Promise.all(json.map(async (tweet: TweetConfig) => await doAi(tweet)))
-    localStorage.setItem("AITWEETSTUFF", JSON.stringify(tweetList))
-    return tweetList;
-  }
 
   useEffect(() => {
     async function doAi() {
