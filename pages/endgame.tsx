@@ -101,13 +101,10 @@ const Endgame: NextPage = () => {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({ 'targetID': lastTweet?.user.id }),
-            }).then((res) => {
-              if (res.status == 200) {
-              setUnfollowed(true);
-            };
             });
+            setUnfollowed(true);
           }}>Unfollow this Account</button>}
-          {unfollowed && <button className="transition bg-red-400 text-white text-lg rounded-md px-3 py-1.5 mx-5 my-2">Unfollowed!</button>}
+          {unfollowed && <button className="bg-red-400 text-white text-lg rounded-md px-3 py-1.5 mx-5 my-2">Unfollowed!</button>}
           <button className="transition bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}` + ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
         </div>}
         {session && <h3 className="mt-2 mx-10 text-sm text-slate-500 text-center">Since this account seems to Tweet like an AI, we've conveniently given you a button to unfollow :&#41;</h3>}
