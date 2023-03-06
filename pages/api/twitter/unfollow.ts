@@ -16,7 +16,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const client = new TwitterApi(token.access_token as string);
 
-  await client.v2.unfollow((await client.v2.me()).data.id, targetID);
+  const result = await client.v2.unfollow((await client.v2.me()).data.id, targetID)
 
-  return res.status(200);
+  if (!result.data.following) {
+    return res.status(200);
+  } else {
+    return res.status(500);
+  }
 }
