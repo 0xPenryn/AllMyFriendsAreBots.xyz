@@ -23,6 +23,19 @@ const PreGame: NextPage = () => {
     })
   }, [])
 
+  useEffect(() => {
+    console.log("status effect status:", status)
+    if (status == "authenticated") {
+      loadTweets(true, JSON.parse(localStorage.getItem("lastTweet")!)?.id).then((tweets) => {
+        setLoading(false);
+      })
+    } else {
+      loadTweets(false, JSON.parse(localStorage.getItem("lastTweet")!)?.id).then((tweets) => {
+        setLoading(false);
+      })
+    }
+  }, [status])
+
   {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
 
   return (
