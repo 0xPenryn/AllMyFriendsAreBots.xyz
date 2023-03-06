@@ -69,7 +69,7 @@ const Play: NextPage = () => {
       }
     }
     doAi();
-    if (tweets.length < 5 && !loading) {
+    if (tweets.length < 6 && !loading) {
       loadMoreTweets();
     }
   }, [tweetId])
