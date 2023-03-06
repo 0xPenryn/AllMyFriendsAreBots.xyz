@@ -30,6 +30,12 @@ export default NextAuth({
       clientId: process.env.TWITTER_CLIENT_ID as string,
       clientSecret: process.env.TWITTER_CLIENT_SECRET as string,
       version: "2.0",
+      authorization: {
+        url: "https://twitter.com/i/oauth2/authorize",
+        params: {
+          scope: "users.read tweet.read offline.access follows.write",
+        },
+      },
     })
 
     // for oauth1 (needs elevated API access)
