@@ -76,8 +76,11 @@ const Play: NextPage = () => {
   const [tweets, setTweets] = useState<TweetConfig[]>([]);
   const [loading, setLoading] = useState(true);
 
+  var AITWEETSTUFF: Array<TweetConfig> = [];
+
   useEffect(() => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
+    AITWEETSTUFF = JSON.parse(localStorage.getItem("AITWEETSTUFF")!) ?? [];
     if (session) {
       //CHANGE THIS BACK TO TRUE BEFORE LAUNCHING
       loadTweets(false).then((tweets) => {
@@ -94,7 +97,6 @@ const Play: NextPage = () => {
   }, [])
 
   useEffect(() => {
-
     async function doAi() {
       if (Math.random() >= 0.5) {
         await makeAITweet(tweets.shift()!).then((tweet) => {
@@ -116,8 +118,6 @@ const Play: NextPage = () => {
   }, [tweetId])
 
   var tweet = tweets.shift()!;
-
-  var AITWEETSTUFF: Array<TweetConfig> = JSON.parse(localStorage.getItem("AITWEETSTUFF")!) ?? [];
 
   const notifyCorrect = () => toast('That was correct!',{
     "duration": 1000,
