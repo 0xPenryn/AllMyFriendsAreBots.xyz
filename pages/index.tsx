@@ -37,8 +37,8 @@ const Home: NextPage = () => {
         <div className="w-1/4 text-right">
           {session && <>
             <button onClick={() => {
-              signOut({ callbackUrl: "/" });
               clearState();
+              signOut({ callbackUrl: "/" });
             }}>Sign out</button>
           </>}</div>
       </div>
@@ -54,10 +54,10 @@ const Home: NextPage = () => {
         </>}
         {!session && <>
           <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl" onClick={() => {
+            clearState();
             signIn("twitter", {
               callbackUrl: `${window.location.origin}/pregame`,
             });
-            clearState();
           }}>Sign in with Twitter to Play</button>
           <p className="w-2/3 max-w-sm text-slate-500 text-center text-xs mt-3 mx-5">We personalize the game to your feed. We only use public Tweets, and we won't post or act on your behalf.</p>
           <button className="bg-slate-400 text-white opacity-80 text-xs rounded-md px-5 py-1.5 mt-4" onClick={() => location.href = '/pregame'}>Play without Signing In</button>

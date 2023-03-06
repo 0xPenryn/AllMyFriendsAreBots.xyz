@@ -135,8 +135,8 @@ const Play: NextPage = () => {
         <div className="w-1/4 text-right">
           {session && <>
             <button onClick={() => {
-              signOut({ callbackUrl: "/" });
               clearState();
+              signOut({ callbackUrl: "/" });
             }}>Sign out</button>
           </>}</div>
       </div>

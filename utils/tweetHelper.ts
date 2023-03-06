@@ -1,5 +1,4 @@
 import { TweetV2, UserV2 } from 'twitter-api-v2';
-import { useSession } from 'next-auth/react';
 
 export type TweetConfig = {
   user: {
