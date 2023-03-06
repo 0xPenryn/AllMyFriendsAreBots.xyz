@@ -37,9 +37,9 @@ const Home: NextPage = () => {
             <img src={session.user.image!} className="hidden md:inline h-10 ml-2.5 rounded-full" />
           </>}</div>
       </div>
-      <div className="grow flex flex-col w-screen justify-center items-center">
+      <div className="grow flex flex-col w-screen justify-center items-center mx-10">
         <h1 className="text-3xl">AI is getting <i>really</i> good.<br /></h1>
-        <p className="mt-2 text-center">
+        <p className="mt-2 text-center mx-10">
           It's impossible to argue that it isn't changing everything -- it's harder than ever to tell when it's being used.<br />
           We owe it to ourselves to be able to know we're working with a human.
         </p>
