@@ -155,5 +155,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // return tweetList;
   });
 
-  return res.status(200).send(tweetList);
+  return new Response(JSON.stringify(tweetList));
 }
