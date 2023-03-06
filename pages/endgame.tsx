@@ -91,8 +91,8 @@ const Endgame: NextPage = () => {
         {!session && <h3 className="mt-2 mx-10 text-sm text-slate-500 text-center">We can't show you many Tweets unless you sign in. See how you do with Tweets from people you follow!</h3>}
 
         {session && <div className="flex flex-row content-center mt-3">
-          <button className="bg-slate-400 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-slate-500 active:bg-slate-700 focus:outline-none focus:ring focus:ring-slate-300" onClick={() => location.href = '/pregame'}>Play Again</button>
-          <button className="bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 focus:outline-none focus:ring focus:ring-sky-300" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}` + ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
+          <button className="transition bg-slate-400 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-slate-500 active:bg-slate-700 hover:outline-none hover:ring hover:ring-slate-300" onClick={() => location.href = '/pregame'}>Play Again</button>
+          <button className="transition bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}` + ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
         </div>}
       </div>
       <Footer />
