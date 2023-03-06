@@ -1,5 +1,4 @@
-import { getToken } from 'next-auth/jwt';
-import { TwitterApi, TweetV2, UserV2, TwitterV2IncludesHelper } from 'twitter-api-v2';
+import { TweetV2, UserV2 } from 'twitter-api-v2';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 export const config = {
@@ -43,7 +42,7 @@ export function parseTweet(unparsedTweet: UnparsedTweet) {
       id: unparsedTweet.author?.id!,
     },
     display: "default",
-    //for no links
+    // for no links
     // text: unparsedTweet.tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">") || "Placeholder Tweet",
     // for links
     text: unparsedTweet.tweet.text.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">") || "Placeholder Tweet",
@@ -138,15 +137,15 @@ export async function loadTweetsFromUser(userID: string): Promise<Array<String>>
   return tweetData;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-
-  async function doAi(tweet: TweetConfig) {
-    if (Math.random() >= 0.5) {
-      await makeAITweet(tweet).then((tweetAi) => {
-        return tweetAi;
-      })
-    }
+export async function doAi(tweet: TweetConfig) {
+  if (Math.random() >= 0.5) {
+    await makeAITweet(tweet).then((tweetAi) => {
+      return tweetAi;
+    })
   }
+}
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   var tweetList: Array<TweetConfig> = [];
 
