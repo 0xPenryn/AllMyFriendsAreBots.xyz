@@ -133,7 +133,7 @@ export async function loadTweets(signedIn?: boolean, tweetID?: string): Promise<
     return a;
   }
 
-  if (localStorage.getItem("tweetData")) {
+  if (localStorage.getItem("tweetData") && tweetID) {
     console.log("tweetData found in local storage")
     tweetData = JSON.parse(localStorage.getItem("tweetData")!);
     console.log("tweetData: ", tweetData)
