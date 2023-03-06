@@ -99,16 +99,18 @@ const Play: NextPage = () => {
   useEffect(() => {
     async function doAi() {
       if (Math.random() >= 0.5) {
-        await makeAITweet(tweets.shift()!).then((tweet) => {
-          tweets.unshift(tweet);
+        await makeAITweet(tweets[0]!).then((tweet) => {
+          AITWEETSTUFF.push(tweet);
+          localStorage.setItem("AITWEETSTUFF", JSON.stringify(AITWEETSTUFF));
         })
+      } else {
+        AITWEETSTUFF.push(tweet);
+        localStorage.setItem("AITWEETSTUFF", JSON.stringify(AITWEETSTUFF));
       }
     }
     
     async function loadMoreTweets() {
-        loadTweets(true, tweets[0].id).then((tweets) => {
-          setTweets(tweets);
-        })
+        alert("out of tweets!")
     }
 
     doAi();
@@ -126,8 +128,6 @@ const Play: NextPage = () => {
   function userGuess(tweet: TweetConfig, userAns: string) {
     setLoading(true);
     localStorage.setItem("tweetData", JSON.stringify(tweets))
-    AITWEETSTUFF.push(tweet);
-    localStorage.setItem("AITWEETSTUFF", JSON.stringify(AITWEETSTUFF));
     if ((userAns == "ai") == tweet?.AI) {
       notifyCorrect();
       setTweetId(tweet.id)
