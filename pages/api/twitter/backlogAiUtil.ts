@@ -141,9 +141,10 @@ export async function loadTweetsFromUser(userID: string): Promise<Array<String>>
 
 export async function doAi(tweet: TweetConfig) {
   if (Math.random() >= 0.5) {
-    await makeAITweet(tweet).then((tweetAi) => {
-      return tweetAi;
-    })
+    const tweetAi = await makeAITweet(tweet)
+    return tweetAi;
+  } else {
+    return tweet;
   }
 }
 
@@ -158,8 +159,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // });
 
   const data = await fetch("https://allmyfriendsarebots.xyz/noSignInTweets.json")
-  const json = await data.json()
-  tweetList = await json.map((tweet: TweetConfig) => {doAi(tweet)})
+  const json: Array<TweetConfig> = await data.json()
+  tweetList = await Promise.all(json.map(async (tweet: TweetConfig) => await doAi(tweet)))
 
   return new Response(JSON.stringify(tweetList));
 }
