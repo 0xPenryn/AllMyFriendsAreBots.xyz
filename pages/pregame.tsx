@@ -64,12 +64,15 @@ const PreGame: NextPage = () => {
           </>}</div>
       </div>
       <div className="flex flex-col w-screen justify-center items-center text-center">
-        <p className="mx-5">Think you know what's AI and what's not? Let's find out! <br /> 
-        You'll see one Tweet at a time -- guess if it's real or AI-generated. <br /> 
-        See how many you can guess correct in a row!</p>
-          {loading && <button className="mx-5 bg-slate-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl">Hold on, loading Tweets...</button>}
-          {!loading && <button className="transition mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-green-600 active:bg-green-700 hover:outline-none hover:ring hover:ring-green-300" onClick={() => location.href = '/play'}>Let's Play!</button>}
+        <div className="mx-10 md:w-2/3 min-w-fit">
+          <h1 className="mb-3 max-w-2/3">Think you know what's AI and what's not?<wbr/> Let's find out! </h1>
+          <p className="text-base mx-10">You'll see one Tweet at a time -- guess if it's <b>real</b> or <b>AI-generated</b>. <br />
+          Every correct guess will add one point to your score,<wbr/> and the game is over<wbr/> when you guess incorrectly.<br />
+          See how many you can guess correct in a row -- good luck!</p>
         </div>
+        {loading && <button className="mx-5 bg-slate-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl">Hold on, loading Tweets...</button>}
+        {!loading && <button className="transition mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-green-600 active:bg-green-700 hover:outline-none hover:ring hover:ring-green-300" onClick={() => location.href = '/play'}>Let's Play!</button>}
+      </div>
       <Footer />
     </div>
   );
