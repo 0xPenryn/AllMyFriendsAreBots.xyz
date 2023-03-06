@@ -68,6 +68,8 @@ export async function loadTweets(signedIn?: boolean, tweetID?: string): Promise<
   return tweetData;
 }
 
+var AITWEETSTUFF: Array<TweetConfig>;
+
 const Play: NextPage = () => {
   const { data: session, status } = useSession();
   const [tweetId, setTweetId] = useState("0");
@@ -76,11 +78,9 @@ const Play: NextPage = () => {
   const [tweets, setTweets] = useState<TweetConfig[]>([]);
   const [loading, setLoading] = useState(true);
 
-  var AITWEETSTUFF: Array<TweetConfig> = [];
-
   useEffect(() => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
-    AITWEETSTUFF = JSON.parse(localStorage.getItem("AITWEETSTUFF")!) ?? [];
+    AITWEETSTUFF = JSON.parse(localStorage.getItem("AITWEETSTUFF")!);
     if (session) {
       //CHANGE THIS BACK TO TRUE BEFORE LAUNCHING
       loadTweets(false).then((tweets) => {
