@@ -6,6 +6,7 @@ import TweetTimeline from "../components/TweetTimeline";
 import { loadTweets, makeAITweet, TweetConfig } from "../utils/tweetHelper";
 import toast, { Toaster } from 'react-hot-toast';
 import Footer from "../components/Footer";
+import { redirect } from "next/dist/server/api-utils";
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -36,27 +37,32 @@ const Play: NextPage = () => {
         setLoading(false);
       })
     }
-
   }, [])
 
   useEffect(() => {
 
     async function doAi() {
-      if (Math.random() >= 0.5) {
+      if (!session) {
+        return
+      } else if (Math.random() >= 0.5) {
         await makeAITweet(tweets.shift()!).then((tweet) => {
           tweets.unshift(tweet);
         })
       }
     }
-    
+
     async function loadMoreTweets() {
+      if (session) {
         loadTweets(true, tweets[0].id).then((tweets) => {
           setTweets(tweets);
         })
+      } else {
+        location.href = "/outoftweets"
+      }
     }
 
     doAi();
-    if (tweets.length == 2 && session) {
+    if (tweets.length < 3 && tweets.length !== 0) {
       loadMoreTweets();
     }
   }, [tweetId])

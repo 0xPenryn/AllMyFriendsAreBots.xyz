@@ -137,13 +137,12 @@ export async function loadTweets(signedIn?: boolean, tweetID?: string): Promise<
   if (localStorage.getItem("tweetData")) {
     tweetData = JSON.parse(localStorage.getItem("tweetData")!);
     console.log("tweetData: ", tweetData)
-    const neededTweet = tweetData?.findIndex(tweet => tweet.id === tweetID) || -1;
-    if (neededTweet !== -1 && tweetData.slice(neededTweet).length > 20) {
+    const neededTweet = tweetData.findIndex(tweet => tweet.id === tweetID) || -1;
+    if (neededTweet !== -1) {
       return tweetData.slice(neededTweet);
     }
-  }
-  if (!signedIn) {
-    fetch("/noSignInTweets.json").then((res) => res.json()).then((data) => {
+  } else if (!signedIn) {
+    fetch("/aiTweetsBacklog.json").then((res) => res.json()).then((data) => {
       tweetData = data
       localStorage.setItem("tweetData", JSON.stringify(tweetData));
       return tweetData;

@@ -81,6 +81,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     'max_results': 100,
   })
 
+  tweetSearch.fetchNext();
+  tweetSearch.fetchNext();
+  tweetSearch.fetchNext();
+  tweetSearch.fetchNext();
+  tweetSearch.fetchNext();
+  tweetSearch.fetchNext();
+
   const includes = new TwitterV2IncludesHelper(tweetSearch);
 
   for (const tweet of tweetSearch.tweets) {
