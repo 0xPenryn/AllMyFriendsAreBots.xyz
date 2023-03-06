@@ -113,12 +113,12 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
     { "role": "user", "content": 'Do NOT include "Tweet: " or surrouding quotes in your response, only reply with the text of the generated Tweet.' },
   ];
 
-  const tweets = await loadTweetsFromUser(tweet.user.id)
-  tweets.forEach(item => {
+  const tweets = await loadTweetsFromUser(tweet.user.id);
+  tweets?.forEach(item => {
     gptPrompt.push({ "role": "user", "content": "Tweet: " + item })
-  })
-  // gptPrompt.push({ "role": "user", "content": "Generate a Tweet." })
-  newTweet.text = await generateTweet(gptPrompt)
+  });
+  gptPrompt.push({ "role": "user", "content": "Generate a Tweet." })
+  newTweet.text = await generateTweet(gptPrompt);
   newTweet.AI = true;
   return newTweet;
 }
@@ -154,7 +154,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   //   tweetList = data.map((tweet: TweetConfig) => {doAi(tweet)})
   //   // return tweetList;
   // });
-  
+
   const data = await fetch("https://allmyfriendsarebots.xyz/noSignInTweets.json")
   const json = await data.json()
   tweetList = await json.map((tweet: TweetConfig) => {doAi(tweet)})
