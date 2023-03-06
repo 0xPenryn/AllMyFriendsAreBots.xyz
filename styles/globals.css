@@ -30,6 +30,11 @@ img {
   font-size: min(2vmax, 1.5rem) !important;
 } 
 
+.twemoji-bg {
+  height: min(2vmax, 1.5rem) !important;
+  width: min(2vmax, 1.5rem) !important;
+}
+
 @supports (-webkit-touch-callout: none) {
   .h-screen {
     height: -webkit-fill-available;
