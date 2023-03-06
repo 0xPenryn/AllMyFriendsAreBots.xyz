@@ -95,7 +95,7 @@ const Endgame: NextPage = () => {
         {session && <div className="flex flex-row content-center mt-3">
           <button className="transition bg-slate-400 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-slate-500 active:bg-slate-700 hover:outline-none hover:ring hover:ring-slate-300" onClick={() => location.href = '/pregame'}>Play Again</button>
           <button className="transition bg-red-500 text-white text-lg rounded-md px-3 py-1.5 mx-5 my-2 hover:bg-red-600 active:bg-red-700 hover:outline-none hover:ring hover:ring-red-300" onClick={() => {
-            fetch('/api/unfollow', {
+            fetch('/api/twitter/unfollow', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
