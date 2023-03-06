@@ -135,6 +135,7 @@ export async function loadTweets(signedIn?: boolean, tweetID?: string): Promise<
   }
 
   if (localStorage.getItem("tweetData")) {
+    console.log("tweetData found in local storage")
     tweetData = JSON.parse(localStorage.getItem("tweetData")!);
     console.log("tweetData: ", tweetData)
     const neededTweet = tweetData.findIndex(tweet => tweet.id === tweetID) || -1;
@@ -142,13 +143,14 @@ export async function loadTweets(signedIn?: boolean, tweetID?: string): Promise<
       return tweetData.slice(neededTweet);
     }
   } else if (!signedIn) {
+    console.log("about to fetch aiTweetsBacklog.json")
     fetch("/aiTweetsBacklog.json").then((res) => res.json()).then((data) => {
       tweetData = data
       localStorage.setItem("tweetData", JSON.stringify(tweetData));
       return tweetData;
     });
   } else if (tweetID) {
-    console.log("about to fetch timeline api endpoint")
+    console.log("about to fetch timeline api endpoint with tweetID")
     fetch('/api/twitter/timeline', {
       method: 'POST',
       headers: {
@@ -158,7 +160,7 @@ export async function loadTweets(signedIn?: boolean, tweetID?: string): Promise<
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("data, storing now")
+        console.log("data from id, storing now")
         tweetData = data;
         localStorage.setItem("tweetData", JSON.stringify(tweetData));
         return tweetData;
