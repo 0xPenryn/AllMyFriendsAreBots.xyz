@@ -25,7 +25,7 @@ const Home: NextPage = () => {
       </Head>
       <div className="self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-start">
         <div className="w-1/4 text-left"><button className="hover:underline" onClick={() => location.href = '/'}>Home</button></div>
-        <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
+        <div className="w-1/2 font-mono text-center flex flex-col flex-nowrap items-center justify-center">
           <h3>All My Friends Are Bots</h3>
         </div>
         <div className="w-1/4 flex flex-row justify-end">
@@ -45,16 +45,16 @@ const Home: NextPage = () => {
         </p>
         <h3 className="mt-2 mx-10 text-lg text-center">Can you tell which Tweets are real or AI-generated?</h3>
         {session && <>
-          <button className="bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300" onClick={() => location.href = '/pregame'}>You're signed in -- play now!</button>
+          <button className="transition bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-green-600 active:bg-green-700 hover:outline-none hover:ring hover:ring-green-300" onClick={() => location.href = '/pregame'}>You're signed in -- play now!</button>
         </>}
         {!session && <>
-          <button className="bg-sky-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-sky-500 active:bg-sky-700 focus:outline-none focus:ring focus:ring-sky-300" onClick={() => {
+          <button className="transition bg-sky-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-sky-500 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => {
             clearState();
             signIn("twitter", {
               callbackUrl: `${window.location.origin}/pregame`,
             });
           }}>Sign in with Twitter to Play</button>
-          <Link className="text-slate-500 text-sm mt-3 hover:text-slate-700" href = '/pregame'>Play without Signing In</Link>
+          <Link className="transition text-slate-500 text-sm mt-3 hover:text-slate-700" href = '/pregame'>Play without Signing In</Link>
           <p className="w-2/3 max-w-sm text-slate-500 text-center text-xs mt-3 mx-5">We personalize the game to your feed. We only use public Tweets, and we won't post or act on your behalf.</p>
         </>}
       </div>

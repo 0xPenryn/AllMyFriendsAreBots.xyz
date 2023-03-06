@@ -34,7 +34,7 @@ const Endgame: NextPage = () => {
       </Head>
       <div className="self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-start">
         <div className="w-1/4 text-left"><button className="hover:underline" onClick={() => location.href = '/'}>Home</button></div>
-        <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
+        <div className="w-1/2 font-mono text-center flex flex-col flex-nowrap items-center justify-center">
           <h3>All My Friends Are Bots</h3>
         </div>
         <div className="w-1/4 flex flex-row justify-end">

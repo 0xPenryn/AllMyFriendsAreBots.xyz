@@ -51,7 +51,7 @@ const PreGame: NextPage = () => {
       </Head>
       <div className="self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-start">
         <div className="w-1/4 text-left"><button className="hover:underline" onClick={() => location.href = '/'}>Home</button></div>
-        <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
+        <div className="w-1/2 font-mono text-center flex flex-col flex-nowrap items-center justify-center">
           <h3>All My Friends Are Bots</h3>
         </div>
         <div className="w-1/4 flex flex-row justify-end">
@@ -68,7 +68,7 @@ const PreGame: NextPage = () => {
         You'll see one Tweet at a time -- guess if it's real or AI-generated. <br /> 
         See how many you can guess correct in a row!</p>
           {loading && <button className="mx-5 bg-slate-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl">Hold on, loading Tweets...</button>}
-          {!loading && <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300" onClick={() => location.href = '/play'}>Let's Play!</button>}
+          {!loading && <button className="transition mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-green-600 active:bg-green-700 hover:outline-none hover:ring hover:ring-green-300" onClick={() => location.href = '/play'}>Let's Play!</button>}
         </div>
       <Footer />
     </div>

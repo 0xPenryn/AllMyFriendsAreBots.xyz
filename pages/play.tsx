@@ -114,7 +114,7 @@ const Play: NextPage = () => {
       </Head>
       <div className="self-stretch flex flex-nowrap flex-row m-5 mx-8 items-center justify-start">
         <div className="w-1/4 text-left"><button className="hover:underline" onClick={() => location.href = '/'}>Home</button></div>
-        <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
+        <div className="w-1/2 font-mono text-center flex flex-col flex-nowrap items-center justify-center">
           <h3>All My Friends Are Bots</h3>
         </div>
         <div className="w-1/4 flex flex-row justify-end">
@@ -127,15 +127,17 @@ const Play: NextPage = () => {
           </>}</div>
       </div>
       <div className="flex flex-col w-screen justify-center items-center">
-        <p>Your Score: {score}</p>
-        <p>Your Previous Best Score: {highScore}</p>
+        <div className='w-full flex flex-row justify-center text-center my-5'>
+          <div className="mx-5 bg-slate-400 text-white rounded-md px-3 py-1.5 mt-5 text-l md:text-xl">Your Score: <br/> {score}</div>
+          <div className="mx-5 bg-slate-400 text-white rounded-md px-3 py-1.5 mt-5 text-l md:text-xl">High Score: <br/> {highScore}</div>
+        </div>
         {loading && <p>Loading Tweet...</p>}
         {!loading && <>
           <FakeTweet config={tweet} />
         </>}
-        <div className="flex flex-row content-center">
-          <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300" onClick={() => userGuess(tweet, "human")}>Human</button>
-          <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300" onClick={() => userGuess(tweet, "ai")}>AI</button>
+        <div className="flex flex-row w-1/2 content-center">
+          <button className="transition w-1/2 mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-green-600 active:bg-green-700 hover:outline-none hover:ring hover:ring-green-300" onClick={() => userGuess(tweet, "human")}>Human</button>
+          <button className="transition w-1/2 mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-blue-600 active:bg-blue-700 hover:outline-none hover:ring hover:ring-blue-300" onClick={() => userGuess(tweet, "ai")}>AI</button>
         </div>
       </div>
       <Footer />
