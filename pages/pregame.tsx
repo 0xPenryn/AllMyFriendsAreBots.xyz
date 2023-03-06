@@ -28,7 +28,9 @@ const PreGame: NextPage = () => {
 
   useEffect(() => {
     console.log("status effect status:", status)
-    if (status == "authenticated") {
+    if (status == "loading") {
+      return
+    } else if (status == "authenticated") {
       loadTweets(true, JSON.parse(localStorage.getItem("lastTweet")!)?.id).then((tweets) => {
         setLoading(false);
       })
