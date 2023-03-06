@@ -1,9 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { signIn, signOut, useSession } from 'next-auth/react';
-import TweetTimeline from "../components/TweetTimeline";
 import { useState, useEffect } from "react";
-import { loadTweets, makeAITweet, TweetConfig } from "../utils/tweetHelper";
 import Footer from "../components/Footer";
 
 function clearState() {
@@ -18,25 +16,9 @@ const Endgame: NextPage = () => {
   const { data: session, status } = useSession();
 
   const [lastScore, setLastScore] = useState("0");
-  const [highScore, setHighScore] = useState("0");
-  const [lastTweet, setLastTweet] = useState<TweetConfig>();
-  const [lastTweetType, setLastTweetType] = useState("human");
 
   useEffect(() => {
-    function checkUserData() {
-      setLastScore(localStorage.getItem("lastScore")!)
-      setHighScore(localStorage.getItem("highScore")!)
-      setLastTweet(JSON.parse(localStorage.getItem("lastTweet")!))
-      setLastTweetType(localStorage.getItem("lastTweetType")!)
-    }
-
-    // window.addEventListener('load', checkUserData)
-    checkUserData()
-    // console.log(lastScore, highScore, lastTweet, "end of effect")
-    // return () => {
-    //   // window.removeEventListener('load', checkUserData)
-    //   console.log(lastScore, highScore, lastTweet, "end of listener")
-    // }
+    setLastScore(localStorage.getItem("lastScore")!)
   }, [])
 
   const tweetText = 'See if you can tell which Tweets are real and which are AI-generated!'
@@ -54,19 +36,14 @@ const Endgame: NextPage = () => {
         <div className="w-1/4 text-left"><button className="hover:underline" onClick={() => location.href = '/'}>Home</button></div>
         <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
           <h3>All My Friends Are Bots</h3>
-          {/* <div className="text-center flex flex-row flex-nowrap items-center justify-center">
-            {session && session.user?.image && <>
-            <img src={session.user.image} className="h-10 mr-2.5 rounded-full" />
-              Signed in as {session?.user?.name}
-            </>}
-          </div> */}
         </div>
-        <div className="w-1/4 text-right">
-          {session && <>
+        <div className="w-1/4 flex flex-row justify-end">
+          {session?.user && <>
             <button className="hover:underline" onClick={() => {
               clearState();
               signOut({ callbackUrl: "/" });
             }}>Sign out</button>
+            <img src={session.user.image!} className="hidden md:inline h-10 ml-2.5 rounded-full" />
           </>}</div>
       </div>
       <div className="grow flex flex-col w-screen justify-center items-center">

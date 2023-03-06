@@ -27,19 +27,14 @@ const Home: NextPage = () => {
         <div className="w-1/4 text-left"><button className="hover:underline" onClick={() => location.href = '/'}>Home</button></div>
         <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
           <h3>All My Friends Are Bots</h3>
-          {/* <div className="text-center flex flex-row flex-nowrap items-center justify-center">
-            {session && session.user?.image && <>
-            <img src={session.user.image} className="h-10 mr-2.5 rounded-full" />
-              Signed in as {session?.user?.name}
-            </>}
-          </div> */}
         </div>
-        <div className="w-1/4 text-right">
-          {session && <>
+        <div className="w-1/4 flex flex-row justify-end">
+          {session?.user && <>
             <button className="hover:underline" onClick={() => {
               clearState();
               signOut({ callbackUrl: "/" });
             }}>Sign out</button>
+            <img src={session.user.image!} className="hidden md:inline h-10 ml-2.5 rounded-full" />
           </>}</div>
       </div>
       <div className="grow flex flex-col w-screen justify-center items-center">

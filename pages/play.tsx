@@ -50,7 +50,6 @@ const Play: NextPage = () => {
   }, [status])
 
   useEffect(() => {
-
     async function doAi() {
       if (!session) {
         return
@@ -60,7 +59,6 @@ const Play: NextPage = () => {
         })
       }
     }
-
     async function loadMoreTweets() {
       if (session) {
         loadTweets(true, tweets[0].id).then((tweets) => {
@@ -70,7 +68,6 @@ const Play: NextPage = () => {
         location.href = "/outoftweets"
       }
     }
-
     doAi();
     if (tweets.length < 5 && !loading) {
       loadMoreTweets();
@@ -79,7 +76,7 @@ const Play: NextPage = () => {
 
   var tweet = tweets.shift()!;
 
-  const notifyCorrect = () => toast('That was correct!',{
+  const notifyCorrect = () => toast('That was correct!', {
     "duration": 1000,
   });
 
@@ -119,46 +116,28 @@ const Play: NextPage = () => {
         <div className="w-1/4 text-left"><button className="hover:underline" onClick={() => location.href = '/'}>Home</button></div>
         <div className="w-1/2 text-center flex flex-col flex-nowrap items-center justify-center">
           <h3>All My Friends Are Bots</h3>
-          {/* <div className="text-center flex flex-row flex-nowrap items-center justify-center">
-            {session && session.user?.image && <>
-            <img src={session.user.image} className="h-10 mr-2.5 rounded-full" />
-              Signed in as {session?.user?.name}
-            </>}
-          </div> */}
         </div>
-        <div className="w-1/4 text-right">
-          {session && <>
+        <div className="w-1/4 flex flex-row justify-end">
+          {session?.user && <>
             <button className="hover:underline" onClick={() => {
               clearState();
               signOut({ callbackUrl: "/" });
             }}>Sign out</button>
+            <img src={session.user.image!} className="hidden md:inline h-10 ml-2.5 rounded-full" />
           </>}</div>
       </div>
-      {/* {session && <> */}
-        <div className="flex flex-col w-screen justify-center items-center">
-          <p>Your Score: {score}</p>
-          <p>Your Previous Best Score: {highScore}</p>
-          {loading && <p>Loading Tweet...</p>}
-          {!loading && <>
-          {/* <div className="flex justify-center w-screen"> */}
-            <FakeTweet config={tweet} />
-          {/* </div> */}
-          </>}
-          <div className="flex flex-row content-center">
-            <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300" onClick={() => userGuess(tweet, "human")}>Human</button>
-            <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300" onClick={() => userGuess(tweet, "ai")}>AI</button>
-          </div>
+      <div className="flex flex-col w-screen justify-center items-center">
+        <p>Your Score: {score}</p>
+        <p>Your Previous Best Score: {highScore}</p>
+        {loading && <p>Loading Tweet...</p>}
+        {!loading && <>
+          <FakeTweet config={tweet} />
+        </>}
+        <div className="flex flex-row content-center">
+          <button className="mx-5 bg-green-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring focus:ring-green-300" onClick={() => userGuess(tweet, "human")}>Human</button>
+          <button className="mx-5 bg-blue-500 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300" onClick={() => userGuess(tweet, "ai")}>AI</button>
         </div>
-      {/* </>} */}
-      {/* {!session && <>
-        <div />
-        <div className="flex flex-col content-center text-center">
-          <p className="justify-self-center text-2xl">Loading your session...</p>
-          <p className="justify-self-center text-md">If you're stuck here, press the button below.</p>
-          <button className="text-center mt-2 bg-slate-400 text-white text-xs rounded-md px-1.5 py-1.5" onClick={() => signOut({ callbackUrl: "/" })}>Return Home</button>
-        </div>
-      </>} */}
-      {/* <button className="bg-violet-400 text-white text-lg rounded-md px-5 py-1.5 m-10" onClick={() => location.href = 'https://worldcoin.org/blog'}>Read more about Proof-of-Personhood</button> */}
+      </div>
       <Footer />
       <Toaster />
     </div>
