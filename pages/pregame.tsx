@@ -18,9 +18,11 @@ const PreGame: NextPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadTweets(session ? true : false, JSON.parse(localStorage.getItem("lastTweet")!)?.id).then(() => {
-      setLoading(false);
-    })
+    if (status !== "loading") {
+      loadTweets(session ? true : false, JSON.parse(localStorage.getItem("lastTweet")!)?.id).then(() => {
+        setLoading(false);
+      })
+    }
   }, [])
 
   useEffect(() => {
