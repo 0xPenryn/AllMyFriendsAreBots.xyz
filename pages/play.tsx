@@ -41,6 +41,9 @@ const Play: NextPage = () => {
   }, [])
 
   useEffect(() => {
+
+    var AITWEETSTUFF: Array<TweetConfig> = JSON.parse(localStorage.getItem("AITWEETSTUFF")!) ?? [];
+
     async function doAi() {
       if (Math.random() >= 0.5) {
         await makeAITweet(tweets.shift()!).then((tweet) => {
@@ -50,13 +53,13 @@ const Play: NextPage = () => {
       AITWEETSTUFF.push(tweets[0])
       localStorage.setItem("AITWEETSTUFF", JSON.stringify(AITWEETSTUFF))
     }
+    
     async function loadMoreTweets() {
         loadTweets(true, tweets[0].id).then((tweets) => {
           setTweets(tweets);
         })
     }
 
-    var AITWEETSTUFF: Array<TweetConfig> = []
     doAi();
     if (tweets.length == 2 && session) {
       loadMoreTweets();
