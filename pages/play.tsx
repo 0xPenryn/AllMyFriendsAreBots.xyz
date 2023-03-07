@@ -52,7 +52,7 @@ const Play: NextPage = () => {
       return
     } else if (Math.random() >= 0.5 && !tweet.AI) {
       makeAITweet(tweets.splice(2,1)[0]).then((tweet) => {
-        tweets.splice(1, 0, tweet);
+        tweets.splice(2, 0, tweet);
       })
     }
   }
