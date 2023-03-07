@@ -96,7 +96,7 @@ const Play: NextPage = () => {
     }
     async function loadMoreTweets() {
       if (session) {
-        loadTweets(true, tweets[0].id).then((newTweets) => {
+        loadTweets(true, tweet.id).then((newTweets) => {
           setTweets(newTweets);
         })
       } else {

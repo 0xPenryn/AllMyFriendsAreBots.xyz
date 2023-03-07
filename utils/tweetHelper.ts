@@ -120,18 +120,6 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
 
 export async function loadTweets(signedIn?: boolean, tweetID?: string): Promise<Array<TweetConfig>> {
   var tweetData: Array<TweetConfig> = [];
-  // const { data: session, status } = useSession();
-
-  function shuffle(a: Array<any>) {
-    var j, x, i;
-    for (i = a.length - 1; i > 0; i--) {
-      j = Math.floor(Math.random() * (i + 1));
-      x = a[i];
-      a[i] = a[j];
-      a[j] = x;
-    }
-    return a;
-  }
 
   if ((JSON.parse(localStorage.getItem("tweetData") ?? "{}")).length > 6) {
     console.log("tweetData found in local storage")
@@ -176,6 +164,53 @@ export async function loadTweets(signedIn?: boolean, tweetID?: string): Promise<
       })
   }
   return tweetData;
+}
+
+export async function preLoadTweets(signedIn?: boolean, tweetID?: string): Promise<any> {
+  var tweetData: Array<TweetConfig> = [];
+
+  if ((JSON.parse(localStorage.getItem("tweetData") ?? "{}")).length > 6) {
+    console.log("tweetData found in local storage")
+    tweetData = JSON.parse(localStorage.getItem("tweetData")!);
+    console.log("tweetData: ", tweetData)
+    const neededTweet = tweetData.findIndex(tweet => tweet.id === tweetID) || -1;
+    if (neededTweet !== -1) {
+      return tweetData.slice(neededTweet);
+    }
+  } else if (!signedIn) {
+    console.log("about to fetch aiTweetsBacklog.json")
+    fetch("/aiTweetsBacklog.json").then((res) => res.json()).then((data) => {
+      tweetData = data
+      localStorage.setItem("tweetData", JSON.stringify(tweetData));
+      return tweetData;
+    });
+  } else if (tweetID) {
+    console.log("about to fetch timeline api endpoint with tweetID")
+    fetch('/api/twitter/timeline', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 'until_id': tweetID }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data from id, storing now")
+        tweetData = data;
+        localStorage.setItem("tweetData", JSON.stringify(tweetData));
+        return tweetData;
+      })
+  } else {
+    console.log("about to fetch timeline api endpoint")
+    fetch('/api/twitter/timeline')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data, storing now")
+        tweetData = data;
+        localStorage.setItem("tweetData", JSON.stringify(tweetData));
+        return tweetData;
+      })
+  }
 }
 
 export async function loadTweetsFromUser(userID: string): Promise<Array<String>> {
