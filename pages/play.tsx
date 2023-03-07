@@ -50,7 +50,7 @@ const Play: NextPage = () => {
     if (!session) {
       console.log("no session, not doing ai")
       return
-    } else if (Math.random() >= 0.5) {
+    } else if (Math.random() >= 0.5 && !tweets[0].AI) {
       makeAITweet(tweets.shift()!).then((tweet) => {
         tweets.splice(2, 0, tweet);
       })
@@ -60,7 +60,7 @@ const Play: NextPage = () => {
   async function loadMoreTweets() {
     if (session) {
       loadTweets(true, tweets[tweets.length - 1].id).then((newTweets) => {
-        setTweets(tweets.concat(newTweets.slice(1)));
+        setTweets(tweets.concat(newTweets.slice(3)));
         localStorage.setItem("tweetData", JSON.stringify(tweets))
       })
     } else {
