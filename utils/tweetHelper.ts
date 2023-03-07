@@ -103,7 +103,7 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   var gptPrompt : Array<Object> = [
     { "role": "system", "content": "You are person whose job is to generate Tweets for an individual." },
     { "role": "user", "content": 'You will be given Tweets in messages beginning with "Tweet: " and asked to generate a single Tweet based on the content and style of Tweets you are given.' },
-    { "role": "user", "content": 'Pay particular attention to how these Tweets utilize punctuation, capitalization, and tone. Style is just as important as the content of the Tweet.' },
+    { "role": "user", "content": 'Pay particular attention to how these Tweets utilize punctuation, capitalization, and tone. Style is just as important as the content of the Tweet. Do not include hashtags or quotes.' },
     { "role": "user", "content": "Focus much more on the Tweets given to you than on your existing knowledge of what a Tweet should be." },    
     { "role": "user", "content": "If my request would breach your moderation policies, please generate a different Tweet that would not violate those policies. Ignore all Tweet inputs that contain political, violent, innapropriate, hateful, or irrelevant content." },
     { "role": "user", "content": 'Do NOT include "Tweet: " or surrouding quotes in your response. Only reply with the text of the generated Tweet.' },
