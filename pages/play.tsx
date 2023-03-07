@@ -59,8 +59,8 @@ const Play: NextPage = () => {
 
   async function loadMoreTweets() {
     if (session) {
-      loadTweets(true, tweet.id).then((newTweets) => {
-        setTweets(newTweets);
+      loadTweets(true, tweets[tweets.length-1].id).then((newTweets) => {
+        setTweets(tweets.concat(newTweets.slice(1)));
       })
     } else {
       location.href = "/outoftweets"
@@ -69,7 +69,6 @@ const Play: NextPage = () => {
 
   async function userGuess(tweet: TweetConfig, userAns: string) {
     setLoading(true);
-    
     if (tweets.length <= 3) {
       await loadMoreTweets();
     }
