@@ -50,9 +50,9 @@ const Play: NextPage = () => {
     if (!session) {
       console.log("no session, not doing ai")
       return
-    } else if (Math.random() >= 0.5 && !tweets[0].AI) {
-      makeAITweet(tweets.shift()!).then((tweet) => {
-        tweets.splice(2, 0, tweet);
+    } else if (Math.random() >= 0.5 && !tweet.AI) {
+      makeAITweet(tweets.splice(2,1)[0]).then((tweet) => {
+        tweets.splice(1, 0, tweet);
       })
     }
   }
@@ -69,6 +69,8 @@ const Play: NextPage = () => {
   }
 
   async function userGuess(tweet: TweetConfig, userAns: string) {
+    // console.log("tweet: ", tweet)
+    // console.log("tweets[0]: ", tweets[0])
     setLoading(true);
     if (tweets.length <= 3) {
       await loadMoreTweets();
