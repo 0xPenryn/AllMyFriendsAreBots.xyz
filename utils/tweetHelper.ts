@@ -166,7 +166,7 @@ export async function loadTweets(signedIn?: boolean, tweetID?: string): Promise<
   return tweetData;
 }
 
-export async function preLoadTweets(signedIn?: boolean, tweetID?: string): Promise<any> {
+export async function preLoadTweets(signedIn?: boolean, tweetID?: string): Promise<Array<TweetConfig>> {
   var tweetData: Array<TweetConfig> = [];
 
   if ((JSON.parse(localStorage.getItem("tweetData") ?? "{}")).length > 6) {
@@ -179,14 +179,14 @@ export async function preLoadTweets(signedIn?: boolean, tweetID?: string): Promi
     }
   } else if (!signedIn) {
     console.log("about to fetch aiTweetsBacklog.json")
-    fetch("/aiTweetsBacklog.json").then((res) => res.json()).then((data) => {
+    tweetData = await fetch("/aiTweetsBacklog.json").then((res) => res.json()).then((data) => {
       tweetData = data
       localStorage.setItem("tweetData", JSON.stringify(tweetData));
       return tweetData;
     });
   } else if (tweetID) {
     console.log("about to fetch timeline api endpoint with tweetID")
-    fetch('/api/twitter/timeline', {
+    tweetData = await fetch('/api/twitter/timeline', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -202,7 +202,7 @@ export async function preLoadTweets(signedIn?: boolean, tweetID?: string): Promi
       })
   } else {
     console.log("about to fetch timeline api endpoint")
-    fetch('/api/twitter/timeline')
+    tweetData = await fetch('/api/twitter/timeline')
       .then((res) => res.json())
       .then((data) => {
         console.log("data, storing now")
@@ -211,6 +211,7 @@ export async function preLoadTweets(signedIn?: boolean, tweetID?: string): Promi
         return tweetData;
       })
   }
+  return tweetData;
 }
 
 export async function loadTweetsFromUser(userID: string): Promise<Array<String>> {
