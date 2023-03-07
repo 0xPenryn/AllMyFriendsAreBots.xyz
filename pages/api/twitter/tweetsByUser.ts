@@ -27,7 +27,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         'media.fields': ['url'],
         'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
         exclude: ['retweets', 'replies'],
-        max_results: 25,
+        max_results: 10,
       });
     // });
   } else {
