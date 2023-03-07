@@ -59,8 +59,9 @@ const Play: NextPage = () => {
 
   async function loadMoreTweets() {
     if (session) {
-      loadTweets(true, tweets[tweets.length-1].id).then((newTweets) => {
+      loadTweets(true, tweets[tweets.length - 1].id).then((newTweets) => {
         setTweets(tweets.concat(newTweets.slice(1)));
+        localStorage.setItem("tweetData", JSON.stringify(tweets))
       })
     } else {
       location.href = "/outoftweets"
