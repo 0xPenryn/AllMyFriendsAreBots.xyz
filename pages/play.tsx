@@ -51,8 +51,8 @@ const Play: NextPage = () => {
       console.log("no session, not doing ai")
       return
     } else if (Math.random() >= 0.5) {
-      await makeAITweet(tweets.shift()!).then((tweet) => {
-        tweets.unshift(tweet);
+      makeAITweet(tweets.shift()!).then((tweet) => {
+        tweets.splice(2, 0, tweet);
       })
     }
   }
@@ -75,7 +75,7 @@ const Play: NextPage = () => {
     }
     if ((userAns == "ai") == tweet?.AI) {
       notifyCorrect();
-      await doAi();
+      doAi();
       setScore(score + 1)
       setTweetId(tweet.id)
       setLoading(false);
