@@ -7,7 +7,6 @@ import toast, { Toaster } from 'react-hot-toast';
 import Footer from "../components/Footer";
 import FakeTweet from "fake-tweet";
 
-
 function clearState() {
   localStorage.removeItem("lastScore");
   localStorage.removeItem("highScore");
@@ -24,14 +23,16 @@ const Play: NextPage = () => {
   const [tweets, setTweets] = useState<TweetConfig[]>([]);
   const [loading, setLoading] = useState(true);
 
+  var tweet = tweets[0];
+
   useEffect(() => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
-    console.log("first load status:", status)
-    if (status !== "loading") {
-      loadTweets(session ? true : false).then(() => {
-        setLoading(false);
-      })
-    }
+    // console.log("first load status:", status)
+    // if (status !== "loading") {
+    //   loadTweets(session ? true : false).then(() => {
+    //     setLoading(false);
+    //   })
+    // }
   }, [])
 
   useEffect(() => {
@@ -41,15 +42,49 @@ const Play: NextPage = () => {
         setTweets(tweets);
         setLoading(false);
       })
-    } else {
+    } else if (status == "unauthenticated") {
       loadTweets(false).then((tweets) => {
         setTweets(tweets);
         setLoading(false);
       })
+    } else {
+      setLoading(true);
     }
   }, [status])
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   async function doAi() {
+  //     if (!session) {
+  //       return
+  //     } else if (Math.random() >= 0.5) {
+  //       await makeAITweet(tweets.shift()!).then((tweet) => {
+  //         tweets.unshift(tweet);
+  //       })
+  //     }
+  //   }
+  //   async function loadMoreTweets() {
+  //     if (session) {
+  //       loadTweets(true, tweets[0].id).then((newTweets) => {
+  //         setTweets(newTweets);
+  //       })
+  //     } else {
+  //       location.href = "/outoftweets"
+  //     }
+  //   }
+  //   doAi();
+  //   if (tweets.length <= 3 && !loading) {
+  //     loadMoreTweets();
+  //   }
+  // }, [tweetId])
+
+  const notifyCorrect = () => toast('That was correct!', {
+    "duration": 1000,
+  });
+
+  function userGuess(tweet: TweetConfig, userAns: string) {
+    setLoading(true);
+    tweet = tweets.shift()!;
+    localStorage.setItem("tweetData", JSON.stringify(tweets))
     async function doAi() {
       if (!session) {
         return
@@ -68,25 +103,15 @@ const Play: NextPage = () => {
         location.href = "/outoftweets"
       }
     }
-    doAi();
-    if (tweets.length <= 3 && !loading) {
+    if (tweets.length <= 3) {
       loadMoreTweets();
     }
-  }, [tweetId])
-
-  var tweet = tweets.shift()!;
-
-  const notifyCorrect = () => toast('That was correct!', {
-    "duration": 1000,
-  });
-
-  function userGuess(tweet: TweetConfig, userAns: string) {
-    setLoading(true);
-    localStorage.setItem("tweetData", JSON.stringify(tweets))
     if ((userAns == "ai") == tweet?.AI) {
       notifyCorrect();
-      setTweetId(tweet.id)
+      doAi();
       setScore(score + 1)
+      setTweetId(tweet.id)
+      setLoading(false);
     } else {
       // store last score
       localStorage.setItem("lastScore", score.toString())
@@ -101,7 +126,6 @@ const Play: NextPage = () => {
       // alert("You lost!")
       location.href = '/endgame'
     }
-    setLoading(false);
   };
 
   {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
