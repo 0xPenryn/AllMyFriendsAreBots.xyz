@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import { signOut, useSession } from 'next-auth/react';
-import { preLoadTweets } from "../utils/tweetHelper";
+import { loadTweets } from "../utils/tweetHelper";
 import Footer from "../components/Footer";
 
 function clearState() {
@@ -31,11 +31,11 @@ const PreGame: NextPage = () => {
     if (status == "loading") {
       return
     } else if (status == "authenticated") {
-      preLoadTweets(true, JSON.parse(localStorage.getItem("lastTweet")!)?.id).then(() => {
+      loadTweets(true, JSON.parse(localStorage.getItem("lastTweet")!)?.id).then(() => {
         setLoading(false);
       })
     } else if (status == "unauthenticated") {
-      preLoadTweets(false, JSON.parse(localStorage.getItem("lastTweet")!)?.id).then(() => {
+      loadTweets(false, JSON.parse(localStorage.getItem("lastTweet")!)?.id).then(() => {
         setLoading(false);
       })
     }
