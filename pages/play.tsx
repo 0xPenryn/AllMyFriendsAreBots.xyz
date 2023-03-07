@@ -60,7 +60,7 @@ const Play: NextPage = () => {
   async function loadMoreTweets() {
     if (session) {
       loadTweets(true, tweets[tweets.length - 1].id).then((newTweets) => {
-        setTweets(tweets.concat(newTweets.slice(3)));
+        setTweets(tweets.concat(newTweets.slice(4)));
         localStorage.setItem("tweetData", JSON.stringify(tweets))
       })
     } else {
