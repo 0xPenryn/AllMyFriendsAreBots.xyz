@@ -71,7 +71,7 @@ const Play: NextPage = () => {
     setLoading(true);
     
     if (tweets.length <= 3) {
-      loadMoreTweets();
+      await loadMoreTweets();
     }
     if ((userAns == "ai") == tweet?.AI) {
       notifyCorrect();
@@ -126,7 +126,7 @@ const Play: NextPage = () => {
           <div className="mx-5 bg-slate-400 text-white rounded-md px-3 py-1.5 mt-5 text-l lg:text-xl">Your Score: <br/> {score}</div>
           <div className="mx-5 bg-slate-400 text-white rounded-md px-3 py-1.5 mt-5 text-l lg:text-xl">High Score: <br/> {highScore}</div>
         </div>
-        {loading && <p>Loading Tweet...</p>}
+        {loading && <p>Loading Tweets...</p>}
         {!loading && <>
           <FakeTweet config={tweet} />
         </>}
