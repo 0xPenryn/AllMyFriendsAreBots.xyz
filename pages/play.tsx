@@ -61,15 +61,15 @@ const Play: NextPage = () => {
     }
     async function loadMoreTweets() {
       if (session) {
-        loadTweets(true, tweets[0].id).then((tweets) => {
-          setTweets(tweets);
+        loadTweets(true, tweets[tweets.length-1].id).then((newTweets) => {
+          setTweets(tweets.concat(newTweets));
         })
       } else {
         location.href = "/outoftweets"
       }
     }
     doAi();
-    if (tweets.length < 6 && !loading) {
+    if (tweets.length < 10 && !loading) {
       loadMoreTweets();
     }
   }, [tweetId])
