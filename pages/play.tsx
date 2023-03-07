@@ -62,7 +62,7 @@ const Play: NextPage = () => {
     async function loadMoreTweets() {
       if (session) {
         loadTweets(true, tweets[tweets.length-1].id).then((newTweets) => {
-          setTweets(tweets.concat(newTweets));
+          setTweets(tweets.slice(0, -1).concat(newTweets));
         })
       } else {
         location.href = "/outoftweets"
