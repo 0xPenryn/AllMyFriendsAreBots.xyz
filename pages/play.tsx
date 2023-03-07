@@ -27,16 +27,6 @@ const Play: NextPage = () => {
 
   useEffect(() => {
     setHighScore(parseInt(localStorage.getItem("highScore") ?? "0"));
-    // console.log("first load status:", status)
-    // if (status !== "loading") {
-    //   loadTweets(session ? true : false).then(() => {
-    //     setLoading(false);
-    //   })
-    // }
-  }, [])
-
-  useEffect(() => {
-    console.log("status effect status:", status)
     if (status == "authenticated") {
       loadTweets(true).then((tweets) => {
         setTweets(tweets);
@@ -52,61 +42,40 @@ const Play: NextPage = () => {
     }
   }, [status])
 
-  // useEffect(() => {
-  //   async function doAi() {
-  //     if (!session) {
-  //       return
-  //     } else if (Math.random() >= 0.5) {
-  //       await makeAITweet(tweets.shift()!).then((tweet) => {
-  //         tweets.unshift(tweet);
-  //       })
-  //     }
-  //   }
-  //   async function loadMoreTweets() {
-  //     if (session) {
-  //       loadTweets(true, tweets[0].id).then((newTweets) => {
-  //         setTweets(newTweets);
-  //       })
-  //     } else {
-  //       location.href = "/outoftweets"
-  //     }
-  //   }
-  //   doAi();
-  //   if (tweets.length <= 3 && !loading) {
-  //     loadMoreTweets();
-  //   }
-  // }, [tweetId])
-
   const notifyCorrect = () => toast('That was correct!', {
     "duration": 1000,
   });
 
-  function userGuess(tweet: TweetConfig, userAns: string) {
+  async function doAi() {
+    if (!session) {
+      console.log("no session, not doing ai")
+      return
+    } else if (Math.random() >= 0.5) {
+      await makeAITweet(tweets.shift()!).then((tweet) => {
+        tweets.unshift(tweet);
+      })
+    }
+  }
+
+  async function loadMoreTweets() {
+    if (session) {
+      loadTweets(true, tweet.id).then((newTweets) => {
+        setTweets(newTweets);
+      })
+    } else {
+      location.href = "/outoftweets"
+    }
+  }
+
+  async function userGuess(tweet: TweetConfig, userAns: string) {
     setLoading(true);
-    async function doAi() {
-      if (!session) {
-        return
-      } else if (Math.random() >= 0.5) {
-        await makeAITweet(tweets.shift()!).then((tweet) => {
-          tweets.unshift(tweet);
-        })
-      }
-    }
-    async function loadMoreTweets() {
-      if (session) {
-        loadTweets(true, tweet.id).then((newTweets) => {
-          setTweets(newTweets);
-        })
-      } else {
-        location.href = "/outoftweets"
-      }
-    }
+    
     if (tweets.length <= 3) {
       loadMoreTweets();
     }
     if ((userAns == "ai") == tweet?.AI) {
       notifyCorrect();
-      doAi();
+      await doAi();
       setScore(score + 1)
       setTweetId(tweet.id)
       setLoading(false);
@@ -123,6 +92,8 @@ const Play: NextPage = () => {
       localStorage.setItem("lastTweet", JSON.stringify(tweet))
       localStorage.setItem("lastTweetType", (userAns == "ai") ? "human" : "ai") // if userAns is "ai", then the tweet was human bc they're only here if they were wrong
       setScore(0)
+      tweet = tweets.shift()!;
+      localStorage.setItem("tweetData", JSON.stringify(tweets))
       // alert("You lost!")
       location.href = '/endgame'
     }
