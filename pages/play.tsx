@@ -83,8 +83,6 @@ const Play: NextPage = () => {
 
   function userGuess(tweet: TweetConfig, userAns: string) {
     setLoading(true);
-    tweet = tweets.shift()!;
-    localStorage.setItem("tweetData", JSON.stringify(tweets))
     async function doAi() {
       if (!session) {
         return
@@ -112,6 +110,8 @@ const Play: NextPage = () => {
       setScore(score + 1)
       setTweetId(tweet.id)
       setLoading(false);
+      tweet = tweets.shift()!;
+      localStorage.setItem("tweetData", JSON.stringify(tweets))
     } else {
       // store last score
       localStorage.setItem("lastScore", score.toString())
