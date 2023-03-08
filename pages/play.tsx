@@ -71,8 +71,8 @@ const Play: NextPage = () => {
   async function userGuess(tweet: TweetConfig, userAns: string) {
     // console.log("tweet: ", tweet)
     // console.log("tweets[0]: ", tweets[0])
-    setLoading(true);
     if (tweets.length <= 3) {
+      setLoading(true);
       await loadMoreTweets();
     }
     if ((userAns == "ai") == tweet?.AI) {
