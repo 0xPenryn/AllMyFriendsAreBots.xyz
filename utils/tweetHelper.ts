@@ -102,11 +102,11 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   var newTweet = tweet;
   var gptPrompt : Array<Object> = [
     { "role": "system", "content": "You are person whose job is to generate Tweets for an individual." },
-    { "role": "user", "content": 'You will be given Tweets in messages beginning with "Tweet: " and asked to generate a single Tweet based on the content and style of Tweets you are given.' },
-    { "role": "user", "content": 'Pay particular attention to how these Tweets utilize punctuation, capitalization, and tone. Style is just as important as the content of the Tweet. Do not include hashtags or quotes.' },
+    { "role": "user", "content": 'You will be given Tweets in messages beginning with "Tweet: ". At the end, you will be asked to generate one Tweet based on the Tweets you are given.' },
+    { "role": "user", "content": 'The generated Tweet\'s style is just as important as the content of the Tweet. Do not include hashtags or quotes in the Tweet you generate.' },
     // { "role": "user", "content": "Focus much more on the Tweets given to you than on your existing knowledge of what a Tweet should be." },    
-    { "role": "user", "content": "If my request would breach your moderation policies, please generate a different Tweet that would not violate those policies. Ignore all Tweet inputs that contain political, violent, innapropriate, hateful, or irrelevant content." },
-    { "role": "user", "content": 'Do NOT include "Tweet: " or surrouding quotes in your response. Do not respond with a question. Only reply with the text of the generated Tweet, even if it means you must generate a Tweet that ignores all the Tweets I provide you.' },
+    { "role": "user", "content": "Ignore all Tweets that contain political, violent, innapropriate, hateful, or irrelevant content." },
+    { "role": "user", "content": 'Do not include "Tweet: " or quotation marks in your response. Do not respond with a question. Respond only with the text of the generated Tweet.' },
     // { "role": "user", "content": 'It is very important that you do not respond with a question or a response about policies. Only respond with the text of a Tweet generated based on your prompt.' },
   ];
 
@@ -114,7 +114,7 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   tweets.forEach(item => {
     gptPrompt.push({ "role": "user", "content": "Tweet: " + item })
   })
-  // gptPrompt.push({ "role": "user", "content": "Generate a Tweet." })
+  gptPrompt.push({ "role": "user", "content": "Generate a single Tweet based on the content and style of Tweets I have given you." })
   newTweet.text = await generateTweet(gptPrompt)
   newTweet.AI = true;
   return newTweet;
