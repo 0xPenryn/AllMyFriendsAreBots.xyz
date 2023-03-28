@@ -26,6 +26,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.OPENAI_API_KEY ?? ""}`,
+      "OpenAI-Organization": process.env.OPENAI_ORG_KEY ?? "",
     },
     method: "POST",
     body: JSON.stringify(payload),
