@@ -187,5 +187,6 @@ export async function loadTweetsFromUser(userID: string): Promise<Array<String>>
     body: JSON.stringify({ 'user_id': userID }),
   });
   tweetData = await response.json();
+  console.log("tweetsByUser returned:", tweetData)
   return tweetData;
 }
