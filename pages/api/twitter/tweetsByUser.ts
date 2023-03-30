@@ -6,7 +6,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
 
-  console.log("timeline was called!")
+  // console.log("timeline was called!")
 
   const token = await getToken({ req });
 
@@ -47,6 +47,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       tweetList.push(parsedTweet);
     }
   }
-  console.log("tweets from User ", req.body.userID, ":", tweetList)
+  // console.log("tweets from User ", req.body.userID, ":", tweetList)
   return res.status(200).send(tweetList);
 }

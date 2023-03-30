@@ -27,7 +27,7 @@ const PreGame: NextPage = () => {
   // }, [])
 
   useEffect(() => {
-    console.log("status effect status:", status)
+    // console.log("status effect status:", status)
     if (status == "loading") {
       return
     } else if (status == "authenticated") {

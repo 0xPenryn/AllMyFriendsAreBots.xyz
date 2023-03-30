@@ -48,7 +48,7 @@ const Play: NextPage = () => {
 
   async function doAi() {
     if (!session) {
-      console.log("no session, not doing ai")
+      // console.log("no session, not doing ai")
       return
     } else if (Math.random() >= 0.5 && !tweets[2].AI) {
       makeAITweet(tweets.splice(2,1)[0]).then((tweet) => {
