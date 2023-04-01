@@ -29,7 +29,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         exclude: ['retweets', 'replies'],
         // max_results: 10,
       });
-    // });
+      console.log("tweetsOfUser:", tweetsOfUser);
   } else {
     return res.status(418).json({ message: 'I\'m a teapot, and you didn\'t include a userID' })
   }

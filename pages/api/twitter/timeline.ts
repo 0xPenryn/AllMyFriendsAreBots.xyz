@@ -29,6 +29,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       exclude: ['retweets', 'replies'],
       'until_id': req.body.until_id,
     });
+    console.log("homeTimeline:", homeTimeline);
   } else {
     homeTimeline = await client.v2.homeTimeline({
       'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
@@ -37,6 +38,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
       exclude: ['retweets', 'replies'],
     });
+    console.log("homeTimeline:", homeTimeline);
   }
 
   const includes = new TwitterV2IncludesHelper(homeTimeline);
