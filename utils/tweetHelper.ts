@@ -109,8 +109,8 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   tweets.forEach(item => {
     gptPrompt.push({ "role": "user", "content": "Tweet: " + item })
   })
-  // gptPrompt.push({ "role": "user", "content": "Generate a single Tweet based on the content and style of Tweets I have given you." })
-  gptPrompt.push({ "role": "user", "content": "Generate a single Tweet." })
+  gptPrompt.push({ "role": "user", "content": "Generate a single Tweet based on the content, writing style, tone, and vibe of Tweets I have given you." })
+  // gptPrompt.push({ "role": "user", "content": "Generate a single Tweet. " })
   newTweet.text = await generateTweet(gptPrompt)
   newTweet.AI = true;
   return newTweet;
