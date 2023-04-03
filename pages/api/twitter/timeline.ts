@@ -46,11 +46,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   for (var tries = 0; !done && tries < 5; tries++) {
     try {
       homeTimeline = await client.v2.homeTimeline(timelineFields);
-      console.log("homeTimeline:", homeTimeline);
-      break
     } catch (error) {
       console.log("error getting timeline, trying again");
       console.log("error: ", error)
+    } finally {
+      console.log("homeTimeline:", homeTimeline!);
+      break
     }
     throw new Error("Failed to get timeline after 5 tries");
   }
