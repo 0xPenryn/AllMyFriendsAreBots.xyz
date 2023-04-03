@@ -63,7 +63,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         tweet: tweet,
         author: includes.author(tweet)!,
       })
-      console.log("adding to list:", parsedTweet);
+      // console.log("adding to list:", parsedTweet);
       tweetList.push(parsedTweet);
     }
   }
