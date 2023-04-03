@@ -25,8 +25,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
     'media.fields': ['url'],
     'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
-    exclude: ['retweets', 'replies'],
-    max_results: 20,
+    exclude: ['replies', 'retweets'],
+    max_results: 25,
   };
 
   if (req.body) {
@@ -48,7 +48,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   for (const tweet of tweetsOfUser!.tweets) {
     // ignores tweets with polls, quotes, media, and by protected users
-    if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments && !includes.author(tweet)?.protected) {
+    if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments && !includes.author(tweet)?.protected && !tweet.in_reply_to_user_id) {
       const parsedTweet = parseTweet({
         tweet: tweet,
         author: includes.author(tweet)!,

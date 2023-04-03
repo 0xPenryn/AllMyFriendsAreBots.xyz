@@ -101,16 +101,15 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   if (tweet.AI) { return tweet };
   var newTweet = tweet;
   var gptPrompt : Array<Object> = [
-    { "role": "system", "content": "You are person whose job is to generate Tweets for an individual." },
-    { "role": "user", "content": 'You will be given Tweets in messages beginning with "Tweet: ". At the end, you will be asked to generate one Tweet for this individual based on the Tweets you are given. Do not include hashtags or quotes in the Tweet you generate. Try to closely match the vibe, tone, style, and word choice of the Tweets given. Ignore all Tweets that contain political, violent, innapropriate, or hateful content. Respond only with the text of the generated Tweet.' },
+    { "role": "system", "content": "You are bot whose job is to generate Tweets for an individual." },
+    { "role": "user", "content": "You're a bot here to help someone generate a new Tweet. They're going to give you some of their old tweets one at a time in messages that start with \"Tweet: \". Generate a new tweet for them similar to the tweets they give you." },
   ];
 
   const tweets = await loadTweetsFromUser(tweet.user.id)
   tweets.forEach(item => {
     gptPrompt.push({ "role": "user", "content": "Tweet: " + item })
   })
-  gptPrompt.push({ "role": "user", "content": "Generate a single Tweet for this user. Closely replicate the topics and writing style of the Tweets you were given." })
-  // gptPrompt.push({ "role": "user", "content": "Generate a single Tweet. " })
+  gptPrompt.push({ "role": "user", "content": "Generate a new tweet that would trick someone into thinking it was written by this person. Don't be formal. Don't reword their existing tweets. Remove anything other than the text of a tweet from your response. Remove emojis and hashtags from your response. Remove \"Tweet: \" from your response."})
   newTweet.text = await generateTweet(gptPrompt)
   newTweet.AI = true;
   return newTweet;
