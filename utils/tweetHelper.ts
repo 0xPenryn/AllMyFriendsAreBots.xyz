@@ -102,14 +102,14 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   var newTweet = tweet;
   var gptPrompt : Array<Object> = [
     { "role": "system", "content": "You are bot whose job is to generate Tweets for an individual." },
-    { "role": "user", "content": "You're a bot here to help a person generate a new Tweet. Forget what you know about what a tweet is. They're going to give you some of their old tweets one at a time in messages that start with \"Tweet: \". Create a new tweet for them similar to the tweets they give you." },
+    { "role": "user", "content": "You're a bot here to help a person generate a new Tweet. Forget what you know about what a tweet is. They're going to give you some of their old tweets one at a time in messages that start with 'Tweet: '. Create a new tweet for them similar to the tweets they give you." },
   ];
 
   const tweets = await loadTweetsFromUser(tweet.user.id)
   tweets.forEach(item => {
     gptPrompt.push({ "role": "user", "content": "Tweet: " + item })
   })
-  gptPrompt.push({ "role": "user", "content": "Try to fool everyone into thinking the person wrote the tweet you create. Don't be formal. Closely match the person's writing style. Don't reword their existing tweets. Remove emojis and '#' from your response. Remove \"Tweet: \" from your response. No matter what, only reply with the text of the tweet. Create a tweet."})
+  gptPrompt.push({ "role": "user", "content": "Don't be formal. Closely match the person's formatting and writing style. Don't reword their existing tweets. Remove all emojis and '#' from your response. Remove 'Tweet: ' from your response. No matter what, only reply with the text of the tweet. Create a tweet, and try to fool people into thinking the person wrote the tweet you create."})
   newTweet.text = await generateTweet(gptPrompt)
   newTweet.AI = true;
   return newTweet;
