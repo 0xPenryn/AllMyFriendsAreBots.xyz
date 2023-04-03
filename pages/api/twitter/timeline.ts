@@ -1,5 +1,5 @@
 import { getToken } from 'next-auth/jwt';
-import { TweetHomeTimelineV2Paginator, TwitterApi } from 'twitter-api-v2';
+import { ApiResponseError, TweetHomeTimelineV2Paginator, TwitterApi } from 'twitter-api-v2';
 import { TwitterV2IncludesHelper, TweetV2HomeTimelineParams } from 'twitter-api-v2';
 import { parseTweet } from '../../../utils/tweetHelper';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
@@ -47,7 +47,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       homeTimeline = await client.v2.homeTimeline(timelineFields);
     } catch (error) {
       console.log("error getting timeline, trying again");
-      console.log("error: ", error)
+      // console.log("error: ", error);
       continue;
     }
     // console.log("homeTimeline:", homeTimeline!);
