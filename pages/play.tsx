@@ -77,7 +77,7 @@ const Play: NextPage = () => {
     }
     if ((userAns == "ai") == tweet?.AI) {
       notifyCorrect();
-      doAi();
+      await doAi();
       setScore(score + 1)
       setTweetId(tweet.id)
       setLoading(false);
