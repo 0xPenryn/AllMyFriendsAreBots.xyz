@@ -41,19 +41,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.body) fieldsToGet = timelineFieldsWithID;
 
-  var done = false;
-
-  for (var tries = 0; !done && tries < 5; tries++) {
+  for (var tries = 0; tries < 5; tries++) {
     try {
+      console.log("trying to get timeline, try number:", tries)
       homeTimeline = await client.v2.homeTimeline(timelineFields);
     } catch (error) {
       console.log("error getting timeline, trying again");
       console.log("error: ", error)
-    } finally {
-      console.log("homeTimeline:", homeTimeline!);
-      break
+      continue;
     }
-    throw new Error("Failed to get timeline after 5 tries");
+    console.log("homeTimeline:", homeTimeline!);
+    break;
   }
 
   const includes = new TwitterV2IncludesHelper(homeTimeline!);
