@@ -50,7 +50,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log("error: ", error)
       continue;
     }
-    console.log("homeTimeline:", homeTimeline!);
+    // console.log("homeTimeline:", homeTimeline!);
     break;
   }
 
