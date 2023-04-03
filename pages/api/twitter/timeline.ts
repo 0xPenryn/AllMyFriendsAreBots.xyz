@@ -1,6 +1,6 @@
 import { getToken } from 'next-auth/jwt';
-import { TwitterApi } from 'twitter-api-v2';
-import { TwitterV2IncludesHelper } from 'twitter-api-v2';
+import { TweetHomeTimelineV2Paginator, TwitterApi } from 'twitter-api-v2';
+import { TwitterV2IncludesHelper, TweetV2HomeTimelineParams } from 'twitter-api-v2';
 import { parseTweet } from '../../../utils/tweetHelper';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
@@ -18,32 +18,46 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const client = new TwitterApi(token.access_token as string);
 
-  var homeTimeline;
+  var homeTimeline: TweetHomeTimelineV2Paginator;
 
-  if (req.body) {
-    homeTimeline = await client.v2.homeTimeline({
-      'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
-      expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
-      'media.fields': ['url'],
-      'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
-      exclude: ['retweets', 'replies'],
-      'until_id': req.body.until_id,
-    });
-    console.log("homeTimeline:", homeTimeline);
-  } else {
-    homeTimeline = await client.v2.homeTimeline({
-      'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
-      expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
-      'media.fields': ['url'],
-      'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
-      exclude: ['retweets', 'replies'],
-    });
-    console.log("homeTimeline:", homeTimeline);
+  const timelineFieldsWithID: TweetV2HomeTimelineParams = {
+    'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
+    expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
+    'media.fields': ['url'],
+    'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
+    exclude: ['retweets', 'replies'],
+    'until_id': req.body.until_id,
+  };
+
+  const timelineFields: TweetV2HomeTimelineParams = {
+    'tweet.fields': ['attachments', 'author_id', 'conversation_id', 'created_at', 'id', 'in_reply_to_user_id', 'lang', 'possibly_sensitive', 'referenced_tweets', 'source', 'text', 'withheld', 'public_metrics'],
+    expansions: ['attachments.media_keys', 'attachments.poll_ids', 'referenced_tweets.id', 'author_id', 'entities.mentions.username', 'geo.place_id', 'in_reply_to_user_id', 'referenced_tweets.id.author_id'],
+    'media.fields': ['url'],
+    'user.fields': ['created_at', 'description', 'entities', 'id', 'location', 'name', 'pinned_tweet_id', 'profile_image_url', 'protected', 'public_metrics', 'url', 'username', 'verified', 'withheld'],
+    exclude: ['retweets', 'replies'],
+  };
+
+  var fieldsToGet = timelineFields;
+
+  if (req.body) fieldsToGet = timelineFieldsWithID;
+
+  var done = false;
+
+  for (var tries = 0; !done && tries < 5; tries++) {
+    try {
+      homeTimeline = await client.v2.homeTimeline(timelineFields);
+      console.log("homeTimeline:", homeTimeline);
+      break
+    } catch (error) {
+      console.log("error getting timeline, trying again");
+      console.log("error: ", error)
+    }
+    throw new Error("Failed to get timeline after 5 tries");
   }
 
-  const includes = new TwitterV2IncludesHelper(homeTimeline);
+  const includes = new TwitterV2IncludesHelper(homeTimeline!);
 
-  for (const tweet of homeTimeline.tweets) {
+  for (const tweet of homeTimeline!.tweets) {
     // ignores tweets with polls, quotes, media, and by protected users
     if (!includes.poll(tweet) && !includes.quote(tweet) && !tweet.attachments && !includes.author(tweet)?.protected) {
       const parsedTweet = parseTweet({
