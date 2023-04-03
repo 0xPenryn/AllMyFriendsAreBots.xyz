@@ -109,7 +109,7 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   tweets.forEach(item => {
     gptPrompt.push({ "role": "user", "content": "Tweet: " + item })
   })
-  gptPrompt.push({ "role": "user", "content": "Don't be formal. Closely match the person's formatting and writing style. Don't reword their existing tweets. Remove all emojis and '#' from your response. Remove 'Tweet: ' from your response. No matter what, only reply with the text of the tweet. Create a tweet, and try to fool people into thinking the person wrote the tweet you create."})
+  gptPrompt.push({ "role": "user", "content": "Don't be formal. Closely match the person's formatting and writing style. Don't reword their existing tweets. Remove all emojis and '#' from your response. Remove 'Tweet: ' from your response. It's very important to only reply with the text of the tweet. Create a tweet to convince everyone that the person wrote the tweet."})
   newTweet.text = await generateTweet(gptPrompt)
   newTweet.AI = true;
   return newTweet;
