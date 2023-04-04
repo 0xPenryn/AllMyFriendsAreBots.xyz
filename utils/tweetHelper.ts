@@ -93,7 +93,7 @@ export async function generateTweet(prompt: Array<Object>) {
     const chunkValue = decoder.decode(value);
     aiTweet = aiTweet + chunkValue;
   }
-  var cleanedTweet = aiTweet.replace(/^"(.*)"$/, '$1').replaceAll("Tweet: ", "").replaceAll("^\"|\"$", "").replace(/(^|\s)(#[a-zA-Z\d_]+)/ig, "");
+  var cleanedTweet = aiTweet.replaceAll("Tweet: ", "").replaceAll("^\"|\"$", "").replace(/(^|\s)(#[a-zA-Z\d_]+)/ig, "").replace(/^"(.*)"$/, '$1');
   return cleanedTweet;
 };
 
@@ -109,7 +109,7 @@ export async function makeAITweet(tweet: TweetConfig): Promise<TweetConfig> {
   tweets.forEach(item => {
     gptPrompt.push({ "role": "user", "content": "Tweet: " + item })
   })
-  gptPrompt.push({ "role": "user", "content": "Don't be formal. Closely match the person's formatting and writing style. Don't reword their existing tweets. No matter what, respond with 'Tweet: ' followed by the text of the tweet without emojis or hashtags. Now create a tweet indistinguishable from a real tweet from this person."})
+  gptPrompt.push({ "role": "user", "content": "Don't be formal. Closely match the person's formatting and writing style. Don't reword their existing tweets. No matter what, respond with 'Tweet: ' followed by the text of the tweet with no emojis and no hashtags. Now create a tweet indistinguishable from a real tweet from this person."})
   newTweet.text = await generateTweet(gptPrompt)
   newTweet.AI = true;
   return newTweet;
