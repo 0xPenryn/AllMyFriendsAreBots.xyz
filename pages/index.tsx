@@ -50,6 +50,7 @@ const Home: NextPage = () => {
         {!session && <>
           <button className="transition bg-sky-400 text-white rounded-md px-5 py-1.5 mt-5 text-xl hover:bg-sky-500 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => {
             clearState();
+            window.alert("Twitter sign in is having some issues due to upcoming API changes -- if it doesn't work the first time, try again.\nIt will work within a few tries!")
             signIn("twitter", {
               callbackUrl: `${window.location.origin}/pregame`,
             });
