@@ -92,16 +92,24 @@ const Endgame: NextPage = () => {
           }}>Sign In and Play Again</button>
           {(lastTweetType == "human") && <button className="transition bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => {
             domtoimage.toBlob(document.getElementsByClassName("tweet default")[0]!, {}).then(function (blob) {
-              alert("The Tweet has been saved to your downloads folder. Add it to your Tweet!")
-              FileSaver.saveAs(blob, 'AllMyFriendsAreBots.png');
-              location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+              if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+                location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+              } else {
+                alert("The Tweet has been saved to your downloads folder. Add it to your Tweet!")
+                FileSaver.saveAs(blob, 'AllMyFriendsAreBots.png');
+                location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+              }
             });
           }}>Tweet My Results</button>}
           {(lastTweetType == "ai") && <button className="transition bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => {
             domtoimage.toBlob(document.getElementsByClassName("tweet default")[0]!, {}).then(function (blob) {
-              alert("The Tweet has been saved to your downloads folder. Add it to your Tweet!")
-              FileSaver.saveAs(blob, 'AllMyFriendsAreBots.png');
-              location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+              if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+                location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+              } else {
+                alert("The Tweet has been saved to your downloads folder. Add it to your Tweet!")
+                FileSaver.saveAs(blob, 'AllMyFriendsAreBots.png');
+                location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+              }
             });
           }}>Tweet My Results</button>}
         </div>}
@@ -122,16 +130,24 @@ const Endgame: NextPage = () => {
           {unfollowed && <button className="bg-red-400 text-white text-lg rounded-md px-3 py-1.5 mx-5 my-2">Unfollowed!</button>}
           {(lastTweetType == "human") && <button className="transition bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => {
             domtoimage.toBlob(document.getElementsByClassName("tweet default")[0]!, {}).then(function (blob) {
-              alert("The Tweet has been saved to your downloads folder. Add it to your Tweet!")
-              FileSaver.saveAs(blob, 'AllMyFriendsAreBots.png');
-              location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+              if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+                location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+              } else {
+                alert("The Tweet has been saved to your downloads folder. Add it to your Tweet!")
+                FileSaver.saveAs(blob, 'AllMyFriendsAreBots.png');
+                location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+              }
             });
           }}>Tweet My Results</button>}
           {(lastTweetType == "ai") && <button className="transition bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => {
             domtoimage.toBlob(document.getElementsByClassName("tweet default")[0]!, {}).then(function (blob) {
-              alert("The Tweet has been saved to your downloads folder. Add it to your Tweet!")
-              FileSaver.saveAs(blob, 'AllMyFriendsAreBots.png');
-              location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+              if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+                location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+              } else {
+                alert("The Tweet has been saved to your downloads folder. Add it to your Tweet!")
+                FileSaver.saveAs(blob, 'AllMyFriendsAreBots.png');
+                location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+              }
             });
           }}>Tweet My Results</button>}        </div>}
         {session && <h3 className="mt-2 mx-10 text-sm text-slate-500 text-center">Since this account seems to Tweet like an AI, we've conveniently given you a button to unfollow :&#41;</h3>}
