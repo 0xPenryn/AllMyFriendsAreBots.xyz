@@ -30,7 +30,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   };
 
   if (req.body) {
-    for (var tries = 0; tries < 5; tries++) {
+    for (var tries = 0; tries < 20; tries++) {
       try {
         console.log("trying to get user timeline, try number:", tries)
         tweetsOfUser = await client.v2.userTimeline(req.body.user_id, timelineFields);

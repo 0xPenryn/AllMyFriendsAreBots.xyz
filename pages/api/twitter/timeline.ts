@@ -41,7 +41,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.body) fieldsToGet = timelineFieldsWithID;
 
-  for (var tries = 0; tries < 5; tries++) {
+  for (var tries = 0; tries < 20; tries++) {
     try {
       console.log("trying to get timeline, try number:", tries)
       homeTimeline = await client.v2.homeTimeline(fieldsToGet);
