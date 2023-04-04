@@ -16,6 +16,6 @@
     "incremental": true,
     "typeRoots": ["./node_modules/@types", "./types"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/twitter/timeline.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/twitter/timeline.js", "pages/api/img/upload.js"],
   "exclude": ["node_modules"]
 }

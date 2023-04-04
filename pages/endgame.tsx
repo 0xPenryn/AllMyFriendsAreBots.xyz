@@ -6,6 +6,8 @@ import { TweetConfig } from "../utils/tweetHelper";
 import Footer from "../components/Footer";
 import FakeTweet from "fake-tweet";
 import Link from "next/link";
+import domtoimage from 'dom-to-image';
+import FileSaver from "file-saver";
 
 function clearState() {
   localStorage.removeItem("lastScore");
@@ -34,7 +36,8 @@ const Endgame: NextPage = () => {
     checkUserData()
   }, [])
 
-  const tweetText = 'I was only able to guess ' + lastScore + ' Tweets correctly as real or AI-generated. How many can you get?'
+  const realTweetText = 'I was only able to guess ' + lastScore + ' Tweets correctly as real or AI-generated. I was fooled by a real Tweet from @' + lastTweet?.user.nickname + '! How many can you get on AllMyFriendsAreBots.xyz?'
+  const aiTweetText = 'I was only able to guess ' + lastScore + ' Tweets correctly as real or AI-generated. I was fooled by an AI pretending to be @' + lastTweet?.user.nickname + '! How many can you get on AllMyFriendsAreBots.xyz?'
   const tweetLink = 'https://AllMyFriendsAreBots.xyz'
 
   {/* I DO NOT KNOW WHAT I AM DOING DO NOT CRITICIZE ME */ }
@@ -76,8 +79,7 @@ const Endgame: NextPage = () => {
           </h3>
         </>}
         {lastTweet && <>
-          <FakeTweet config={lastTweet} />
-          
+          <FakeTweet config={lastTweet}/>
         </>}
         {!session && <div className="flex flex-col md:flex-row content-center mt-3">
           <button className="transition bg-slate-400 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-slate-500 active:bg-slate-700 hover:outline-none hover:ring hover:ring-slate-300" onClick={() => location.href = '/pregame'}>Play Again</button>
@@ -88,7 +90,20 @@ const Endgame: NextPage = () => {
               callbackUrl: `${window.location.origin}/pregame`,
             });
           }}>Sign In and Play Again</button>
-          <button className="transition bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}` + ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
+          {(lastTweetType == "human") && <button className="transition bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => {
+            domtoimage.toBlob(document.getElementsByClassName("tweet default")[0]!, {}).then(function (blob) {
+              alert("The Tweet has been saved to your downloads folder. Add it to your Tweet!")
+              FileSaver.saveAs(blob, 'AllMyFriendsAreBots.png');
+              location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+            });
+          }}>Tweet My Results</button>}
+          {(lastTweetType == "ai") && <button className="transition bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => {
+            domtoimage.toBlob(document.getElementsByClassName("tweet default")[0]!, {}).then(function (blob) {
+              alert("The Tweet has been saved to your downloads folder. Add it to your Tweet!")
+              FileSaver.saveAs(blob, 'AllMyFriendsAreBots.png');
+              location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+            });
+          }}>Tweet My Results</button>}
         </div>}
         {!session && <h3 className="mt-2 mx-10 text-sm text-slate-500 text-center">We can't show you many Tweets unless you sign in. See how well you do with Tweets from people you follow!</h3>}
 
@@ -105,8 +120,20 @@ const Endgame: NextPage = () => {
             setUnfollowed(true);
           }}>Unfollow this Account</button>}
           {unfollowed && <button className="bg-red-400 text-white text-lg rounded-md px-3 py-1.5 mx-5 my-2">Unfollowed!</button>}
-          <button className="transition bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(tweetText)}` + ` ${encodeURIComponent(tweetLink)}`}>Tweet My Results</button>
-        </div>}
+          {(lastTweetType == "human") && <button className="transition bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => {
+            domtoimage.toBlob(document.getElementsByClassName("tweet default")[0]!, {}).then(function (blob) {
+              alert("The Tweet has been saved to your downloads folder. Add it to your Tweet!")
+              FileSaver.saveAs(blob, 'AllMyFriendsAreBots.png');
+              location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+            });
+          }}>Tweet My Results</button>}
+          {(lastTweetType == "ai") && <button className="transition bg-sky-500 text-white text-lg rounded-md px-5 py-1.5 mx-5 my-2 hover:bg-sky-600 active:bg-sky-700 hover:outline-none hover:ring hover:ring-sky-300" onClick={() => {
+            domtoimage.toBlob(document.getElementsByClassName("tweet default")[0]!, {}).then(function (blob) {
+              alert("The Tweet has been saved to your downloads folder. Add it to your Tweet!")
+              FileSaver.saveAs(blob, 'AllMyFriendsAreBots.png');
+              location.href = 'https://twitter.com/intent/tweet' + `?text=${encodeURIComponent(aiTweetText)}`
+            });
+          }}>Tweet My Results</button>}        </div>}
         {session && <h3 className="mt-2 mx-10 text-sm text-slate-500 text-center">Since this account seems to Tweet like an AI, we've conveniently given you a button to unfollow :&#41;</h3>}
       </div>
       <Footer />
